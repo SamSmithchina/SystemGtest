@@ -9,11 +9,11 @@
 // 最近成交价， 卖单， 不验股 
 //aStockQuot.zqdm = "600326";
 //aStockQuot.zqmc = "西藏天路";
-//	SingleMatchDivideWithQuotation_S.RecentMatchPrice_1
-TEST(SingleMatchDivideWithQuotation_S, RecentMatchPrice_1)
+//	SingleMatchDivideWithQuotation_S.RecentPrice_1
+TEST(SingleMatchDivideWithQuotation_S, RecentPrice_1)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情
@@ -83,11 +83,11 @@ TEST(SingleMatchDivideWithQuotation_S, RecentMatchPrice_1)
 	//查成交表，比较成交结果是否与预期一致；
 	//延时 ，等待第二笔成交
 	Sleep(g_iTimeOut * 50);
-	lRes = CheckCjhb(con, aSHShare, 2);
+	lRes = CheckDivideCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -98,11 +98,11 @@ TEST(SingleMatchDivideWithQuotation_S, RecentMatchPrice_1)
 // 最近成交价， 卖单， 验股
 // aStockQuot.zqdm = "600328";
 //	aStockQuot.zqmc = "兰太实业";
-//		SingleMatchDivideWithQuotation_S.RecentMatchPriceCheckAsset_4
-TEST(SingleMatchDivideWithQuotation_S, RecentMatchPriceCheckAsset_4)
+//		SingleMatchDivideWithQuotation_S.RecentPriceCheckAsset_4
+TEST(SingleMatchDivideWithQuotation_S, RecentPriceCheckAsset_4)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetYES));
 
 	//构造行情
@@ -185,7 +185,7 @@ TEST(SingleMatchDivideWithQuotation_S, RecentMatchPriceCheckAsset_4)
 		//比较结果；
 		//查成交表，比较成交结果是否与预期一致；
 		Sleep(g_iTimeOut * 50);
-		lRes = CheckCjhb(con, aSHShare, 2);
+		lRes = CheckDivideCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
 	}
 
@@ -194,7 +194,7 @@ TEST(SingleMatchDivideWithQuotation_S, RecentMatchPriceCheckAsset_4)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

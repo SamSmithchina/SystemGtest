@@ -9,11 +9,11 @@
 // 最近成交价1.000元， 买单， 不验股
 // account = "A645078963" 
 // stock = "600325" 华发股份
-//		SingleMatchDivideWithQuotation_B.RecentMatchPrice_1
-TEST(SingleMatchDivideWithQuotation_B, RecentMatchPrice_1)
+//		SingleMatchDivideWithQuotation_B.RecentPrice_1
+TEST(SingleMatchDivideWithQuotation_B, RecentPrice_1)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情
@@ -83,11 +83,11 @@ TEST(SingleMatchDivideWithQuotation_B, RecentMatchPrice_1)
 	//查成交表，比较成交结果是否与预期一致；
 	//延时 ，等待第二笔成交
 	Sleep(g_iTimeOut * 50);
-	lRes = CheckCjhb(con, aSHShare, 2);
+	lRes = CheckDivideCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -98,11 +98,11 @@ TEST(SingleMatchDivideWithQuotation_B, RecentMatchPrice_1)
 // 最近成交价， 买单， 验股
 // aStockQuot.zqdm = "600327";
 // aStockQuot.zqmc = "大东方";
-//		SingleMatchDivideWithQuotation_B.RecentMatchPriceCheckAsset_3
-TEST(SingleMatchDivideWithQuotation_B, RecentMatchPriceCheckAsset_3)
+//		SingleMatchDivideWithQuotation_B.RecentPriceCheckAsset_3
+TEST(SingleMatchDivideWithQuotation_B, RecentPriceCheckAsset_3)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetYES));
 
 	//构造行情
@@ -185,7 +185,7 @@ TEST(SingleMatchDivideWithQuotation_B, RecentMatchPriceCheckAsset_3)
 		//比较结果；
 		//查成交表，比较成交结果是否与预期一致；
 		Sleep(g_iTimeOut * 50);
-		lRes = CheckCjhb(con, aSHShare, 2);
+		lRes = CheckDivideCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
 	}
 
@@ -194,7 +194,7 @@ TEST(SingleMatchDivideWithQuotation_B, RecentMatchPriceCheckAsset_3)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

@@ -7,11 +7,11 @@
 // 最近成交价1.000元， 买单，不验股
 // account = "A645078963" 股票账号
 // stock = ("600312") 平高电气
-//	SingleErrorWithQuotation_B.RecentMatchPrice_1
-TEST(SingleErrorWithQuotation_B, RecentMatchPrice_1)
+//	SingleErrorWithQuotation_B.RecentPrice_1
+TEST(SingleErrorWithQuotation_B, RecentPrice_1)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情
@@ -63,7 +63,7 @@ TEST(SingleErrorWithQuotation_B, RecentMatchPrice_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -75,13 +75,13 @@ TEST(SingleErrorWithQuotation_B, RecentMatchPrice_1)
 //// 最近成交价1.000元， 买单，不验股
 //// account = "A645078963" 股票账号
 //// stock = ("600312") 平高电气
-//// SingleErrorWithQuotation.RecentMatchPrice_4
-//TEST(SingleErrorWithQuotation, RecentMatchPrice_4)
+//// SingleErrorWithQuotation.RecentPrice_4
+//TEST(SingleErrorWithQuotation, RecentPrice_4)
 //{
 //	
 //	
 //切换模式
-//	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+//	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 //	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 //
 //	//构造行情
@@ -140,13 +140,13 @@ TEST(SingleErrorWithQuotation_B, RecentMatchPrice_1)
 //// 最近成交价1.000元， 卖单，不验股
 //// account = "A645078963" 股票账号
 //// stock = ("600312") 平高电气
-////	SingleErrorWithQuotation.RecentMatchPrice_5
-//TEST(SingleErrorWithQuotation, RecentMatchPrice_5)
+////	SingleErrorWithQuotation.RecentPrice_5
+//TEST(SingleErrorWithQuotation, RecentPrice_5)
 //{
 //	
 //	
 //切换模式
-//	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+//	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 //	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 //
 //	//构造行情

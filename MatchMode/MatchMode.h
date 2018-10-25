@@ -30,7 +30,7 @@ enum MatchMode
 
 	SellBuyPrice = 7,	// 买一卖一
 	
-	RecentMatchPrice = 8,	// 最近成交价
+	RecentPrice = 8,	// 最近成交价
 
 	//
 	//其他成交命令

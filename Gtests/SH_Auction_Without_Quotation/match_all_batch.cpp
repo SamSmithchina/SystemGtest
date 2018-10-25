@@ -129,7 +129,7 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetNO)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -139,7 +139,7 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetNO)
 	}
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }
 
 
@@ -311,7 +311,7 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetYES)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -319,6 +319,6 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetYES)
 		EzLog::Out("出现错误订单笔数 ：", (trivial::severity_level)2, lErrorOrderCounter);
 		EzLog::i("=================================================", "\n");
 	}
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 		EzLog::e("" , __FUNCTION__);
 }

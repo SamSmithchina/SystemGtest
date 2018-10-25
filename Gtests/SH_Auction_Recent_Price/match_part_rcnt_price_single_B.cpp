@@ -9,11 +9,11 @@
 // 最近成交价1.000元， 买单，不验股
 // account = "A645078963" 股票账号
 // stock = "600329" 中新药业
-//	SinglePartMatchWithQuotation_B.RecentMatchPrice_1
-TEST(SinglePartMatchWithQuotation_B, RecentMatchPrice_1)
+//	SingleMatchPartWithQuotation_B.RecentPrice_1
+TEST(SingleMatchPartWithQuotation_B, RecentPrice_1)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情
@@ -82,11 +82,11 @@ TEST(SinglePartMatchWithQuotation_B, RecentMatchPrice_1)
 	EXPECT_EQ(0, lRes);
 
 	//查询成交结果
-	lRes = CheckCjhb(con, aSHShare, 2);
+	lRes = CheckCjhb(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -97,11 +97,11 @@ TEST(SinglePartMatchWithQuotation_B, RecentMatchPrice_1)
 // 最近成交价1.000元， 买单，验股
 // account = "A645078963" 股票账号
 // stock = ("600331")  宏达股份
-//	SinglePartMatchWithQuotation_B.RecentMatchPriceCheckAsset_2
-TEST(SinglePartMatchWithQuotation_B, RecentMatchPriceCheckAsset_2)
+//	SingleMatchPartWithQuotation_B.RecentPriceCheckAsset_2
+TEST(SingleMatchPartWithQuotation_B, RecentPriceCheckAsset_2)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetYES));
 
 	//构造行情
@@ -181,7 +181,7 @@ TEST(SinglePartMatchWithQuotation_B, RecentMatchPriceCheckAsset_2)
 		con.Commit();
 
 		//查询成交结果
-		lRes = CheckCjhb(con, aSHShare, 2);
+		lRes = CheckCjhb(con, aSHShare);
 		EXPECT_EQ(0, lRes);
 
 		//检查撤单的确认
@@ -194,7 +194,7 @@ TEST(SinglePartMatchWithQuotation_B, RecentMatchPriceCheckAsset_2)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

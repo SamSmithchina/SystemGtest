@@ -255,7 +255,7 @@ TEST(MutilThreadGtestMatchAll, MatchAll)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, g_AShareNum);
@@ -264,5 +264,5 @@ TEST(MutilThreadGtestMatchAll, MatchAll)
 		EzLog::i("=================================================", "\n");
 		EXPECT_EQ(lErrorOrderCounter, 0);//如果有错误订单就输出错误订单数，
 	}
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }

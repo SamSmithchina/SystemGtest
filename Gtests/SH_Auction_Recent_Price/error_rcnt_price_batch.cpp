@@ -7,11 +7,11 @@
 //最近成交价1.000元 ，批量处理实盘下错误价格订单,  不验股
 // account = "A645078963" 股票账号
 // stock = ("600312") 平高电气
-//	 BatchGtestErrorWithQuotation.BatchError_RecentMatchPriceCheckAssetNO
-TEST(BatchGtestErrorWithQuotation, BatchError_RecentMatchPriceCheckAssetNO)
+//	 BatchGtestErrorWithQuotation.BatchError_RecentPriceCheckAssetNO
+TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetNO)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情,
@@ -105,7 +105,7 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentMatchPriceCheckAssetNO)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -116,17 +116,17 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentMatchPriceCheckAssetNO)
 
 	//关闭连接
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }
 
 //最近成交价1.000元 ，批量处理实盘下不合理价格订单, 验股时卖单数量超出股份持有数量，导致错单
 // account = "A645078963" 股票账号
 // stock = ("600333") 长春燃气
-//	 BatchGtestErrorWithQuotation.BatchError_RecentMatchPriceCheckAssetYES
-TEST(BatchGtestErrorWithQuotation, BatchError_RecentMatchPriceCheckAssetYES)
+//	 BatchGtestErrorWithQuotation.BatchError_RecentPriceCheckAssetYES
+TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetYES)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetYES));
 
 	//构造行情,
@@ -215,7 +215,7 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentMatchPriceCheckAssetYES)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -226,5 +226,5 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentMatchPriceCheckAssetYES)
 
 	//关闭连接
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }

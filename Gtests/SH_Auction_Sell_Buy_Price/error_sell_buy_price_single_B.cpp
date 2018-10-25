@@ -62,7 +62,7 @@ TEST(SingleErrorWithQuotation_B, SellBuyPrice_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

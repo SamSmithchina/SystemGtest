@@ -26,7 +26,7 @@ TEST(TransformMatchMode, Error)
 	WaitForSingleObject(pi.hProcess, INFINITE);
 	GetExitCodeProcess(pi.hProcess, &iDRes);
 	EXPECT_EQ(iDRes, 0);
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iDRes != 0)
 	{
 		EzLog::e("Transform to MatchAllWithoutQuotation ", "failed. \n");
@@ -82,7 +82,7 @@ TEST(TransformMatchMode, RepateTransform)
 	EzLog::Out("总循环耗时ms  ", (trivial::severity_level)2, (long)(tEnd - tBegin));
 	EzLog::i("\n", "\n");
 	EXPECT_EQ(0, iErrorCounter);
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iErrorCounter != 0)
 	{
 		EzLog::e("", __FUNCTION__);

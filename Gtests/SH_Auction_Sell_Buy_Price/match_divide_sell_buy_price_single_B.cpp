@@ -84,11 +84,11 @@ TEST(SingleMatchDivideWithQuotation_B, SellBuyPrice_1)
 	//查成交表，比较成交结果是否与预期一致；
 	//延时 ，等待第二笔成交
 	Sleep(g_iTimeOut * 50);
-	lRes = CheckCjhb(con, aSHShare, 2);
+	lRes = CheckDivideCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -187,7 +187,7 @@ TEST(SingleMatchDivideWithQuotation_B, SellBuyPriceCheckAsset_2)
 		//比较结果；
 		//查成交表，比较成交结果是否与预期一致；
 		Sleep(g_iTimeOut * 50);
-		lRes = CheckCjhb(con, aSHShare, 2);
+		lRes = CheckDivideCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
 	}
 
@@ -196,7 +196,7 @@ TEST(SingleMatchDivideWithQuotation_B, SellBuyPriceCheckAsset_2)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

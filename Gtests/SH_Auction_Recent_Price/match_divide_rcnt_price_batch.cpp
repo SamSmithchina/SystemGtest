@@ -7,11 +7,11 @@
 // 最近成交价1.000元 ，批量处理实盘下分笔成交订单,  验股
 // account = "A645078963" 股票账号
 // stock = ("600353") 旭光股份
-//	 BatchGtestMatchDivideWithQuotation.BatchMatchDivide_RecentMatchPriceCheckAssetYES
-TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckAssetYES)
+//	 BatchGtestMatchDivideWithQuotation.BatchMatchDivide_RecentPriceCheckAssetYES
+TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentPriceCheckAssetYES)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetYES));
 
 	//构造行情,
@@ -100,6 +100,15 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 			//插入
 			lRes = InsertOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+
+			//推送第二次行情；
+			aStockQuot.cjsl += 200000;
+			aStockQuot.cjje += 200000000;
+			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
+			aStockQuot.hqsj += ".500";					//毫秒
+			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
+			Sleep(g_iTimeOut * 50);
+
 		}
 		con.Commit();	// commit
 
@@ -126,13 +135,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 				lRes = CheckOrdwth2Match(con, aSHShare[j]);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			}
-			//推送第二次行情；
-			aStockQuot.cjsl += 200000;
-			aStockQuot.cjje += 200000000;
-			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
-			aStockQuot.hqsj += ".500";					//毫秒
-			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
+			
 		}
 
 		//成交
@@ -140,10 +143,10 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 		{
 			if (-1 != lAShareQty[j])
 			{
-				lRes =CheckCjhb(con, aSHShare[j], 2);
+				lRes = CheckDivideCjhb(con, aSHShare[j], 2);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			}
-		}		//比较
+		}
 
 	}//for (i = 0; i < 1; i++ )	//主循环
 
@@ -151,7 +154,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -162,18 +165,18 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 
 	//关闭连接
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }
 
 
 //最近成交价1.000元 ，批量处理实盘下分笔成交订单,  不验股
 // account = "A645078963" 股票账号
 // stock = ("600356") 恒丰纸业
-//	 BatchGtestMatchDivideWithQuotation.BatchMatchDivide_RecentMatchPriceCheckAssetNO
-TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckAssetNO)
+//	 BatchGtestMatchDivideWithQuotation.BatchMatchDivide_RecentPriceCheckAssetNO
+TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentPriceCheckAssetNO)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情,
@@ -258,6 +261,15 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 			//插入
 			lRes = InsertOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			
+			//推送第二次行情；
+			aStockQuot.cjsl += 200000;
+			aStockQuot.cjje += 200000000;
+			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
+			aStockQuot.hqsj += ".500";					//毫秒
+			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
+			Sleep(g_iTimeOut * 50);
+
 		}
 		con.Commit();	// commit
 
@@ -266,21 +278,14 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 		{
 			lRes = CheckOrdwth2Match(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
-			//推送第二次行情；
-			aStockQuot.cjsl += 200000;
-			aStockQuot.cjje += 200000000;
-			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
-			aStockQuot.hqsj += ".500";					//毫秒
-			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
 		}
 
 		//成交
 		for (j = 0; j < iAShareNum; j++)		//比较
 		{
-			lRes =CheckCjhb(con, aSHShare[j], 2);
+			lRes = CheckDivideCjhb(con, aSHShare[j], 2);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
-		}		//比较
+		}
 
 	}//for (i = 0; i < 1; i++ )	//主循环
 
@@ -288,7 +293,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -299,5 +304,5 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentMatchPriceCheckA
 
 	//关闭连接
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }

@@ -9,8 +9,8 @@
 // 买一价1.050元，卖一价1.045元， 买单，不验股
 // account = "A645078963" 股票账号
 // stock = "600340" 华夏幸福
-//	SinglePartMatchWithQuotation_B.SellBuyPrice_1
-TEST(SinglePartMatchWithQuotation_B, SellBuyPrice_1)
+//	SingleMatchPartWithQuotation_B.SellBuyPrice_1
+TEST(SingleMatchPartWithQuotation_B, SellBuyPrice_1)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SellBuyPrice));
@@ -86,7 +86,7 @@ TEST(SinglePartMatchWithQuotation_B, SellBuyPrice_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -97,8 +97,8 @@ TEST(SinglePartMatchWithQuotation_B, SellBuyPrice_1)
 // 买一价1.050元，卖一价1.045元， 买单，验股
 // account = "A645078963" 股票账号
 // stock = ("600345")  长江通信
-//	SinglePartMatchWithQuotation_B.SellBuyPriceCheckAsset_3
-TEST(SinglePartMatchWithQuotation_B, SellBuyPriceCheckAsset_3)
+//	SingleMatchPartWithQuotation_B.SellBuyPriceCheckAsset_3
+TEST(SingleMatchPartWithQuotation_B, SellBuyPriceCheckAsset_3)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SellBuyPrice));
@@ -194,7 +194,7 @@ TEST(SinglePartMatchWithQuotation_B, SellBuyPriceCheckAsset_3)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

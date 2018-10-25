@@ -148,7 +148,7 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetYES)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -160,7 +160,7 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetYES)
 	//关闭连接
 	con.Close();
 
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }
 
 
@@ -285,7 +285,7 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetNO)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -295,5 +295,5 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetNO)
 	}
 	//关闭连接
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }

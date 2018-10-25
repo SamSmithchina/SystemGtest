@@ -8,11 +8,11 @@
 // 最近成交价1.000元， 买单，不验股
 // account = "A645078963" 股票账号
 // stock = ("600311") 荣华实业
-// SingleNoMatchCancelWithQuotation_B.RecentMatchPrice_1
-TEST(SingleNoMatchCancelWithQuotation_B, RecentMatchPrice_1)
+// SingleNoMatchCancelWithQuotation_B.RecentPrice_1
+TEST(SingleNoMatchCancelWithQuotation_B, RecentPrice_1)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情
@@ -79,7 +79,7 @@ TEST(SingleNoMatchCancelWithQuotation_B, RecentMatchPrice_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -90,11 +90,11 @@ TEST(SingleNoMatchCancelWithQuotation_B, RecentMatchPrice_1)
 // 最近成交价1.000元， 买单，不验股
 // account = "A645078963" 股票账号
 // stock = ("600311") 荣华实业
-// SingleNoMatchCancelWithQuotation_B.RecentMatchPrice_2
-TEST(SingleNoMatchCancelWithQuotation_B, RecentMatchPrice_2)
+// SingleNoMatchCancelWithQuotation_B.RecentPrice_2
+TEST(SingleNoMatchCancelWithQuotation_B, RecentPrice_2)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情
@@ -154,7 +154,7 @@ TEST(SingleNoMatchCancelWithQuotation_B, RecentMatchPrice_2)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

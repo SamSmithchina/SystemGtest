@@ -88,6 +88,13 @@ int ReadMaxRecNumFromDB()
 		g_iExternRecNum = 0;
 	}
 	
+	std::string strTruncateTable = "TRUNCATE TABLE [Ashare_OIW].[dbo].[ashare_ordwth];";
+	con.Exec(strTruncateTable, lTemp);
+	strTruncateTable = "TRUNCATE TABLE [Ashare_OIW].[dbo].[ashare_ordwth2];";
+	con.Exec(strTruncateTable, lTemp);
+	strTruncateTable = "TRUNCATE TABLE [Ashare_OIW].[dbo].[ashare_cjhb];";
+	con.Exec(strTruncateTable, lTemp);
+
 	streamDB.close();
 	con.Close();
 	if (iRes != -1)

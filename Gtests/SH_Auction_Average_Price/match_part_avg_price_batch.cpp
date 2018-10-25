@@ -1,31 +1,31 @@
-ï»¿#include "AShareCheckOrder/AShareCheckOrder.h"
+#include "AShareCheckOrder/AShareCheckOrder.h"
 #include "AShareCheckOrder/QuotationBuild.h"
 #include "SystemGtestConfigs/configs.h"
 #include "gtest/gtest.h"
 #include "util/EzLog.h"
 
-//åŒºé—´æ®µå‡ä»·1.000å…ƒ ï¼Œæ‰¹é‡å¤„ç†å®ç›˜ä¸‹åˆ†ç¬”æˆäº¤è®¢å•,  éªŒè‚¡
-// account = "A645078963" è‚¡ç¥¨è´¦å·
-// stock = ("600349") å¯Œé€šæ˜­å’Œ
-//	 BatchGtestMatchDivideWithQuotation.BatchMatchDivide_AveragePriceCheckAssetYES
-TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAssetYES)
+//Çø¼ä¶Î¾ù¼Û1.000Ôª £¬ÅúÁ¿´¦ÀíÊµÅÌÏÂ²¿·Ö³É½»¶©µ¥,  Ñé¹É
+// account = "A645078963" ¹ÉÆ±ÕËºÅ
+// stock = ("600366") Äş²¨ÔÏÉı
+//	 BatchGtestMAtchPartWithQuotation.BatchMAtchPart_AveragePriceCheckAssetYES
+TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetYES)
 {
-	//åˆ‡æ¢åˆ†ç¬”æˆäº¤æ¨¡å¼ï¼Œå¼€å¯è¡Œæƒ…
+	//ÇĞ»»²¿·Ö³É½»Ä£Ê½£¬¿ªÆôĞĞÇé
 	ASSERT_EQ(0, TransformMatchMode(AveragePrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetYES));
 
-	//æ„é€ è¡Œæƒ…,
+	//¹¹ÔìĞĞÇé,
 	AStockQuot aStockQuot;
 	CreateQuotationExample(aStockQuot);
-	aStockQuot.zqdm = "600349";
-	aStockQuot.zqmc = "å¯Œé€šæ˜­å’Œ";
+	aStockQuot.zqdm = "600366";
+	aStockQuot.zqmc = "Äş²¨ÔÏÉı";
 
-	//æ¨é€è¡Œæƒ…
+	//ÍÆËÍĞĞÇé
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
 
 	int iRes = 0;
 	long lRes = 0;
-	long lErrorOrderCounter = 0;		//é”™è¯¯è®¢å•è®¡æ•°å™¨
+	long lErrorOrderCounter = 0;		//´íÎó¶©µ¥¼ÆÊıÆ÷
 	int i = 0;
 	int j = 0;
 	int k = 0;
@@ -37,25 +37,25 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 	long lTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
-	int iAShareNum = 10;			//aSHShareæ•°ç»„çš„æˆå‘˜æ•°é‡
-	long lAShareQty[10] = { 0 };	//-1 è¡¨ç¤ºå–å•æ•°é‡ä¸åˆç† ï¼Œ ä¸ä¸º - 1 è¡¨ç¤º ä¸éªŒè‚¡ï¼Œæˆ–è€…ä¹°ï¼Œæˆ–è€…å–çš„æ•°é‡åˆç†
+	int iAShareNum = 10;			//aSHShareÊı×éµÄ³ÉÔ±ÊıÁ¿
+	long lAShareQty[10] = { 0 };	//-1 ±íÊ¾Âôµ¥ÊıÁ¿²»ºÏÀí £¬ ²»Îª - 1 ±íÊ¾ ²»Ñé¹É£¬»òÕßÂò£¬»òÕßÂôµÄÊıÁ¿ºÏÀí
 	int iRound = 1;
 	StockAsset aSHStockAsset;
 	aSHStockAsset.account_id = "A645078963";
 	aSHStockAsset.Init("A645078963", aStockQuot.zqdm);
 
-	//å»ºç«‹æ•°æ®åº“è¿æ¥ ,0 right , -1 wrong
+	//½¨Á¢Êı¾İ¿âÁ¬½Ó ,0 right , -1 wrong
 	iRes = con.Connect(g_strShOdbcConn);
 	ASSERT_EQ(0, iRes);
 	iRes = con.SetAutoCommit(0);
 	ASSERT_EQ(0, iRes);
 
-	//ä¸»å¾ªç¯ä½“åŒ…å«æ’å…¥ã€ç¡®è®¤ã€æˆäº¤
+	//Ö÷Ñ­»·Ìå°üº¬²åÈë¡¢È·ÈÏ¡¢³É½»
 	for (i = 0; i < iRound; i++)
 	{
 		for (j = 0; j < iAShareNum; j++)
 		{
-			//åˆå§‹åŒ–è‚¡ç¥¨è®¢å•ï¼›	//è®¾è®¡è®¢å•é›†å’Œç»“æœé›†
+			//³õÊ¼»¯¹ÉÆ±¶©µ¥£»	//Éè¼Æ¶©µ¥¼¯ºÍ½á¹û¼¯
 			aSHShare[j].account = aSHStockAsset.account_id;
 			aSHShare[j].stock = aStockQuot.zqdm;
 			g_iExternRecNum++;
@@ -68,23 +68,23 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 			aSHShare[j].cjjg = CalcAvePrice(aStockQuot, ui64Cjjg);		//cjjg 
 			if (0 == g_iExternRecNum % 2)
 			{
-				aSHShare[j].bs = "B";		//ä¹°
-				ui64Price = ui64Cjjg + rand() % (uint64_t)(ui64Cjjg * 0.1);	//é«˜äºç­‰äºå‡ä»·ï¼Œä¸é«˜äºæ¶¨å¹…
+				aSHShare[j].bs = "B";		//Âò
+				ui64Price = ui64Cjjg + rand() % (uint64_t)(ui64Cjjg * 0.1);	//¸ßÓÚµÈÓÚ¾ù¼Û£¬²»¸ßÓÚÕÇ·ù
 			}
 			else
 			{
-				aSHShare[j].bs = "S";		//å–
-				ui64Price = ui64Cjjg - rand() % (uint64_t)(ui64Cjjg *0.1);		//ä½äºç­‰äºå‡ä»·,ä¸ä½äºè·Œå¹…
+				aSHShare[j].bs = "S";		//Âô
+				ui64Price = ui64Cjjg - rand() % (uint64_t)(ui64Cjjg *0.1);		//µÍÓÚµÈÓÚ¾ù¼Û,²»µÍÓÚµø·ù
 			}
 			Tgw_StringUtil::iLiToStr(ui64Price, aSHShare[j].price, 3);
 
-			//ç¡®è®¤å­—æ®µï¼›
-
-			//æˆäº¤å­—æ®µ			
+			//È·ÈÏ×Ö¶Î£»
+			aSHShare[j].qty2 = "100000";
+			//³É½»×Ö¶Î			
 			aSHShare[j].gddm = aSHShare[j].account;
 			aSHShare[j].zqdm = aSHShare[j].stock;
-			aSHShare[j].cjsl = aSHShare[j].qty;
-			lTemp = atoi(aSHShare[j].qty.c_str());
+			aSHShare[j].cjsl = "100000";
+			lTemp = atoi(aSHShare[j].cjsl.c_str());
 			ui64Cjje = lTemp * ui64Cjjg;
 			if (ui64Cjje > 999999999990)
 			{
@@ -92,30 +92,37 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 			}
 			else
 			{
-				Tgw_StringUtil::iLiToStr(ui64Cjje, aSHShare[j].cjje, 2); //æˆäº¤é‡‘é¢å¸¦ä¸¤ä½å°æ•°ï¼›
+				Tgw_StringUtil::iLiToStr(ui64Cjje, aSHShare[j].cjje, 2); //³É½»½ğ¶î´øÁ½Î»Ğ¡Êı£»
 			}
 
-			//æ’å…¥
+			//²åÈë
 			lRes = InsertOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			//con.Commit();	// commit
 
-			//æ¨é€ç¬¬äºŒæ¬¡è¡Œæƒ…ï¼›
-			aStockQuot.cjsl += 200000;
-			aStockQuot.cjje += 200000000;
+			//³·µ¥
+			Sleep(g_iTimeOut * 10);
+			lRes = InsertCancelOrder(con, aSHShare[j]);
+			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			con.Commit();	// commit
+
+			//ÍÆËÍµÚ¶ş´ÎĞĞÇé£»
+			aStockQuot.cjsl += 100000;
+			aStockQuot.cjje += 100000000;
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
-			aStockQuot.hqsj += ".500";					//æ¯«ç§’
+			aStockQuot.hqsj += ".500";					//ºÁÃë
 			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
 			Sleep(g_iTimeOut * 50);
-		}
-		con.Commit();	// commit
 
-		//éªŒè‚¡
+		}
+
+		//Ñé¹É
 		for (j = 0; j < iAShareNum; j++)
 		{
-			lAShareQty[j] = 0;		//å…ˆç½®ä¸º 0
+			lAShareQty[j] = 0;		//ÏÈÖÃÎª 0
 			lTemp = atol(aSHStockAsset.stock_etf_redemption_balance.c_str());
 			lTemp += atol(aSHStockAsset.stock_available.c_str());
-			lAShareQty[j] = atol(aSHShare[j].qty.c_str());
+			lAShareQty[j] = atol(aSHShare[j].qty2.c_str());
 			if ("S" == aSHShare[j].bs && lAShareQty[j] > lTemp)
 			{
 				lAShareQty[j] = -1;
@@ -124,28 +131,30 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 			}
 		}
 
-		//ç¡®è®¤
+		//È·ÈÏ
 		for (j = 0; j < iAShareNum; j++)
 		{
 			if (-1 != lAShareQty[j])
 			{
 				lRes = CheckOrdwth2Match(con, aSHShare[j]);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				lRes = CheckOrdwth2Cancel(con, aSHShare[j]);
+				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			}
-			
+
 		}
 
-		//æˆäº¤
+		//³É½»
 		for (j = 0; j < iAShareNum; j++)		
 		{
 			if (-1 != lAShareQty[j])
 			{
-				lRes =CheckDivideCjhb(con, aSHShare[j], 2);
+				lRes = CheckCjhb(con, aSHShare[j]);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			}
 		}		
 
-	}//for (i = 0; i < 1; i++ )	//ä¸»å¾ªç¯
+	}//for (i = 0; i < 1; i++ )	//Ö÷Ñ­»·
 
 	if (0 < lErrorOrderCounter)
 	{
@@ -153,41 +162,41 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 		EzLog::e("", __FUNCTION__);
 		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
-		EzLog::Out("å…±æ‰§è¡Œç»„æ•°  ï¼š", (trivial::severity_level)2, iRound);
-		EzLog::Out("æ¯ç»„        ï¼š", (trivial::severity_level)2, iAShareNum);
-		EzLog::Out("å…±è®¡ iRound * iAShareNum ï¼š ", (trivial::severity_level)2, iRound*iAShareNum);
-		EzLog::Out("å‡ºç°é”™è¯¯è®¢å•ç¬”æ•° ï¼š", (trivial::severity_level)2, lErrorOrderCounter);
+		EzLog::Out("¹²Ö´ĞĞ×éÊı  £º", (trivial::severity_level)2, iRound);
+		EzLog::Out("Ã¿×é        £º", (trivial::severity_level)2, iAShareNum);
+		EzLog::Out("¹²¼Æ iRound * iAShareNum £º ", (trivial::severity_level)2, iRound*iAShareNum);
+		EzLog::Out("³öÏÖ´íÎó¶©µ¥±ÊÊı £º", (trivial::severity_level)2, lErrorOrderCounter);
 		EzLog::i("=================================================", "\n");
 	}
 
-	//å…³é—­è¿æ¥
+	//¹Ø±ÕÁ¬½Ó
 	con.Close();
 	EzLog::i(__FUNCTION__, "\n\n");
 }
 
 
-//åŒºé—´æ®µå‡ä»·1.000å…ƒ ï¼Œæ‰¹é‡å¤„ç†å®ç›˜ä¸‹åˆ†ç¬”æˆäº¤è®¢å•,  ä¸éªŒè‚¡
-// account = "A645078963" è‚¡ç¥¨è´¦å·
-// stock = ("600350") å±±ä¸œé«˜é€Ÿ
-//	 BatchGtestMatchDivideWithQuotation.BatchMatchDivide_AveragePriceCheckAssetNO
-TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAssetNO)
+//Çø¼ä¶Î¾ù¼Û1.000Ôª £¬ÅúÁ¿´¦ÀíÊµÅÌÏÂ²¿·Ö³É½»¶©µ¥,  ²»Ñé¹É
+// account = "A645078963" ¹ÉÆ±ÕËºÅ
+// stock = ("600367") ºìĞÇ·¢Õ¹
+//	 BatchGtestMAtchPartWithQuotation.BatchMAtchPart_AveragePriceCheckAssetNO
+TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetNO)
 {
-	//åˆ‡æ¢åˆ†ç¬”æˆäº¤æ¨¡å¼ï¼Œå¼€å¯è¡Œæƒ…
+	//ÇĞ»»²¿·Ö³É½»Ä£Ê½£¬¿ªÆôĞĞÇé
 	ASSERT_EQ(0, TransformMatchMode(AveragePrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
-	//æ„é€ è¡Œæƒ…,
+	//¹¹ÔìĞĞÇé,
 	AStockQuot aStockQuot;
 	CreateQuotationExample(aStockQuot);
-	aStockQuot.zqdm = "600350";
-	aStockQuot.zqmc = "å±±ä¸œé«˜é€Ÿ";
+	aStockQuot.zqdm = "600367";
+	aStockQuot.zqmc = "ºìĞÇ·¢Õ¹";
 
-	//æ¨é€è¡Œæƒ…
+	//ÍÆËÍĞĞÇé
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
 
 	int iRes = 0;
 	long lRes = 0;
-	long lErrorOrderCounter = 0;		//é”™è¯¯è®¢å•è®¡æ•°å™¨
+	long lErrorOrderCounter = 0;		//´íÎó¶©µ¥¼ÆÊıÆ÷
 	int i = 0;
 	int j = 0;
 	int k = 0;
@@ -199,23 +208,22 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 	long lTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
-	int iAShareNum = 10;			//aSHShareæ•°ç»„çš„æˆå‘˜æ•°é‡
-	long lAShareQty[10] = { 0 };	//-1 è¡¨ç¤ºå–å•æ•°é‡ä¸åˆç† ï¼Œ ä¸ä¸º - 1 è¡¨ç¤º ä¸éªŒè‚¡ï¼Œæˆ–è€…ä¹°ï¼Œæˆ–è€…å–çš„æ•°é‡åˆç†
+	int iAShareNum = 10;			//aSHShareÊı×éµÄ³ÉÔ±ÊıÁ¿
 	int iRound = 1;
 
-	//å»ºç«‹æ•°æ®åº“è¿æ¥ ,0 right , -1 wrong
+	//½¨Á¢Êı¾İ¿âÁ¬½Ó ,0 right , -1 wrong
 	iRes = con.Connect(g_strShOdbcConn);
 	ASSERT_EQ(0, iRes);
 	iRes = con.SetAutoCommit(0);
 	ASSERT_EQ(0, iRes);
 
-	//ä¸»å¾ªç¯ä½“åŒ…å«æ’å…¥ã€ç¡®è®¤ã€æˆäº¤
+	//Ö÷Ñ­»·Ìå°üº¬²åÈë¡¢È·ÈÏ¡¢³É½»
 	for (i = 0; i < iRound; i++)
 	{
 		for (j = 0; j < iAShareNum; j++)
 		{
-			//åˆå§‹åŒ–è‚¡ç¥¨è®¢å•ï¼›	//è®¾è®¡è®¢å•é›†å’Œç»“æœé›†
-			//aSHShare[j].account = "A645078963";
+			//³õÊ¼»¯¹ÉÆ±¶©µ¥£»	//Éè¼Æ¶©µ¥¼¯ºÍ½á¹û¼¯
+			aSHShare[j].account = "A645078963";
 			aSHShare[j].stock = aStockQuot.zqdm;
 			g_iExternRecNum++;
 			aSHShare[j].reff = "J000000000";
@@ -227,23 +235,23 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 			aSHShare[j].cjjg = CalcAvePrice(aStockQuot, ui64Cjjg);		//cjjg 
 			if (0 == g_iExternRecNum % 2)
 			{
-				aSHShare[j].bs = "B";		//ä¹°
-				ui64Price = ui64Cjjg + rand() % (uint64_t)(ui64Cjjg * 0.1);	//é«˜äºç­‰äºå‡ä»·ï¼Œä¸é«˜äºæ¶¨å¹…
+				aSHShare[j].bs = "B";		//Âò
+				ui64Price = ui64Cjjg + rand() % (uint64_t)(ui64Cjjg * 0.1);	//¸ßÓÚµÈÓÚ¾ù¼Û£¬²»¸ßÓÚÕÇ·ù
 			}
 			else
 			{
-				aSHShare[j].bs = "S";		//å–
-				ui64Price = ui64Cjjg - rand() % (uint64_t)(ui64Cjjg *0.1);		//ä½äºç­‰äºå‡ä»·,ä¸ä½äºè·Œå¹…
+				aSHShare[j].bs = "S";		//Âô
+				ui64Price = ui64Cjjg - rand() % (uint64_t)(ui64Cjjg *0.1);		//µÍÓÚµÈÓÚ¾ù¼Û,²»µÍÓÚµø·ù
 			}
 			Tgw_StringUtil::iLiToStr(ui64Price, aSHShare[j].price, 3);
 
-			//ç¡®è®¤å­—æ®µï¼›
-
-			//æˆäº¤å­—æ®µ			
+			//È·ÈÏ×Ö¶Î£»
+			aSHShare[j].qty2 = "100000";
+			//³É½»×Ö¶Î			
 			aSHShare[j].gddm = aSHShare[j].account;
 			aSHShare[j].zqdm = aSHShare[j].stock;
-			aSHShare[j].cjsl = aSHShare[j].qty;
-			lTemp = atoi(aSHShare[j].qty.c_str());
+			aSHShare[j].cjsl = "100000";
+			lTemp = atoi(aSHShare[j].cjsl.c_str());
 			ui64Cjje = lTemp * ui64Cjjg;
 			if (ui64Cjje > 999999999990)
 			{
@@ -251,39 +259,47 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 			}
 			else
 			{
-				Tgw_StringUtil::iLiToStr(ui64Cjje, aSHShare[j].cjje, 2); //æˆäº¤é‡‘é¢å¸¦ä¸¤ä½å°æ•°ï¼›
+				Tgw_StringUtil::iLiToStr(ui64Cjje, aSHShare[j].cjje, 2); //³É½»½ğ¶î´øÁ½Î»Ğ¡Êı£»
 			}
 
-			//æ’å…¥
+			//²åÈë
 			lRes = InsertOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			//con.Commit();	// commit
 
-			//æ¨é€ç¬¬äºŒæ¬¡è¡Œæƒ…ï¼›
-			aStockQuot.cjsl += 200000;
-			aStockQuot.cjje += 200000000;
+			//³·µ¥
+			Sleep(g_iTimeOut * 10);
+			lRes = InsertCancelOrder(con, aSHShare[j]);
+			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			con.Commit();	// commit
+
+			//ÍÆËÍµÚ¶ş´ÎĞĞÇé£»
+			aStockQuot.cjsl += 100000;
+			aStockQuot.cjje += 100000000;
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
-			aStockQuot.hqsj += ".500";					//æ¯«ç§’
+			aStockQuot.hqsj += ".500";					//ºÁÃë
 			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
 			Sleep(g_iTimeOut * 50);
 
 		}
-		con.Commit();	// commit
 
-		//ç¡®è®¤
+		//È·ÈÏ
 		for (j = 0; j < iAShareNum; j++)
 		{
 			lRes = CheckOrdwth2Match(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+			lRes = CheckOrdwth2Cancel(con, aSHShare[j]);
+			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}
 
-		//æˆäº¤
+		//³É½»
 		for (j = 0; j < iAShareNum; j++)		
 		{
-			lRes =CheckDivideCjhb(con, aSHShare[j], 2);
+			lRes = CheckCjhb(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}		
 
-	}//for (i = 0; i < 1; i++ )	//ä¸»å¾ªç¯
+	}//for (i = 0; i < 1; i++ )	//Ö÷Ñ­»·
 
 	if (0 < lErrorOrderCounter)
 	{
@@ -291,14 +307,14 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 		EzLog::e("", __FUNCTION__);
 		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
-		EzLog::Out("å…±æ‰§è¡Œç»„æ•°  ï¼š", (trivial::severity_level)2, iRound);
-		EzLog::Out("æ¯ç»„        ï¼š", (trivial::severity_level)2, iAShareNum);
-		EzLog::Out("å…±è®¡ iRound * iAShareNum ï¼š ", (trivial::severity_level)2, iRound*iAShareNum);
-		EzLog::Out("å‡ºç°é”™è¯¯è®¢å•ç¬”æ•° ï¼š", (trivial::severity_level)2, lErrorOrderCounter);
+		EzLog::Out("¹²Ö´ĞĞ×éÊı  £º", (trivial::severity_level)2, iRound);
+		EzLog::Out("Ã¿×é        £º", (trivial::severity_level)2, iAShareNum);
+		EzLog::Out("¹²¼Æ iRound * iAShareNum £º ", (trivial::severity_level)2, iRound*iAShareNum);
+		EzLog::Out("³öÏÖ´íÎó¶©µ¥±ÊÊı £º", (trivial::severity_level)2, lErrorOrderCounter);
 		EzLog::i("=================================================", "\n");
 	}
 
-	//å…³é—­è¿æ¥
+	//¹Ø±ÕÁ¬½Ó
 	con.Close();
 	EzLog::i(__FUNCTION__, "\n\n");
 }

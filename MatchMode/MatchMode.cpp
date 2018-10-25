@@ -65,7 +65,7 @@ int TransformMatchMode(MatchMode simulateMatchMode)
 		break;
 
 		// 8 --最近成交价  
-	case RecentMatchPrice:
+	case RecentPrice:
 		g_iQuotationEnable = 1;
 		strCMD = ("simutgw_win64\\simutgw_cli.exe -h 127.0.0.1 -p 50000 -f simutgw_win64\\data\\cli_cmd\\cmd_matchmode_quotation_recentprice.txt");
 		break;

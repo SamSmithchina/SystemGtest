@@ -8,8 +8,8 @@
 // 区间段均价1.000元， 买单，不验股
 // account = "A645078963" 股票账号
 // stock = ("600310") 桂东电力
-//	SinglePartMatchWithQuotation_B.AveragePrice_1
-TEST(SinglePartMatchWithQuotation_B, AveragePrice_1)
+//	SingleMatchPartWithQuotation_B.AveragePrice_1
+TEST(SingleMatchPartWithQuotation_B, AveragePrice_1)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(AveragePrice));
@@ -84,7 +84,7 @@ TEST(SinglePartMatchWithQuotation_B, AveragePrice_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -96,8 +96,8 @@ TEST(SinglePartMatchWithQuotation_B, AveragePrice_1)
 // 区间段均价1.000元， 买单，验股
 // account = "A645078963" 股票账号
 // stock = ("600321") 国栋建设
-//	SinglePartMatchWithQuotation_B.AveragePriceCheckAsset_2
-TEST(SinglePartMatchWithQuotation_B, AveragePriceCheckAsset_2)
+//	SingleMatchPartWithQuotation_B.AveragePriceCheckAsset_2
+TEST(SingleMatchPartWithQuotation_B, AveragePriceCheckAsset_2)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(AveragePrice));
@@ -192,7 +192,7 @@ TEST(SinglePartMatchWithQuotation_B, AveragePriceCheckAsset_2)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

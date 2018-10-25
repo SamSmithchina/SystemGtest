@@ -60,11 +60,11 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivide_1)
 
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
-	lRes = CheckCjhb(con, aSHShare, 2);
+	lRes = CheckDivideCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -119,11 +119,11 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivide_2)
 
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
-	lRes = CheckCjhb(con, aSHShare, 2);
+	lRes = CheckDivideCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -180,11 +180,11 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivide_3)
 
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
-	lRes = CheckCjhb(con, aSHShare, 2);
+	lRes = CheckDivideCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -241,11 +241,11 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivide_4)
 
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
-	lRes = CheckCjhb(con, aSHShare, 2);
+	lRes = CheckDivideCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -318,7 +318,7 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivideCheckAsset_5)
 
 		//比较结果；
 		//查成交表，比较成交结果是否与预期一致；
-		lRes = CheckCjhb(con, aSHShare, 2);
+		lRes = CheckDivideCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
 	}
 
@@ -327,7 +327,7 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivideCheckAsset_5)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -400,7 +400,7 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivideCheckAsset_6)
 
 		//比较结果；
 		//查成交表，比较成交结果是否与预期一致；
-		lRes = CheckCjhb(con, aSHShare, 2);
+		lRes = CheckDivideCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
 	}
 
@@ -409,7 +409,7 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivideCheckAsset_6)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

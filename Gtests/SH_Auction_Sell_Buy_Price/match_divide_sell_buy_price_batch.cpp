@@ -156,14 +156,14 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 		}
 
 		//成交
-		for (j = 0; j < iAShareNum; j++)		//比较
+		for (j = 0; j < iAShareNum; j++)		
 		{
 			if (-1 != lAShareQty[j])
 			{
-				lRes =CheckCjhb(con, aSHShare[j], 2);
+				lRes =CheckDivideCjhb(con, aSHShare[j], 2);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			}
-		}		//比较
+		}		
 
 	}//for (i = 0; i < 1; i++ )	//主循环
 
@@ -171,7 +171,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -182,7 +182,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 
 	//关闭连接
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }
 
 
@@ -316,11 +316,11 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 		}
 
 		//成交
-		for (j = 0; j < iAShareNum; j++)		//比较
+		for (j = 0; j < iAShareNum; j++)		
 		{
-			lRes =CheckCjhb(con, aSHShare[j], 2);
+			lRes =CheckDivideCjhb(con, aSHShare[j], 2);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
-		}		//比较
+		}		
 
 	}//for (i = 0; i < 1; i++ )	//主循环
 
@@ -328,7 +328,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -338,5 +338,5 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 	}
 	//关闭连接
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }

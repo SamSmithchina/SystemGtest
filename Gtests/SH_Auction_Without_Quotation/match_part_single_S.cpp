@@ -15,8 +15,8 @@
 
 
 //单个测试样例；
-//	SinglePartMatchWithoutQuotation_S.PartMatch_1
-TEST(SinglePartMatchWithoutQuotation_S, PartMatch_1)
+//	SingleMatchPartWithoutQuotation_S.MatchPart_1
+TEST(SingleMatchPartWithoutQuotation_S, MatchPart_1)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SimulMatchPart));
@@ -95,7 +95,7 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -103,8 +103,8 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_1)
 }
 
 //单个测试样例；
-//	SinglePartMatchWithoutQuotation_S.PartMatch_2
-TEST(SinglePartMatchWithoutQuotation_S, PartMatch_2)
+//	SingleMatchPartWithoutQuotation_S.MatchPart_2
+TEST(SingleMatchPartWithoutQuotation_S, MatchPart_2)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SimulMatchPart));
@@ -184,7 +184,7 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_2)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -192,8 +192,8 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_2)
 }
 
 //单个测试样例；
-//	SinglePartMatchWithoutQuotation_S.PartMatch_3
-TEST(SinglePartMatchWithoutQuotation_S, PartMatch_3)
+//	SingleMatchPartWithoutQuotation_S.MatchPart_3
+TEST(SingleMatchPartWithoutQuotation_S, MatchPart_3)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SimulMatchPart));
@@ -273,7 +273,7 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_3)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -281,8 +281,8 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_3)
 }
 
 //单个测试样例；
-//	SinglePartMatchWithoutQuotation_S.PartMatch_4
-TEST(SinglePartMatchWithoutQuotation_S, PartMatch_4)
+//	SingleMatchPartWithoutQuotation_S.MatchPart_4
+TEST(SingleMatchPartWithoutQuotation_S, MatchPart_4)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SimulMatchPart));
@@ -362,7 +362,7 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_4)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -371,8 +371,8 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_4)
 
 
 //单个测试样例；
-//	SinglePartMatchWithoutQuotation_S.PartMatch_5
-TEST(SinglePartMatchWithoutQuotation_S, PartMatch_5)
+//	SingleMatchPartWithoutQuotation_S.MatchPart_5
+TEST(SingleMatchPartWithoutQuotation_S, MatchPart_5)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SimulMatchPart));
@@ -471,7 +471,7 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_5)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -480,8 +480,8 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_5)
 
 
 //单个测试样例；
-//	SinglePartMatchWithoutQuotation_S.PartMatch_6
-TEST(SinglePartMatchWithoutQuotation_S, PartMatch_6)
+//	SingleMatchPartWithoutQuotation_S.MatchPart_6
+TEST(SingleMatchPartWithoutQuotation_S, MatchPart_6)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SimulMatchPart));
@@ -581,7 +581,7 @@ TEST(SinglePartMatchWithoutQuotation_S, PartMatch_6)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

@@ -123,7 +123,7 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetNO)
 		//成交
 		for (j = 0; j < iAShareNum; j++)		//比较
 		{
-			lRes =CheckCjhb(con, aSHShare[j], 2);
+			lRes =CheckDivideCjhb(con, aSHShare[j], 2);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}		//比较
 
@@ -133,7 +133,7 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetNO)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -143,7 +143,7 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetNO)
 	}
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }
 
 
@@ -291,7 +291,7 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetYES)
 		{
 			if (-1 != lAShareQty[j])
 			{
-				lRes =CheckCjhb(con, aSHShare[j], 2);
+				lRes =CheckDivideCjhb(con, aSHShare[j], 2);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 				if ("S" == aSHShare[j].bs)
 				{
@@ -316,7 +316,7 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetYES)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -324,5 +324,5 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetYES)
 		EzLog::Out("出现错误订单笔数 ：", (trivial::severity_level)2, lErrorOrderCounter);
 		EzLog::i("=================================================", "\n");
 	}
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }

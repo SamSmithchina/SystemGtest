@@ -89,15 +89,15 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 		{
 			if (k == g_iQueryTimes - 1)//达到最大查询次数
 			{
-				EzLog::e("达到最大查找次数，人未查到 ：", strQueryOrdwth2);
+				EzLog::e("达到最大查找次数，仍未查到 ：", strQueryOrdwth2);
 				return -1;
 			}
 			Sleep(g_iTimeOut);
 			continue;
 		}
-		else if (iRes > 1) //成交订单的确认回报有多条
+		else if (iRes > 1) //订单的确认回报有多条
 		{
-			EzLog::e(__FUNCTION__, strQueryRecordNum);
+			EzLog::e("订单的确认回报有多条! ", strQueryRecordNum);
 			return -1;
 		}
 		else if (iRes == 1) //一条确认回报
@@ -105,7 +105,7 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 			lQueryResult = con.Query(strQueryOrdwth2, &streamDB);
 			if (0 != lQueryResult)	//查询未完成
 			{
-				EzLog::e(__FUNCTION__, "Query sql server failed !");
+				EzLog::e(__FUNCTION__, " Query sql server failed !");
 				Sleep(g_iTimeOut);
 				continue;
 			}
@@ -121,8 +121,8 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 				strTemp = mapRowData["acc"].strValue;
 				if (aSHShare.account.compare(strTemp))
 				{
-					EzLog::e("Ordwth acc:", strTemp);
-					EzLog::e("预期 acc:", aSHShare.account);
+					EzLog::e("Ordwth acc: ", strTemp);
+					EzLog::e("预期   acc: ", aSHShare.account);
 					EzLog::e("Check Ordwth2_Match ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -130,8 +130,8 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 				strTemp = mapRowData["stock"].strValue;
 				if (strTemp != aSHShare.stock)
 				{
-					EzLog::e("Ordwth stock:", strTemp);
-					EzLog::e("预期 stock:", aSHShare.stock);
+					EzLog::e("Ordwth stock: ", strTemp);
+					EzLog::e("预期   stock: ", aSHShare.stock);
 					EzLog::e("Check Ordwth2_Match ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -139,8 +139,8 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 				strTemp = mapRowData["bs"].strValue;
 				if (strTemp != aSHShare.bs)
 				{
-					EzLog::e("Ordwth bs:", strTemp);
-					EzLog::e("预期 bs:", aSHShare.bs);
+					EzLog::e("Ordwth bs: ", strTemp);
+					EzLog::e("预期   bs: ", aSHShare.bs);
 					EzLog::e("Check Ordwth2_Match ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -153,8 +153,8 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 				}
 				if (strTemp != aSHShare.price)
 				{
-					EzLog::e("Ordwth price:", strTemp);
-					EzLog::e("预期 price:", aSHShare.price);
+					EzLog::e("Ordwth price: ", strTemp);
+					EzLog::e("预期   price: ", aSHShare.price);
 					EzLog::e("Check Ordwth2_Match ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -168,7 +168,7 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.qty)
 				{
 					EzLog::e("Ordwth qty:", strTemp);
-					EzLog::e("预期 qty:", aSHShare.qty);
+					EzLog::e("预期   qty:", aSHShare.qty);
 					EzLog::e("Check Ordwth2_Match ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -212,7 +212,7 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 		{
 			if (k == g_iQueryTimes - 1)//达到最大查询次数
 			{
-				EzLog::e("达到最大查找次数，人未查到 ：", strQueryOrdwth2);
+				EzLog::e("达到最大查找次数，仍未查到 ：", strQueryOrdwth2);
 				return -1;
 			}
 			Sleep(g_iTimeOut);
@@ -220,7 +220,7 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 		}
 		else if (iRes > 1) //订单的确认回报有多条
 		{
-			EzLog::e(__FUNCTION__, strQueryRecordNum);
+			EzLog::e("订单的确认回报有多条! ", strQueryRecordNum);
 			return -1;
 		}
 		else if (iRes == 1) //一条确认回报
@@ -228,7 +228,7 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 			lQueryResult = con.Query(strQueryOrdwth2, &streamDB);
 			if (0 != lQueryResult)	//查询异常
 			{
-				EzLog::e(__FUNCTION__, "Query sql server failed !");
+				EzLog::e(__FUNCTION__, " Query sql server failed !");
 				Sleep(g_iTimeOut);
 				continue;
 			}
@@ -245,8 +245,8 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 				strTemp = mapRowData["acc"].strValue;
 				if (strTemp != aSHShare.account)
 				{
-					EzLog::e("Ordwth acc:", strTemp);
-					EzLog::e("预期 acc:", aSHShare.account);
+					EzLog::e("Ordwth acc: ", strTemp);
+					EzLog::e("预期   acc: ", aSHShare.account);
 					EzLog::e("Check Ordwth2_Cancel ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -255,7 +255,7 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.stock)
 				{
 					EzLog::e("Ordwth stock:", strTemp);
-					EzLog::e("预期 stock:", aSHShare.stock);
+					EzLog::e("预期   stock:", aSHShare.stock);
 					EzLog::e("Check Ordwth2_Cancel ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -264,7 +264,7 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.bs)
 				{
 					EzLog::e("Ordwth bs:", strTemp);
-					EzLog::e("预期 bs:", aSHShare.bs);
+					EzLog::e("预期   bs:", aSHShare.bs);
 					EzLog::e("Check Ordwth2_Cancel ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -278,7 +278,7 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.price)
 				{
 					EzLog::e("Ordwth price:", strTemp);
-					EzLog::e("预期 price:", aSHShare.price);
+					EzLog::e("预期   price:", aSHShare.price);
 					EzLog::e("Check Ordwth2_Cancel ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -292,7 +292,7 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.qty)
 				{
 					EzLog::e("Ordwth qty:", strTemp);
-					EzLog::e("预期 qty:", aSHShare.qty);
+					EzLog::e("预期   qty:", aSHShare.qty);
 					EzLog::e("Check Ordwth2_Cancel ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -305,8 +305,8 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 				}
 				if (strTemp != aSHShare.qty2)
 				{
-					EzLog::e("\t Ordwth qty2:", strTemp);
-					EzLog::e("\t预期 qty2:", aSHShare.qty2);						//
+					EzLog::e("Ordwth qty2:", strTemp);
+					EzLog::e("预期   qty2:", aSHShare.qty2);						//
 					EzLog::e("Check Ordwth2_Cancel ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -348,7 +348,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 		{
 			if (k == g_iQueryTimes - 1)//达到最大查询次数
 			{
-				EzLog::e("达到最大查找次数，人未查到 ：", strQueryOrdwth2);
+				EzLog::e("达到最大查找次数，仍未查到 ：", strQueryOrdwth2);
 				return -1;
 			}
 			Sleep(g_iTimeOut);
@@ -356,7 +356,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 		}
 		else if (iRes > 1) //订单的确认回报有多条
 		{
-			EzLog::e(__FUNCTION__, strQueryRecordNum);
+			EzLog::e("订单的确认回报有多条! ", strQueryRecordNum);
 			return -1;
 		}
 		else if (iRes == 1) //一条确认回报
@@ -364,7 +364,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 			lQueryResult = con.Query(strQueryOrdwth2, &streamDB);
 			if (0 != lQueryResult)	//查询异常
 			{
-				EzLog::e(__FUNCTION__, "Query sql server failed !");
+				EzLog::e(__FUNCTION__, " Query sql server failed !");
 				Sleep(g_iTimeOut);
 				continue;
 			}
@@ -382,7 +382,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.account)
 				{
 					EzLog::e("Ordwth acc:", strTemp);
-					EzLog::e("预期 acc:", aSHShare.account);
+					EzLog::e("预期   acc:", aSHShare.account);
 					EzLog::e("Check Ordwth2_error ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -391,7 +391,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.stock)
 				{
 					EzLog::e("Ordwth stock:", strTemp);
-					EzLog::e("预期 stock:", aSHShare.stock);
+					EzLog::e("预期   stock:", aSHShare.stock);
 					EzLog::e("Check Ordwth2_error ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -400,7 +400,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.bs)
 				{
 					EzLog::e("Ordwth bs:", strTemp);
-					EzLog::e("预期 bs:", aSHShare.bs);
+					EzLog::e("预期   bs:", aSHShare.bs);
 					EzLog::e("Check Ordwth2_error ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -414,7 +414,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.price)
 				{
 					EzLog::e("Ordwth price:", strTemp);
-					EzLog::e("预期 price:", aSHShare.price);
+					EzLog::e("预期   price:", aSHShare.price);
 					EzLog::e("Check Ordwth2_error ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -428,7 +428,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 				if (strTemp != aSHShare.qty)
 				{
 					EzLog::e("Ordwth qty:", strTemp);
-					EzLog::e("预期 qty:", aSHShare.qty);
+					EzLog::e("预期   qty:", aSHShare.qty);
 					EzLog::e("Check Ordwth2_error ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -437,7 +437,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 				if ("F" != strTemp)
 				{
 					EzLog::e("Ordwth status:", strTemp);
-					EzLog::e("预期 status:", "F");//错单标志F
+					EzLog::e("预期   status:", "F");//错单标志F
 					EzLog::e("Check Ordwth2_error ERROR! reff = ", aSHShare.reff);
 					return -1;
 				}
@@ -471,7 +471,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 	//成交回报 求总数量
 	std::string strQueryRecordNum = "select count(rec_num) from Ashare_OIW.dbo.ashare_cjhb where sqbh='";
 	strQueryRecordNum += aSHShare.reff;
-	strQueryRecordNum += ";";
+	strQueryRecordNum += "';";
 
 	int  k = 0;
 	int iRes = 0;
@@ -484,7 +484,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 		{
 			if (k == g_iQueryTimes - 1)//达到最大查询次数
 			{
-				EzLog::e("达到最大查找次数，人未查到 ：", strQueryCjhb);
+				EzLog::e("达到最大查找次数，仍未查到 ：", strQueryCjhb);
 				return -1;
 			}
 			Sleep(g_iTimeOut);
@@ -492,7 +492,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 		}
 		else if (iRes > 1) //成交订单的成交回报有多条
 		{
-			EzLog::e(__FUNCTION__, strQueryRecordNum);
+			EzLog::e("成交订单的成交回报有多条! ", strQueryRecordNum);
 			return -1;
 		}
 		else if (iRes == 1) //一条成交回报
@@ -500,7 +500,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 			lQueryResult = con.Query(strQueryCjhb, &streamDB);
 			if (0 != lQueryResult)	//查询异常
 			{
-				EzLog::e(__FUNCTION__, "Query sql server failed !");
+				EzLog::e(__FUNCTION__, " Query sql server failed !");
 				Sleep(g_iTimeOut);
 				continue;
 			}
@@ -518,7 +518,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 				//*STREQ*和*STRNE*同时支持char*和wchar_t*类型的，*STRCASEEQ*和*STRCASENE*却只接收char*，
 				if (strTemp != aSHShare.gddm)
 				{
-					EzLog::e("\t CJHB gddm: ", strTemp);
+					EzLog::e("\tCJHB gddm: ", strTemp);
 					EzLog::e("\t预期 gddm: ", aSHShare.gddm);
 					EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
 					return  -1;
@@ -527,7 +527,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 				strTemp = mapRowData["zqdm"].strValue;
 				if (strTemp != aSHShare.zqdm)
 				{
-					EzLog::e("\t CJHB zqdm: ", strTemp);
+					EzLog::e("\tCJHB zqdm: ", strTemp);
 					EzLog::e("\t预期 zqdm: ", aSHShare.zqdm);
 					EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
 					return  -1;
@@ -536,7 +536,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 				strTemp = mapRowData["bs"].strValue;
 				if (strTemp != aSHShare.bs)
 				{
-					EzLog::e("\t CJHB bs: ", strTemp);
+					EzLog::e("\tCJHB bs: ", strTemp);
 					EzLog::e("\t预期 bs: ", aSHShare.bs);
 					EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
 					return  -1;
@@ -558,7 +558,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 				}
 				if (strTemp != aSHShare.cjjg)
 				{
-					EzLog::e("\t CJHB cjjg: ", strTemp);
+					EzLog::e("\tCJHB cjjg: ", strTemp);
 					EzLog::e("\t预期 cjjg: ", aSHShare.cjjg);
 					EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
 					return  -1;
@@ -604,7 +604,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 //检查分笔成交的成交回报：
 //输入：OTLConn40240 &con 连接数据库, SHShare aShare待检查股票订单,iDivide 目前分笔数为2 
 //输出 ： 0 正确； -1 异常
-long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
+long CheckDivideCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 {
 	long lQueryResult = 0;
 	long lCjsl = 0;
@@ -621,7 +621,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 	//成交回报 求总数量
 	std::string strQueryRecordNum = "select count(rec_num) from Ashare_OIW.dbo.ashare_cjhb where sqbh='";
 	strQueryRecordNum += aSHShare.reff;
-	strQueryRecordNum += ";";
+	strQueryRecordNum += "';";
 
 	int  k = 0;
 	int iRes = 0;
@@ -634,20 +634,20 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 		{
 			if (k == g_iQueryTimes - 1)//达到最大查询次数
 			{
-				EzLog::e("达到最大查找次数，人未查到 ：", strQueryCjhb);
+				EzLog::e("达到最大查找次数，仍未查到 ：", strQueryCjhb);
 				return -1;
 			}
 			Sleep(g_iTimeOut);
 			continue;
 		}
-		else if (iRes > iDivideNum) //成交订单的成交回报有多条
+		else if (iRes > iDivideNum) //分笔成交订单的成交回报有多条
 		{
-			EzLog::e(__FUNCTION__, strQueryRecordNum);
+			EzLog::e("分笔成交订单的成交回报有多条! ", strQueryRecordNum);
 			return -1;
 		}
 		else if (iRes > 0 && iRes < iDivideNum) //查到成交回报数量不足
 		{
-			EzLog::e(__FUNCTION__, strQueryRecordNum);
+			EzLog::e("分笔成交订单的成交回报数量不足！ ", strQueryRecordNum);
 			return -1;
 		}
 		else if (iRes == iDivideNum) //分笔数等于的成交回报数
@@ -655,7 +655,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 			lQueryResult = con.Query(strQueryCjhb, &streamDB);
 			if (0 != lQueryResult)	//查询异常
 			{
-				EzLog::e(__FUNCTION__, "Query sql server failed !");
+				EzLog::e(__FUNCTION__, " Query sql server failed !");
 				Sleep(g_iTimeOut);
 				continue;
 			}
@@ -675,7 +675,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 					//*STREQ*和*STRNE*同时支持char*和wchar_t*类型的，*STRCASEEQ*和*STRCASENE*却只接收char*，
 					if (strTemp != aSHShare.gddm)
 					{
-						EzLog::e("\t CJHB gddm: ", strTemp);
+						EzLog::e("\tCJHB gddm: ", strTemp);
 						EzLog::e("\t预期 gddm: ", aSHShare.gddm);
 						EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
 						return  -1;
@@ -684,7 +684,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 					strTemp = mapRowData["zqdm"].strValue;
 					if (strTemp != aSHShare.zqdm)
 					{
-						EzLog::e("\t CJHB zqdm: ", strTemp);
+						EzLog::e("\tCJHB zqdm: ", strTemp);
 						EzLog::e("\t预期 zqdm: ", aSHShare.zqdm);
 						EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
 						return  -1;
@@ -693,7 +693,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 					strTemp = mapRowData["bs"].strValue;
 					if (strTemp != aSHShare.bs)
 					{
-						EzLog::e("\t CJHB bs: ", strTemp);
+						EzLog::e("\tCJHB bs: ", strTemp);
 						EzLog::e("\t预期 bs: ", aSHShare.bs);
 						EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
 						return  -1;
@@ -715,7 +715,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 					}
 					if (strTemp != aSHShare.cjjg)
 					{
-						EzLog::e("\t CJHB cjjg: ", strTemp);
+						EzLog::e("\tCJHB cjjg: ", strTemp);
 						EzLog::e("\t预期 cjjg: ", aSHShare.cjjg);
 						EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
 						return  -1;
@@ -723,37 +723,36 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 					strTemp = mapRowData["cjje"].strValue;
 					iRes = Tgw_StringUtil::String2UInt64MoneyInLi_strtoui64(strTemp, ui64Temp);
 					ui64Cjje += ui64Temp;
-					break;
 				}// eles 
 			} // for (int i = 0; i < iDivideNum;i++)
+
+			//成交总的成交数量和金额比较
+			strTemp = _ui64toa(ui64Cjsl, szTemp, 10);
+			if (ui64Cjje > 999999999990)				//cjje
+			{
+				strTemp = "-1";
+				if ("-1" != aSHShare.cjje)
+				{
+					EzLog::e("CJHB cjje: ", strTemp);
+					EzLog::e("预期 cjje: ", aSHShare.cjje);
+					EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
+					return  -1;
+				}
+			}
+			else
+			{
+				//	ui64Cjje /= 10;
+				Tgw_StringUtil::iLiToStr(ui64Cjje, strTemp, 2);
+				if (strTemp != aSHShare.cjje)
+				{
+					EzLog::e("CJHB cjje: ", strTemp);
+					EzLog::e("预期 cjje: ", aSHShare.cjje);
+					EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
+					return  -1;
+				}
+			}
+			break;
 		} // else if (iRes == iDivideNum) //分笔数等于的成交回报数
-
-		//成交总的成交数量和金额比较
-		strTemp = _ui64toa(ui64Cjsl, szTemp, 10);
-		if (ui64Cjje > 999999999990)				//cjje
-		{
-			strTemp = "-1";
-			if ("-1" != aSHShare.cjje)
-			{
-				EzLog::e("CJHB cjje: ", strTemp);
-				EzLog::e("预期 cjje: ", aSHShare.cjje);
-				EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
-				return  -1;
-			}
-		}
-		else
-		{
-			//	ui64Cjje /= 10;
-			Tgw_StringUtil::iLiToStr(ui64Cjje, strTemp, 2);
-			if (strTemp != aSHShare.cjje)
-			{
-				EzLog::e("CJHB cjje: ", strTemp);
-				EzLog::e("预期 cjje: ", aSHShare.cjje);
-				EzLog::e("Check Cjhb ERROR! reff = ", aSHShare.reff);
-				return  -1;
-			}
-		}
-
 	}//for (int k = 0; k < g_iQueryTimes; k++)
 
 	streamDB.close();	//显式关闭

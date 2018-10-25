@@ -47,7 +47,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare);
 //检查分笔成交的成交回报：
 //输入：OTLConn40240 &con 连接数据库, SHShare aShare待检查股票订单,iDivide 目前分笔数为2 
 //输出 ： 0 正确； -1 异常
-long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum);
+long CheckDivideCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum);
 
 // 校验simutgw写回本地mysql数据库的数据是否符合实际交易
 //@parameter ： SHShare aSHShare STGW处理的订单;

@@ -6,12 +6,12 @@
 #include "StockAsset/StockAsset.h"
 
 // 实盘下推送行情，全部成交，卖单，最近成交价， 不验股，  
-//			SingleGtestMatchAllWithQuotation_S.RecentMatchPrice_1
-TEST(SingleGtestMatchAllWithQuotation_S, RecentMatchPrice_1)
+//			SingleGtestMatchAllWithQuotation_S.RecentPrice_1
+TEST(SingleGtestMatchAllWithQuotation_S, RecentPrice_1)
 {
 	int iRes = 0;
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情
@@ -71,7 +71,7 @@ TEST(SingleGtestMatchAllWithQuotation_S, RecentMatchPrice_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -81,12 +81,12 @@ TEST(SingleGtestMatchAllWithQuotation_S, RecentMatchPrice_1)
 
 
 // 实盘下推送行情，全部成交，卖单，最近成交价 ，验股，  
-//			SingleGtestMatchAllWithQuotation_S.RecentMatchPriceCheckAsset_4
-TEST(SingleGtestMatchAllWithQuotation_S, RecentMatchPriceCheckAsset_4)
+//			SingleGtestMatchAllWithQuotation_S.RecentPriceCheckAsset_4
+TEST(SingleGtestMatchAllWithQuotation_S, RecentPriceCheckAsset_4)
 {
 	int iRes = 0;
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetYES));
 
 	//构造行情
@@ -164,7 +164,7 @@ TEST(SingleGtestMatchAllWithQuotation_S, RecentMatchPriceCheckAsset_4)
 	con.Close();
 
 	iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
-	EXPECT_EQ(0, iRes);	EzLog::i("", __FUNCTION__);
+	EXPECT_EQ(0, iRes);	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);

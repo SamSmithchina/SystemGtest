@@ -13,8 +13,8 @@
 */
 
 //批量测试样例；
-//	BatchPartMatchWithoutQuotation.CheckAssetNO
-TEST(BatchPartMatchWithoutQuotation, CheckAssetNO)
+//	BatchMatchPartWithoutQuotation.CheckAssetNO
+TEST(BatchMatchPartWithoutQuotation, CheckAssetNO)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SimulMatchPart));
@@ -156,7 +156,7 @@ TEST(BatchPartMatchWithoutQuotation, CheckAssetNO)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -166,12 +166,12 @@ TEST(BatchPartMatchWithoutQuotation, CheckAssetNO)
 	}
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }
 
 //批量测试样例；
-//	BatchPartMatchWithoutQuotation.CheckAssetYES
-TEST(BatchPartMatchWithoutQuotation, CheckAssetYES)
+//	BatchMatchPartWithoutQuotation.CheckAssetYES
+TEST(BatchMatchPartWithoutQuotation, CheckAssetYES)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SimulMatchPart));
@@ -356,7 +356,7 @@ TEST(BatchPartMatchWithoutQuotation, CheckAssetYES)
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -364,5 +364,5 @@ TEST(BatchPartMatchWithoutQuotation, CheckAssetYES)
 		EzLog::Out("出现错误订单笔数 ：", (trivial::severity_level)2, lErrorOrderCounter);
 		EzLog::i("=================================================", "\n");
 	}
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }

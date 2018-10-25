@@ -10,11 +10,11 @@
 // 最近成交价1.000元，不验股；
 // account = "A645078963" 股票账号
 // stock = ("600311") 荣华实业
-//	 BatchGtestNoMatchCancelWithQuotation.BatchNoMatchCancel_RecentMatchPriceCheckAssetNO
-TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_RecentMatchPriceCheckAssetNO)
+//	 BatchGtestNoMatchCancelWithQuotation.BatchNoMatchCancel_RecentPriceCheckAssetNO
+TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_RecentPriceCheckAssetNO)
 {
 	//切换模式
-	ASSERT_EQ(0, TransformMatchMode(RecentMatchPrice));
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
 	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
 
 	//构造行情,
@@ -131,7 +131,7 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_RecentMatchPriceCh
 	{
 		EzLog::i("=================================================", "\n");
 		EzLog::e("", __FUNCTION__);
-		EzLog::Out("g_iTimeOut    : ", (trivial::severity_level)2, g_iTimeOut);
+		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
 		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
@@ -141,5 +141,5 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_RecentMatchPriceCh
 	}
 	//关闭连接
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 }

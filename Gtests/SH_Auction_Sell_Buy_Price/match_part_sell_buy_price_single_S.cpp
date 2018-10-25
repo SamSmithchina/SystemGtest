@@ -8,8 +8,8 @@
 // 买一价1.050元，卖一价1.045元， 卖单，验股
 // account = "A645078963" 股票账号
 // stock = ("600343") 航天动力
-//	SinglePartMatchWithQuotation_S.SellBuyPrice_1
-TEST(SinglePartMatchWithQuotation_S, SellBuyPrice_1)
+//	SingleMatchPartWithQuotation_S.SellBuyPrice_1
+TEST(SingleMatchPartWithQuotation_S, SellBuyPrice_1)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SellBuyPrice));
@@ -85,7 +85,7 @@ TEST(SinglePartMatchWithQuotation_S, SellBuyPrice_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
@@ -97,8 +97,8 @@ TEST(SinglePartMatchWithQuotation_S, SellBuyPrice_1)
 // 买一价1.050元，卖一价1.045元， 卖单，不验股
 // account = "A645078963" 股票账号
 // stock = ("600348") 阳泉煤业
-//	SinglePartMatchWithQuotation_S.SellBuyPriceCheckAsset_2
-TEST(SinglePartMatchWithQuotation_S, SellBuyPriceCheckAsset_2)
+//	SingleMatchPartWithQuotation_S.SellBuyPriceCheckAsset_2
+TEST(SingleMatchPartWithQuotation_S, SellBuyPriceCheckAsset_2)
 {
 	//切换模式
 	ASSERT_EQ(0, TransformMatchMode(SellBuyPrice));
@@ -194,7 +194,7 @@ TEST(SinglePartMatchWithQuotation_S, SellBuyPriceCheckAsset_2)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i("", __FUNCTION__);
+	EzLog::i(__FUNCTION__, "\n\n");
 	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e("", __FUNCTION__);
