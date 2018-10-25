@@ -95,10 +95,13 @@ TEST(SingleMatchPartWithoutQuotation_B, MatchPart_1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0 || lRes != 0)
+	if(iRes != 0 || lRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }
 
@@ -185,10 +188,13 @@ TEST(SingleMatchPartWithoutQuotation_B, MatchPart_2)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0 || lRes != 0)
+	if(iRes != 0 || lRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }
 
@@ -274,10 +280,13 @@ TEST(SingleMatchPartWithoutQuotation_B, MatchPart_3)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0 || lRes != 0)
+	if(iRes != 0 || lRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }
 
@@ -363,10 +372,13 @@ TEST(SingleMatchPartWithoutQuotation_B, MatchPart_4)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0 || lRes != 0)
+	if(iRes != 0 || lRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }
 
@@ -472,9 +484,12 @@ TEST(SingleMatchPartWithoutQuotation_B, MatchPart_5)
 	EXPECT_EQ(0, iRes);
 
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0 || lRes != 0)
+	if(iRes != 0 || lRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }

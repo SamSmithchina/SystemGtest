@@ -57,10 +57,13 @@ TEST(SingleErrorWithoutQuotation_S, Error1)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0 || lRes != 0)
+	if(iRes != 0 || lRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }
 
@@ -113,10 +116,13 @@ TEST(SingleErrorWithoutQuotation_S, Error2)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0 || lRes != 0)
+	if(iRes != 0 || lRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }
 
@@ -168,9 +174,12 @@ TEST(SingleErrorWithoutQuotation_S, Error3)
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0 || lRes != 0)
+	if(iRes != 0 || lRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }

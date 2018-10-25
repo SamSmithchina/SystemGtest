@@ -30,7 +30,7 @@ TEST(TransformMatchMode, Error)
 	if (iDRes != 0)
 	{
 		EzLog::e("Transform to MatchAllWithoutQuotation ", "failed. \n");
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
 		ASSERT_EQ(0, iDRes);
 	}
 }
@@ -85,6 +85,6 @@ TEST(TransformMatchMode, RepateTransform)
 	EzLog::i(__FUNCTION__, "\n\n");
 	if (iErrorCounter != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
 	}
 }

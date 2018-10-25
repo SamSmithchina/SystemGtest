@@ -104,7 +104,7 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetNO)
 	if (0 < lErrorOrderCounter)
 	{
 		EzLog::i("=================================================", "\n");
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
 		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
@@ -214,7 +214,7 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetYES)
 	if (0 < lErrorOrderCounter)
 	{
 		EzLog::i("=================================================", "\n");
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
 		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
 		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
 		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);

@@ -24,7 +24,7 @@ TEST(AStockQuot, Example)
 	EzLog::i(__FUNCTION__, "\n\n");
 	if (0 != iRes)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
 	}
 }
 
@@ -43,10 +43,13 @@ TEST(AStockQuot, NewExample)
 	EXPECT_EQ(0, iRes);
 
 	EzLog::i("NewExample;\n", aStockQuot.OriginStr);
-	EzLog::i(__FUNCTION__, "\n\n");
-	if (iRes != 0)
+	if(iRes != 0)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }
 
@@ -119,9 +122,12 @@ TEST(AStockQuot, HMGET)
 	}
 	if (0 != n)
 	{
-		EzLog::e("", __FUNCTION__);
+		EzLog::e(__FUNCTION__, "\n");
 	}
-	EzLog::i(__FUNCTION__, "\n\n");
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
+	}
 }
 
 
@@ -203,5 +209,8 @@ TEST(AStockQuot, DelKeyNum)
 	{
 		EzLog::e(__FUNCTION__, "未正常获取行情容量！");
 	}
-	EzLog::i(__FUNCTION__, "\n\n");
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
+	}
 }

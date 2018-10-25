@@ -14,7 +14,7 @@ int g_iExternRecNum = 0;
 int g_iTimeOut = 100;		//	设置100ms比较合适
 
 //查询次数；
-int g_iQueryTimes = 50;
+int g_iQueryTimes = 1;
 
 //验股 0:不验股， 1：验股
 int  g_iCheckAsset = 0;
