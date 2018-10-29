@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 
 		EzLog::i("================================", "\n");
 		EzLog::i("SystemGtest", "");
-		EzLog::Out("Bit ", (trivial::severity_level)2, (int)(8 * sizeof(int)));
+		EzLog::Out("Bit ", (trivial::severity_level)2, (int)(8 * sizeof(int *)));
 
 		srand((unsigned)time(NULL));
 

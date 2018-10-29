@@ -1,0 +1,61 @@
+﻿G_TestTradeWithoutQuotation\G_TestMatchALLWithoutQuotation.cpp(455): error: Expected: (999999999.99) < (dTemp), actual: 1e+009 vs 9.99906e+008
+999905600
+[2018-06-29 16:25:21.745512] [0x000002fc] [error]
+							
+// #将GTEST语句 改为EXPECT_PRED_FORMAT2(testing::DoubleLE, 999999999.99, dTemp) 
+
+[error]   OTLConn40240::Exec()EXCEPTION=[Microsoft][ODBC SQL Server Driver][SQL Server]违反了 PRIMARY KEY 约束 'PK_ASHARE_ORDWTH'。不能在对象 'dbo.ashare_ordwth' 中插入重复键。,INSERT INTO [Ashare_OIW].[dbo].[ashare_ordwth]([date],[time],[reff],[acc], [stock], [bs], [price], [qty], [status] , [owflag], [ordrec], [firmid], [branchid], [checkord],[rec_num])VALUES('20180629','17:06:49','J100010000','A645078963','600320','B','1.321','1000100','R','LPT','0','','',0x01,'10000'),23000,
+// #price的位宽8， 超过8为会出错，改进为加入模除取余，比较可以减少除法次数，
+			temp = 100 + externRecNum * 100;
+			if (temp > 99990000)
+			{
+				temp = temp % 99990000;		//char qty[8]
+			}
+			AShare[j].qty = itoa(temp, chTemp, 10);
+			if (temp > 9999)
+			{
+				temp = externRecNum % 9999;
+			}
+			
+			
+G_TestTradeWithoutQuotation\G_TestMatchALLWithoutQuotation.cpp(455): error: Expected: (999999999.99) <= (dTemp)
+  Actual: 999999999.99000001 vs 999905600	
+  // # 浮点运算精度不能用整形的Test来比较；
+  //其他地方也是如此；
+  
+999905600  814
+G_TestTradeWithoutQuotation\G_TestMatchALLWithoutQuotation.cpp(455): error: Expected: (999999999.99) <= (dTemp)
+  Actual: 999999999.99000001 vs 999765600
+999765600  2485
+G_TestTradeWithoutQuotation\G_TestMatchALLWithoutQuotation.cpp(455): error: Expected: (999999999.99) <= (dTemp)
+  Actual: 999999999.99000001 vs 999765600
+999765600 Rec_num : 2485price : 488.321  qty : 2048700temp 2048700
+// #stgw的cjje没有计算小数部分，校验才出错，
+
+
+SEH exception with code 0xc00000fd thrown in the test body.
+// #空指针，原因是设置SHShare[3000]数组太大，每条元素640B, 设置1500可以，设置2000就不行；
+
+
+2018-07-05 16:28:25
+虚拟机很卡， 丢了一些订单的cjhb；
+
+unknown file: error: C++ exception with description "invalid string position" thrown in the test body.
+// string  find_first_of() 找不到返回-1， 使用这个函数要注意返回值的有有效性；
+
+//插入数据后一定记得COMMIT；
+
+unknown file: error: SEH exception with code 0xc0000005 thrown in the test body.
+//	strTemp = ltoa(lTemp, NULL, 10); 第二个参数用NULL ，  就会报上面的错误； 
+//	可以改成 ltoa( lTemp, szChar, 10);
+
+
+2018-10-22 16:00:17
+// 重装系统，丢失了很多重要文件
+准备找回数据
+
+2018-10-29 16:47:40
+行情圈的意义在于根据营业部代码区分不同券商的交易，尽量避免所有市场参与者对某只股票竞争，而一些人大量卖卖导致奇特人无法交易；
+行情圈存在时，行情圈的成交数量和成交金额在上一次的行情加减本次交易的数量、金额；
+
+
