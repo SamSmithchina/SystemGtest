@@ -124,7 +124,7 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePriceCheckAssert_2)
 	itoa(g_iExternRecNum, szTemp, 10);
 	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);	//订单编号；利用静态变量保持rec_num从1递增；
 	aSHShare.rec_num = szTemp;
-	aSHShare.price = "0.950";				//均价为1
+	aSHShare.price = "0.960";				//均价为1
 	aSHShare.qty = "100";
 	aSHShare.bs = "S";					//卖
 

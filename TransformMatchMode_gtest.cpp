@@ -14,14 +14,13 @@ TEST(TransformMatchMode, Error)
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 	DWORD iDRes = 0;
-	std::string strModel = "Transform to MatchAllWithoutQuotation ";
 
 	ZeroMemory(&pi, sizeof(pi));
 	ZeroMemory(&si, sizeof(si));	//"cd /d %~dp0"
 	system("echo %cd%");	//simutgw_win64
 
 	char TransformCMD[256] = { "\0" };
-	std::string strCMD = ("simutgw_win64\\simutgw_cli.exe -h 127.0.0.1 -p 50000 -f simutgw_win64\\data\\cli_cmd\\cmd_matchmode_serr.txt");
+	//std::string strCMD = ("simutgw_win64\\simutgw_cli.exe -h 127.0.0.1 -p 50000 -f simutgw_win64\\data\\cli_cmd\\cmd_matchmode_serr.txt");
 	CreateProcess(NULL, TransformCMD, NULL, NULL, FALSE, NORMAL_PRIORITY_CLASS, NULL, NULL, &si, &pi);
 	WaitForSingleObject(pi.hProcess, INFINITE);
 	GetExitCodeProcess(pi.hProcess, &iDRes);
@@ -42,20 +41,21 @@ TEST(TransformMatchMode, Error)
 TEST(TransformMatchMode, RepateTransform)
 {
 	MatchMode mmExample = SimulMatchAll;
-	int iModeNumber = 11;
 	int iRound = 11;
-	int i = 0;
-	int iRes = 0;
 	int iErrorCounter = 0;
-	time_t tSingleTestBegin;
-	time_t tSingleTestEnd;
 	time_t tTotal = 0;
-	time_t tTemp = 0;
+
 	time_t tBegin = clock();
 	{
+		int iModeNumber = 11;
+		int i = 0;
+		int iRes = 0;
+		time_t tSingleTestBegin;
+		time_t tSingleTestEnd;
+		time_t tTemp = 0;
 		for (i = 0; i < iRound; i++)
 		{
-			if (1 == 0 || i == 9) //0清算模式完成时间太长，9启用行情实际上用不到；
+			if (i == 0 || i == 9) //0清算模式完成时间太长，9启用行情实际上用不到；
 			{
 				continue;
 			}

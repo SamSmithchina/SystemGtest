@@ -92,8 +92,7 @@ std::string SHShare::GetSQlInsertSentence()
 	OrdwthStruct += "')";
 
 	//实际在执行函数中用的insert语句
-	std::string strInsertSentence = "";
-	strInsertSentence = strInsertSql_prefix + OrdwthStruct;
+	std::string strInsertSentence = strInsertSql_prefix + OrdwthStruct;
 	return(strInsertSentence);
 }
 
@@ -143,8 +142,7 @@ std::string SHShare::GetSQLCancelSentence()
 	CancelOrderStruct += "')";
 
 	//执行cancel order语句
-	std::string strCancelSentence = "";
-	strCancelSentence = strInsertSql_prefix + CancelOrderStruct;
+	std::string strCancelSentence = strInsertSql_prefix + CancelOrderStruct;
 	return strCancelSentence;
 }
 

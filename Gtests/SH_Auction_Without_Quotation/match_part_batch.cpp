@@ -24,14 +24,12 @@ TEST(BatchMatchPartWithoutQuotation, CheckAssetNO)
 	long lRes = 0;
 	int i = 0;
 	int j = 0;
-	int k = 0;
-	int n = 0;
 	long lErrorOrderCounter = 0;
 	long lTemp = 0;
 	uint64_t ui64Temp = 0;
 	uint64_t ui64Cjje = 0;
 	char szTemp[12] = { "\0" };
-	std::string strTemp = "";
+	std::string strTemp;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;		//aSHShare[j]数组的成员数量
@@ -58,7 +56,7 @@ TEST(BatchMatchPartWithoutQuotation, CheckAssetNO)
 			aSHShare[j].rec_num = szTemp;
 			//aSHShare[j].account = "A645078963";		//股票账号
 			//aSHShare[j].stock = "600302";				// 证券代码
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";					//买
 			}
@@ -181,15 +179,13 @@ TEST(BatchMatchPartWithoutQuotation, CheckAssetYES)
 	long lRes = 0;
 	int i = 0;
 	int j = 0;
-	int k = 0;
-	int n = 0;
 	long lErrorOrderCounter = 0;
 	uint64_t ui64Temp = 0;
 	uint64_t ui64Cjje = 0;
 	uint64_t ui64BCjsl = 0;
 	uint64_t ui64SCjsl = 0;
 	char szTemp[12] = { "\0" };
-	std::string strTemp = "";
+	std::string strTemp;
 	long lTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
@@ -220,7 +216,7 @@ TEST(BatchMatchPartWithoutQuotation, CheckAssetYES)
 			aSHShare[j].rec_num = szTemp;
 			//aSHShare[j].account = "A645078963";		//股票账号
 			//aSHShare[j].stock = "600302";				// 证券代码
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";					//买
 			}

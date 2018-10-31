@@ -21,10 +21,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivide_1)
 
 	int iRes = 0;
 	long lRes = 0;
-	uint64_t ui64Cjje = 0;
 	char szTemp[10] = { "\0" };
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -85,10 +82,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivide_2)
 
 	int iRes = 0;
 	long lRes = 0;
-	uint64_t ui64Cjje = 0;
 	char szTemp[10] = { "\0" };
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -150,10 +144,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivide_3)
 
 	int iRes = 0;
 	long lRes = 0;
-	uint64_t ui64Cjje = 0;
 	char szTemp[10] = { "\0" };
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -215,10 +206,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivide_4)
 
 	int iRes = 0;
 	long lRes = 0;
-	uint64_t ui64Cjje = 0;
 	char szTemp[10] = { "\0" };
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -279,11 +267,9 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivideCheckAsset_5)
 
 	int iRes = 0;
 	long lRes = 0;
-	uint64_t ui64Cjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	long laShareQty = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 	StockAsset aSHStockAsset;

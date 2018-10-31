@@ -25,13 +25,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_1)
 
 	int iRes = 0;
 	long lRes = 0;
-	long laShareQty = 0;
-	uint64_t ui64Cjje = 0;
-	uint64_t ui64Price = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -74,12 +68,12 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_1)
 	con.Commit();
 
 	//查询撤单
-	Sleep(g_iTimeOut * 50);
+	Sleep(g_iTimeOut * 20);
 	lRes = CheckOrdwth2Cancel(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	if(iRes != 0 || lRes != 0)
+	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e(__FUNCTION__, "\n");
 	}
@@ -111,13 +105,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_2)
 
 	int iRes = 0;
 	long lRes = 0;
-	long laShareQty = 0;
-	uint64_t ui64Cjje = 0;
-	uint64_t ui64Price = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -152,12 +140,115 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_2)
 	con.Commit();
 
 	//查询撤单
-	Sleep(g_iTimeOut * 50);
+	Sleep(g_iTimeOut * 20);
 	lRes = CheckOrdwth2Cancel(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
-	if(iRes != 0 || lRes != 0)
+	if (iRes != 0 || lRes != 0)
+	{
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
+	}
+}
+
+
+// 挂单撤单 ，对应的股票成交数量0，订单理应不成交，之后推送新行情；
+// 最近成交价1.000元， 卖单，不验股
+// account = "A645078963" 股票账号
+// stock = ("600377") 宁沪高速
+//	SingleNoMatchCancelWithQuotation_S.RecentPrice_3
+TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_3)
+{
+	//切换模式
+	ASSERT_EQ(0, TransformMatchMode(RecentPrice));
+	ASSERT_EQ(0, TransformMatchMode(CheckAssetNO));
+
+	//构造行情
+	AStockQuot aStockQuot;				//行情CJSL = 100000
+	CreateQuotationExample(aStockQuot);
+	aStockQuot.zqdm = "600377";
+	aStockQuot.zqmc = "宁沪高速";
+
+	//推送行情
+	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
+
+	int iRes = 0;
+	long lRes = 0;
+	uint64_t ui64Cjje = 0;
+	char szTemp[10] = { "\0" };
+	long lTemp = 0;
+	OTLConn40240 con;
+	SHShare aSHShare;
+
+	//建立数据库连接 ,0 right , -1 wrong
+	iRes = con.Connect(g_strShOdbcConn);
+	//	ASSERT_EQ(0, iRes);
+	ASSERT_EQ(0, iRes);
+	iRes = con.SetAutoCommit(0);
+	ASSERT_EQ(0, iRes);
+
+	//单个测试样例；
+	aSHShare.account = "A645078963";	//股票账号
+	aSHShare.stock = aStockQuot.zqdm;		// 证券代码
+	g_iExternRecNum++;
+	aSHShare.reff = "J000000000";
+	itoa(g_iExternRecNum, szTemp, 10);
+	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);		//订单编号；利用静态变量保持rec_num从1递增；
+	aSHShare.rec_num = szTemp;
+	aSHShare.price = "0.950";
+	aSHShare.qty = "100000";
+	aSHShare.bs = "S";					//买\卖
+	//成交字段
+	aSHShare.gddm = aSHShare.account;
+	aSHShare.zqdm = aSHShare.stock;
+	aSHShare.cjsl = aSHShare.qty;
+	lTemp = atoi(aSHShare.qty.c_str());
+	uint64_t ui64Cjjg = aStockQuot.zjjg;
+	ui64Cjje = lTemp * ui64Cjjg;
+	if (ui64Cjje > 999999999990)
+	{
+		aSHShare.cjje = "-1";
+	}
+	else
+	{
+		Tgw_StringUtil::iLiToStr(ui64Cjje, aSHShare.cjje, 2); //成交金额带两位小数；
+	}
+
+	lRes = InsertOrder(con, aSHShare);	//消耗行情容量
+	EXPECT_EQ(0, lRes);
+
+	//插入订单
+	g_iExternRecNum++;
+	aSHShare.reff = "J000000000";
+	itoa(g_iExternRecNum, szTemp, 10);
+	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);
+	aSHShare.rec_num = szTemp;
+	lRes = InsertOrder(con, aSHShare);
+	EXPECT_EQ(0, lRes);
+	con.Commit();
+
+	//推送第二次行情；
+	//Sleep(g_iTimeOut * 25);
+	aStockQuot.cjsl += 100000;
+	aStockQuot.cjje += 100000000;
+	TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
+	aStockQuot.hqsj += ".500";					//毫秒
+	EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
+	Sleep(g_iTimeOut * 20);
+
+	//查询确认
+	lRes = CheckOrdwth2Match(con, aSHShare);
+	EXPECT_EQ(0, lRes);
+	//成交
+	lRes = CheckCjhb(con, aSHShare);
+	EXPECT_EQ(0, lRes);
+
+	con.Close();
+	if (iRes != 0 || lRes != 0)
 	{
 		EzLog::e(__FUNCTION__, "\n");
 	}

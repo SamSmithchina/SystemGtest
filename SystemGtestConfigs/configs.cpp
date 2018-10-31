@@ -14,7 +14,7 @@ int g_iExternRecNum = 0;
 int g_iTimeOut = 100;		//	设置100ms比较合适
 
 //查询次数；
-int g_iQueryTimes = 1;
+int g_iQueryTimes = 50;
 
 //验股 0:不验股， 1：验股
 int  g_iCheckAsset = 0;
@@ -205,10 +205,10 @@ int  ReadConfig()
 int  WriteConfig()
 {
 	boost::property_tree::ptree pt;
-	char szBuff[33] = { "\0" };
 	try
 	{
 		//如果需要，写回配置信息；
+		char szBuff[33] = { "\0" };
 		_itoa_s(g_iExternRecNum, szBuff, 10);
 		pt.put<std::string>("systemgtest.g_iExternRecNum", szBuff);
 		_itoa_s(g_iTimeOut, szBuff, 10);

@@ -21,13 +21,7 @@ TEST(SingleNoMatchCancelWithoutQuotation_S, NoMatchCancel_1)
 
 	int iRes = 0;
 	long lRes = 0;
-	int i = 0;
-	int j = 0;
-	int k = 0;
 	char szTemp[10] = { " \0 " };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 
 	OTLConn40240 con;
 
@@ -86,13 +80,7 @@ TEST(SingleNoMatchCancelWithoutQuotation_S, NoMatchCancel_2)
 
 	int iRes = 0;
 	long lRes = 0;
-	int i = 0;
-	int j = 0;
-	int k = 0;
 	char szTemp[10] = { " \0 " };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 
 	OTLConn40240 con;
 
@@ -151,13 +139,7 @@ TEST(SingleNoMatchCancelWithoutQuotation_S, NoMatchCancel_3)
 
 	int iRes = 0;
 	long lRes = 0;
-	int i = 0;
-	int j = 0;
-	int k = 0;
 	char szTemp[10] = { " \0 " };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 
 	OTLConn40240 con;
 

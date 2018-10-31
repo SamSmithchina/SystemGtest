@@ -28,11 +28,9 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	uint64_t ui64Cjjg = 0;
 	uint64_t ui64Cjje = 0;
 	uint64_t ui64Price = 0;
-	double dCjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
@@ -66,25 +64,27 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 
 			aSHShare[j].qty = "200000";
 
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";		//买
 				ui64Cjjg = aStockQuot.SJW1;
-				ui64Price = ui64Cjjg + rand() % 1000;
-				for (; ui64Cjjg > ui64Price || ui64Price > aStockQuot.maxgain;) 	//设置价格高于卖一价 ，低于涨幅
-				{
-					ui64Price = ui64Cjjg + rand() % 1000;
-				}
+				//ui64Price = ui64Cjjg + rand() % 1000;
+				//for (; ui64Cjjg > ui64Price || ui64Price > aStockQuot.maxgain;) 	//设置价格高于卖一价 ，低于涨幅
+				//{
+				//	ui64Price = ui64Cjjg + rand() % 1000;
+				//}
+				ui64Price = aStockQuot.maxgain - j;
 			}
 			else
 			{
 				aSHShare[j].bs = "S";		//卖
 				ui64Cjjg = aStockQuot.BJW1;
-				ui64Price = ui64Cjjg - rand() % 1000;
-				for (; aStockQuot.minfall > ui64Price || ui64Price > ui64Cjjg;) //价格在跌幅 到 买一价之间	
-				{
-					ui64Price = ui64Cjjg - rand() % 1000;
-				}
+				//ui64Price = ui64Cjjg - rand() % 1000;
+				//for (; aStockQuot.minfall > ui64Price || ui64Price > ui64Cjjg;) //价格在跌幅 到 买一价之间	
+				//{
+				//	ui64Price = ui64Cjjg - rand() % 1000;
+				//}
+				ui64Price = aStockQuot.minfall + j;
 			}
 			Tgw_StringUtil::iLiToStr(ui64Price, aSHShare[j].price, 3);
 
@@ -136,23 +136,21 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			}
 			//推送第二次行情；
-			aStockQuot.cjsl += 200000;
-			aStockQuot.cjje += 200000000;
+			//Sleep(g_iTimeOut * 25);
+			aStockQuot.cjsl += 100000;
+			aStockQuot.cjje += 100000000;
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
-			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
-		}
+			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
+			Sleep(g_iTimeOut * 20);
 
-		//继续推送行情；确保所有订单都在这段时间内成交
-		for (j = 0; j < iAShareNum; j++)
-		{
-			aStockQuot.cjsl += 200000;
-			aStockQuot.cjje += 200000000;
+			aStockQuot.cjsl += 100000;
+			aStockQuot.cjje += 100000000;
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
-			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
+			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
+			//	EzLog::i("插入行情 ： ", aStockQuot.OriginStr);
+			Sleep(g_iTimeOut * 20);
 		}
 
 		//成交
@@ -210,17 +208,14 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	uint64_t ui64Cjjg = 0;
 	uint64_t ui64Cjje = 0;
 	uint64_t ui64Price = 0;
-	double dCjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;			//aSHShare数组的成员数量
-	long lAShareQty[10] = { 0 };	//-1 表示卖单数量不合理 ， 不为 - 1 表示 不验股，或者买，或者卖的数量合理
 	int iRound = 1;
 
 	//建立数据库连接 ,0 right , -1 wrong
@@ -245,25 +240,27 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 
 			aSHShare[j].qty = "200000";
 
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";		//买
 				ui64Cjjg = aStockQuot.SJW1;
-				ui64Price = ui64Cjjg + rand() % 1000;
-				for (; ui64Cjjg > ui64Price || ui64Price > aStockQuot.maxgain;) 	//设置价格高于卖一价 ，低于涨幅
-				{
-					ui64Price = ui64Cjjg + rand() % 1000;
-				}
+				//ui64Price = ui64Cjjg + rand() % 1000;
+				//for (; ui64Cjjg > ui64Price || ui64Price > aStockQuot.maxgain;) 	//设置价格高于卖一价 ，低于涨幅
+				//{
+				//	ui64Price = ui64Cjjg + rand() % 1000;
+				//}
+				ui64Price = aStockQuot.maxgain - j;
 			}
 			else
 			{
 				aSHShare[j].bs = "S";		//卖
 				ui64Cjjg = aStockQuot.BJW1;
-				ui64Price = ui64Cjjg - rand() % 1000;
-				for (; aStockQuot.minfall > ui64Price || ui64Price > ui64Cjjg;) //价格在跌幅 到 买一价之间	
-				{
-					ui64Price = ui64Cjjg - rand() % 1000;
-				}
+				//ui64Price = ui64Cjjg - rand() % 1000;
+				//for (; aStockQuot.minfall > ui64Price || ui64Price > ui64Cjjg;) //价格在跌幅 到 买一价之间	
+				//{
+				//	ui64Price = ui64Cjjg - rand() % 1000;
+				//}
+				ui64Price = aStockQuot.minfall + j;
 			}
 			Tgw_StringUtil::iLiToStr(ui64Price, aSHShare[j].price, 3);
 
@@ -296,23 +293,23 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 		{
 			lRes = CheckOrdwth2Match(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
-			aStockQuot.cjsl += 200000;
-			aStockQuot.cjje += 200000000;
+			
+			//推送第二次行情；
+			//Sleep(g_iTimeOut * 25);
+			aStockQuot.cjsl += 100000;
+			aStockQuot.cjje += 100000000;
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
-			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
+			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
 			Sleep(g_iTimeOut * 20);
-		}
 
-		//继续推送行情；确保所有订单都在这段时间内成交
-		for (j = 0; j < iAShareNum; j++)
-		{
-			aStockQuot.cjsl += 200000;
-			aStockQuot.cjje += 200000000;
+			aStockQuot.cjsl += 100000;
+			aStockQuot.cjje += 100000000;
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
-			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
+			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
+			//	EzLog::i("插入行情 ： ", aStockQuot.OriginStr);
+			Sleep(g_iTimeOut * 20);
 		}
 
 		//成交

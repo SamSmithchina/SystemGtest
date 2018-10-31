@@ -21,12 +21,8 @@ TEST(BatchGtestErrorWithoutQuotation, CheckAssetNO)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
-	double dCjjg = 0;
-	double dCjje = 0;
-	double dTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;
@@ -52,7 +48,7 @@ TEST(BatchGtestErrorWithoutQuotation, CheckAssetNO)
 			aSHShare[j].rec_num = szTemp;
 			//aSHShare[j].account = "A645078963";				//股票账号
 			//aSHShare[j].stock = "600302";					// 证券代码
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";					//买
 			}
@@ -132,12 +128,8 @@ TEST(BatchGtestErrorWithoutQuotation, CheckAssetYES)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
-	double dCjjg = 0;
-	double dCjje = 0;
-	double dTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;

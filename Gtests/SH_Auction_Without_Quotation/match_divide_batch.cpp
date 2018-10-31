@@ -16,15 +16,10 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetNO)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	uint64_t ui64Temp = 0;
 	uint64_t ui64Cjje = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
 	long lTemp = 0;
-	long lQueryCjsl = 0;
-	std::string strTemp = "";
-	std::map<std::string, struct OTLConn_DF::DataInRow> mapRowData;
 	OTLConn40240 con;
 	otl_stream streamDB;	//otl 流
 	SHShare aSHShare[10];
@@ -51,7 +46,7 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetNO)
 			aSHShare[j].rec_num = szTemp;
 			//aSHShare[j].account = "A645078963";		//股票账号
 			//aSHShare[j].stock = "600302";			// 证券代码
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";					//买
 			}
@@ -159,17 +154,12 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetYES)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	uint64_t ui64Temp = 0;
 	uint64_t ui64Cjje = 0;
 	uint64_t ui64BCjsl = 0;
 	uint64_t ui64SCjsl = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
 	long lTemp = 0;
-	long lQueryCjsl = 0;
-	std::string strTemp = "";
-	std::map<std::string, struct OTLConn_DF::DataInRow> mapRowData;
 	OTLConn40240 con;
 	otl_stream streamDB;	//otl 流
 	SHShare aSHShare[10];
@@ -199,7 +189,7 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetYES)
 			aSHShare[j].rec_num = szTemp;
 			//aSHShare[j].account = "A645078963";		//股票账号
 			//aSHShare[j].stock = "600302";			// 证券代码
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";					//买
 			}

@@ -30,7 +30,6 @@ TEST(SingleMatchPartWithQuotation_S, AveragePrice_1)
 	uint64_t ui64Price = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -121,7 +120,6 @@ TEST(SingleMatchPartWithQuotation_S, AveragePriceCheckAsset_2)
 	uint64_t ui64Price = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 	aSHShare.account = "A645078963";

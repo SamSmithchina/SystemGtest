@@ -18,7 +18,7 @@ TEST(AStockQuot, Example)
 	aStockQuot.zqmc = "营口港";
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
 	iRes = myQuotHelper.Validate(aStockQuot);
-	EXPECT_EQ(0, iRes) << iRes;	std::string  strTemp = "";
+	EXPECT_EQ(0, iRes) << iRes;	
 
 	EzLog::i("CreateQuotationExample();\n", aStockQuot.OriginStr);
 	EzLog::i(__FUNCTION__, "\n\n");

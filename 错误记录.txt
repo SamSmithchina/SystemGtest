@@ -58,4 +58,13 @@ unknown file: error: SEH exception with code 0xc0000005 thrown in the test body.
 行情圈的意义在于根据营业部代码区分不同券商的交易，尽量避免所有市场参与者对某只股票竞争，而一些人大量卖卖导致奇特人无法交易；
 行情圈存在时，行情圈的成交数量和成交金额在上一次的行情加减本次交易的数量、金额；
 
+2018-10-31 09:37:16
+[2018-10-31 09:34:53.462024] [0x0000e538] [info]    SystemInit::Simutgw_ConfigIn
+it() System Initialization begin
+[2018-10-31 10:29:43.784036] [info] Pid[0x00017ec4]-Tid[0x000189f8] [] SystemIni
+t::Step2_ReadConfig() add sh db link name=Sh_Conn1
+Assertion failed: IsObject(), file d:\simutgw_slu\vs13_src\rapidjson1.1.0\rapidj
+son/document.h, line 1187
+
+vs编译器 对未引用的局部变量会检查，单不检查全局的我使用变量。
 

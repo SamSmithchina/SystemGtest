@@ -31,19 +31,15 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_AveragePriceCheckA
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	uint64_t ui64Cjjg = 0;
-	uint64_t ui64Cjje = 0;
 	uint64_t ui64Price = 0;
-	double dCjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;			//aSHShare数组的成员数量
-	long lAShareQty[10] = { 0 };	//-1 表示卖单数量不合理 ， 不为 - 1 表示 不验股，或者买，或者卖的数量合理
 	int iRound = 1;
-	std::string strTemp = "";
+	std::string strTemp;
 
 	//建立数据库连接 ,0 right , -1 wrong
 	iRes = con.Connect(g_strShOdbcConn);
@@ -72,7 +68,7 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_AveragePriceCheckA
 			}
 			aSHShare[j].qty = itoa(lTemp, szTemp, 10);
 			CalcAvePrice(aStockQuot, ui64Cjjg);
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";		//买
 				ui64Price = ui64Cjjg + rand() % (uint64_t)(ui64Cjjg * 0.1);	//高于等于均价，不高于涨幅
@@ -121,7 +117,6 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_AveragePriceCheckA
 		//挂单撤单确认
 		for (j = 0; j < iAShareNum; j++)
 		{
-			iRes = CheckOrdwth2Cancel(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}
 

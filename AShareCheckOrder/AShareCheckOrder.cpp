@@ -67,11 +67,10 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 {
 	long lQueryResult = 0;
 	int k = 0;
-	int iRes = 0;
 	std::map<std::string, struct OTLConn_DF::DataInRow> mapRowData;
 	otl_stream streamDB;	//otl 流
-	std::string strTemp = "";
-	std::string strQueryOrdwth2 = "";
+	std::string strTemp;
+	std::string strQueryOrdwth2;
 
 	//比较确认结果；
 	strQueryOrdwth2 = "select * from [Ashare_OIW].[dbo].[ashare_ordwth2] where reff ='";
@@ -84,6 +83,7 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 
 	for (k = 0; k < g_iQueryTimes; k++)
 	{
+		int iRes = 0;
 		iRes = QueryRecordNum(con, strQueryRecordNum);
 		if (iRes == -1 || iRes == 0) //出现异常 、 没有记录，再查
 		{
@@ -189,11 +189,10 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 {
 	long lQueryResult = 0;
 	int k = 0;
-	int iRes = 0;
 	std::map<std::string, struct OTLConn_DF::DataInRow> mapRowData;
 	otl_stream streamDB;	//otl 流
-	std::string strTemp = "";
-	std::string strQueryOrdwth2 = "";
+	std::string strTemp;
+	std::string strQueryOrdwth2;
 
 	//撤单确认结果；
 	strQueryOrdwth2 = "select * from [Ashare_OIW].[dbo].[ashare_ordwth2] where ordrec='";
@@ -207,6 +206,7 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare)
 
 	for (k = 0; k < g_iQueryTimes; k++)
 	{
+		int iRes = 0;
 		iRes = QueryRecordNum(con, strQueryRecordNum);
 		if (iRes == -1 || iRes == 0) //出现异常 、 没有记录，再查
 		{
@@ -327,10 +327,9 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 {
 	long lQueryResult = 0;
 	int k = 0;
-	int iRes = 0;
 	std::map<std::string, struct OTLConn_DF::DataInRow> mapRowData;
 	otl_stream streamDB;	//otl 流
-	std::string strTemp = "";
+	std::string strTemp;
 	//错单确认 查询每条记录
 	std::string strQueryOrdwth2 = "select * from [Ashare_OIW].[dbo].[ashare_ordwth2] where reff ='";
 	strQueryOrdwth2 += aSHShare.reff;
@@ -343,6 +342,7 @@ long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare)
 
 	for (k = 0; k < g_iQueryTimes; k++)
 	{
+		int iRes = 0;
 		iRes = QueryRecordNum(con, strQueryRecordNum);
 		if (iRes == -1 || iRes == 0) //出现异常 、 没有记录，再查
 		{
@@ -463,7 +463,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 	uint64_t ui64Cjje = 0;
 	std::map<std::string, struct OTLConn_DF::DataInRow> mapRowData;
 	otl_stream streamDB;
-	std::string strTemp = "";
+	std::string strTemp;
 	//成交回报 查询每条记录
 	std::string strQueryCjhb = "select * from ashare_cjhb where sqbh='";
 	strQueryCjhb += aSHShare.reff;
@@ -474,11 +474,11 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare)
 	strQueryRecordNum += "';";
 
 	int  k = 0;
-	int iRes = 0;
 	char szTemp[65] = { "\0" };
 
 	for (k = 0; k < g_iQueryTimes; k++)
 	{
+		int iRes = 0;
 		iRes = QueryRecordNum(con, strQueryRecordNum);
 		if (iRes == -1 || iRes == 0) //出现异常 、 没有记录，再查
 		{
@@ -613,7 +613,7 @@ long CheckDivideCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 	uint64_t ui64Cjje = 0;
 	std::map<std::string, struct OTLConn_DF::DataInRow> mapRowData;
 	otl_stream streamDB;
-	std::string strTemp = "";
+	std::string strTemp;
 	//成交回报 查询每条记录
 	std::string strQueryCjhb = "select * from ashare_cjhb where sqbh='";
 	strQueryCjhb += aSHShare.reff;
@@ -624,11 +624,11 @@ long CheckDivideCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 	strQueryRecordNum += "';";
 
 	int  k = 0;
-	int iRes = 0;
 	char szTemp[65] = { "\0" };
 
 	for (k = 0; k < g_iQueryTimes; k++)
 	{
+		int iRes = 0;
 		iRes = QueryRecordNum(con, strQueryRecordNum);
 		if (iRes == -1 || iRes == 0) //出现异常 、 没有记录，再查
 		{
@@ -642,11 +642,13 @@ long CheckDivideCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 2)
 		}
 		else if (iRes > iDivideNum) //分笔成交订单的成交回报有多条
 		{
+			EzLog::Out("成交回报数量 ： ", (trivial::severity_level)4, iRes);
 			EzLog::e("分笔成交订单的成交回报有多条! ", strQueryRecordNum);
 			return -1;
 		}
 		else if (iRes > 0 && iRes < iDivideNum) //查到成交回报数量不足
 		{
+			EzLog::Out("成交回报数量 ： ", (trivial::severity_level)4, iRes);
 			EzLog::e("分笔成交订单的成交回报数量不足！ ", strQueryRecordNum);
 			return -1;
 		}
@@ -791,11 +793,12 @@ int CheckStgwWriteAssetBackToMySQL(const SHShare aSHShare, StockAsset beginStock
 		ui64Temp = ui64EndTemp - ui64BeginTemp;
 		if (ui64Temp != ui64ASHShareCjsl)
 		{
-			EzLog::e("\n\n", beginStockAsset.stock_id);
+			EzLog::e("交易股票stock_id ：", beginStockAsset.stock_id);
 			EzLog::e("买 交易前stock_auction_purchase_balance ：", beginStockAsset.stock_auction_purchase_balance);
 			EzLog::e("买 交易后stock_auction_purchase_balance ：", endStockAsset.stock_auction_purchase_balance);
 			EzLog::e("买单前后成交数量差值不符合，实际成交数量 ：", aSHShare.cjsl);
 			EzLog::e("stock_asset计算得出数量： ", to_string(ui64Temp));
+			EzLog::e("\n", "\n");
 			iRes = -1;
 		}
 
@@ -805,11 +808,12 @@ int CheckStgwWriteAssetBackToMySQL(const SHShare aSHShare, StockAsset beginStock
 		ui64Temp = ui64EndTemp - ui64BeginTemp;
 		if (ui64Temp != ui64ASHShareCjsl)
 		{
-			EzLog::e("\n\n", beginStockAsset.stock_id);
+			EzLog::e("交易股票stock_id ：", beginStockAsset.stock_id);
 			EzLog::e("买 交易前stock_balance ：", beginStockAsset.stock_balance);
 			EzLog::e("买 交易后stock_balance ：", endStockAsset.stock_balance);
 			EzLog::e("买单前后成交数量差值不符合，实际成交数量 ：", aSHShare.cjsl);
 			EzLog::e("stock_asset计算得出数量： ", to_string(ui64Temp));
+			EzLog::e("\n", "\n");
 			iRes = -1;
 		}
 	} // end if( "B" == aSHShare.bs)
@@ -825,9 +829,10 @@ int CheckStgwWriteAssetBackToMySQL(const SHShare aSHShare, StockAsset beginStock
 		ui64Temp = ui64BeginTemp - ui64EndTemp;
 		if (ui64Temp != ui64ASHShareCjsl)
 		{
-			EzLog::e("\n\n", beginStockAsset.stock_id);
+			EzLog::e("交易股票stock_id ：", beginStockAsset.stock_id);
 			EzLog::e("卖单前后成交可用额度不符合，实际成交数量 ：", aSHShare.cjsl);
 			EzLog::e("stock_asset计算得出数量： ", to_string(ui64Temp));
+			EzLog::e("\n", "\n");
 			iRes = -1;
 		}
 
@@ -837,11 +842,12 @@ int CheckStgwWriteAssetBackToMySQL(const SHShare aSHShare, StockAsset beginStock
 		ui64Temp = ui64BeginTemp - ui64EndTemp;
 		if (ui64Temp != ui64ASHShareCjsl)
 		{
-			EzLog::e("\n\n", beginStockAsset.stock_id);
+			EzLog::e("交易股票stock_id ：", beginStockAsset.stock_id);
 			EzLog::e("卖 交易前stock_balance ：", beginStockAsset.stock_balance);
 			EzLog::e("卖 交易后stock_balance ：", endStockAsset.stock_balance);
 			EzLog::e("卖单前后成交数量差值不符合，实际成交数量 ：", aSHShare.cjsl);
 			EzLog::e("stock_asset计算得出数量： ", to_string(ui64Temp));
+			EzLog::e("\n", "\n");
 			iRes = -1;
 		}
 	}//  end id("S" == aSHShare.bs)
@@ -863,11 +869,12 @@ int CheckStgwWriteAssetBackToMySQL(const SHShare aSHShare, StockAsset beginStock
 	//比较stock_last_balance
 	if (endStockAsset.stock_last_balance != beginStockAsset.stock_balance)
 	{
-		EzLog::e("\n\n", beginStockAsset.stock_id);
+		EzLog::e("交易股票stock_id ：", beginStockAsset.stock_id);
 		EzLog::e("交易前stock_balance      ：", beginStockAsset.stock_balance);
 		EzLog::e("交易后stock_last_balance ：", endStockAsset.stock_last_balance);
 		EzLog::e("stock_balance数量不符合交易后stock_last_balance\n",
 			"请在MySQL Stock_asset表检查各个字段");
+		EzLog::e("\n", "\n");
 		iRes = -1;
 	}
 
@@ -884,7 +891,6 @@ int CheckStgwWriteAssetBackToMySQL(const StockAsset beginStockAsset, const uint6
 	uint64_t ui64Temp = 0;
 	uint64_t ui64BeginTem = 0;
 	uint64_t ui64EndTemp = 0;
-	std::string strTemp = "";
 	int flag = 0;
 
 	//使用中发现stgw写回stock_asset表时间很长；systemgtest读取stock_asset数据但不是交易的最终结果；
@@ -899,11 +905,12 @@ int CheckStgwWriteAssetBackToMySQL(const StockAsset beginStockAsset, const uint6
 	//std::cout << "买 ui64EndTemp - ui64BeginTem =" << ui64Temp << " \t ui64BCjsl = " << ui64BCjsl << std::endl;
 	if (ui64BCjsl != ui64Temp)
 	{
-		EzLog::e("\n\n", beginStockAsset.stock_id);
+		EzLog::e("交易股票stock_id ：", beginStockAsset.stock_id);
 		EzLog::e("买 交易前买入量 ：", to_string(ui64BeginTem));
 		EzLog::e("买 交易后买入量 ：", to_string(ui64EndTemp));
 		EzLog::e("买单前后成交数量差值不符合，实际成交数量 ：", to_string(ui64BCjsl));
 		EzLog::e("stock_asset计算得出数量： ", to_string(ui64Temp));
+		EzLog::e("\n", "\n");
 		flag = -1;
 	}
 
@@ -916,11 +923,12 @@ int CheckStgwWriteAssetBackToMySQL(const StockAsset beginStockAsset, const uint6
 	ui64Temp = ui64BeginTem - ui64EndTemp;
 	if (ui64Temp != ui64SCjsl)
 	{
-		EzLog::e("\n\n", beginStockAsset.stock_id);
+		EzLog::e("交易股票stock_id ：", beginStockAsset.stock_id);
 		EzLog::e("卖 交易前可卖余额 ：", to_string(ui64BeginTem));
 		EzLog::e("卖 交易后可卖余额 ：", to_string(ui64EndTemp));
 		EzLog::e("卖单前后成交数量差值不符合，实际成交数量 ：", to_string(ui64SCjsl));
 		EzLog::e("stock_asset计算得出数量： ", to_string(ui64Temp));
+		EzLog::e("\n", "\n");
 		flag = -1;
 	}
 	return flag;

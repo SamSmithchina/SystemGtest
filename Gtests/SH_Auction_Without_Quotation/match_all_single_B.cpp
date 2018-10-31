@@ -22,7 +22,6 @@ TEST(SingleMatchAllWithoutQuotation_B, MatchAll_1)
 	int iRes = 0;
 	long lRes = 0;
 	char szTemp[10] = { " \0 " };
-	long lTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare;			
 
@@ -82,8 +81,6 @@ TEST(SingleMatchAllWithoutQuotation_B, MatchAll_2)
 	int iRes = 0;
 	long lRes = 0;
 	char szTemp[10] = { " \0 " };
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;			
 
@@ -143,8 +140,6 @@ TEST(SingleMatchAllWithoutQuotation_B, MatchAll_3)
 	int iRes = 0;
 	long lRes = 0;
 	char szTemp[10] = { " \0 " };
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;			
 
@@ -204,8 +199,6 @@ TEST(SingleMatchAllWithoutQuotation_B, MatchAll_4)
 	int iRes = 0;
 	long lRes = 0;
 	char szTemp[10] = { " \0 " };
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;			
 
@@ -268,7 +261,6 @@ TEST(SingleMatchAllWithoutQuotation_B, MatchAllCheckAsset_5)
 	char szTemp[10] = { " \0 " };
 	long lTemp = 0;
 	long laShareQty = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;			
 	StockAsset aSHStockAsset;

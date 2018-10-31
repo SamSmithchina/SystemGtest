@@ -13,27 +13,21 @@ std::mutex mutex1;
 //									大于0 表示不正常；
 int MatchAllWithoutQuotation()
 {
-	int iRes = 0;
 	long lRes = 0;
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
 	int k = 0;
 	uint64_t ui64Cjjg = 0;
-	uint64_t ui64Temp = 0;
-	uint64_t ui64Cjje = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;		//aSHShare数组的成员数量
 	g_AShareNum = iAShareNum;
 
 	//建立数据库连接 ,0 right , -1 wrong
-	iRes = con.Connect(g_strShOdbcConn);
-	iRes = con.SetAutoCommit(0);
+	con.Connect(g_strShOdbcConn);
+	con.SetAutoCommit(0);
 
 	//主循环体包含插入、确认、成交
 	//
@@ -49,7 +43,7 @@ int MatchAllWithoutQuotation()
 		aSHShare[j].rec_num = szTemp;
 		//aSHShare[j].account = "A645078963";		//股票账号
 		//aSHShare[j].stock = "600302";			// 证券代码
-		if (0 == g_iExternRecNum % 2)
+		if (0 == j % 2)
 		{
 			aSHShare[j].bs = "B";					//买
 		}
@@ -57,7 +51,7 @@ int MatchAllWithoutQuotation()
 		{
 			aSHShare[j].bs = "S";					//卖
 		}
-		lTemp = g_iExternRecNum * 100;
+		long lTemp = g_iExternRecNum * 100;
 		if (lTemp > 99999900)
 		{
 			lTemp = lTemp % 100000000;		//char qty[8]
@@ -93,9 +87,9 @@ int MatchAllWithoutQuotation()
 		aSHShare[j].cjsl = aSHShare[j].qty;
 		aSHShare[j].cjjg = aSHShare[j].price;
 		lTemp = atoi(aSHShare[j].qty.c_str());
-		iRes = Tgw_StringUtil::String2UInt64MoneyInLi_strtoui64(aSHShare[j].price, ui64Cjjg);	//带小数的成交价格安全转换为整形
+		int iRes = Tgw_StringUtil::String2UInt64MoneyInLi_strtoui64(aSHShare[j].price, ui64Cjjg);	//带小数的成交价格安全转换为整形
 		EXPECT_EQ(0, iRes);
-		ui64Cjje = lTemp * ui64Cjjg;
+		uint64_t ui64Cjje = lTemp * ui64Cjjg;
 		if (ui64Cjje > 999999999990)
 		{
 			aSHShare[j].cjje = "-1";
@@ -165,7 +159,7 @@ DWORD WINAPI ThreadFunc1(LPVOID lpParam)
 	}
 	catch (exception& e)
 	{
-		throw e;
+		throw(e);
 	}
 
 	return lErrorOrderCounter;
@@ -185,7 +179,7 @@ DWORD WINAPI ThreadFunc2(LPVOID lpParam)
 	}
 	catch (exception &e)
 	{
-		throw e;
+		throw(e);
 	}
 
 	return lErrorOrderCounter;
@@ -205,7 +199,7 @@ DWORD WINAPI ThreadFunc3(LPVOID lpParam)
 	}
 	catch (exception& e)
 	{
-		throw e;
+		throw(e);
 	}
 
 	return lErrorOrderCounter;
@@ -224,15 +218,15 @@ TEST(MutilThreadGtestMatchAll, MatchAll)
 	DWORD iDRes1 = 0;
 	DWORD iDRes2 = 0;
 	DWORD iDRes3 = 0;
-	HANDLE hThread1;
-	HANDLE hThread2;
-	HANDLE hThread3;
 	int i = 0;
 	int iRound = 1;
 	long lErrorOrderCounter = 0;
 
 	for (i = 0; i < iRound; i++)
 	{
+		HANDLE hThread1;
+		HANDLE hThread2;
+		HANDLE hThread3;
 		EzLog::Out("iRound = ", (trivial::severity_level)2, i);
 		hThread1 = CreateThread(NULL, 0, ThreadFunc1, &iTheardParam1, 0, NULL);
 		hThread2 = CreateThread(NULL, 0, ThreadFunc2, &iThreadParam2, 0, NULL);

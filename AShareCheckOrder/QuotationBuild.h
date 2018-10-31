@@ -33,7 +33,7 @@ int SendQuotToRedis(AStockQuot& in_aStockQuot);
 // 删除Redis对应的行情
 // 输入 ：strZqdm 待删除的行情的证券代码
 // 输出 ：0 正常执行删除 操作 ， -1删除操作失败
-int DelRedisKeyNum(const std::string strZqdm);
+int DelRedisKeyNum(const std::string& strZqdm);
 
 //从tgwhqk_tv获取行情容量
 //输入： 
@@ -50,7 +50,7 @@ int DelRedisKeyNum(const std::string strZqdm);
 //  uint64_t ui64Zjjg 最近成交价
 //  RedisReply emPcbCallRes 查询redis命令的返回状态
 RedisReply GetQuotFromTgwHqkTV(
-	const std::string strZqdm, std::string& strTpbz,
+	const std::string& strZqdm, std::string& strTpbz,
 	uint64_t& ui64MaxGain, uint64_t& ui64MinFall, uint64_t& ui64Cjje,
 	uint64_t& ui64Cjsl, uint64_t& ui64SJW1, uint64_t& ui64SSL1,
 	uint64_t& ui64BJW1, uint64_t& ui64BSL1, uint64_t& ui64Zjjg);

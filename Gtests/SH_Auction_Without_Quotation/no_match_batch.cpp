@@ -27,16 +27,8 @@ TEST(BatchGtestNoMatchCancelWithoutQuotation, BatchNoMatchCancel)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
-	double dCjje = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
 	long lTemp = 0;
-	long lQueryCjsl = 0;
-	long lAShareQty = 0;
-	uint64_t ui64Cjje = 0;
-	uint64_t ui64Cjjg = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;		//aSHShare数组的成员数量
@@ -62,7 +54,7 @@ TEST(BatchGtestNoMatchCancelWithoutQuotation, BatchNoMatchCancel)
 			aSHShare[j].rec_num = szTemp;
 			//aSHShare[j].account = "A645078963";		//股票账号
 			//aSHShare[j].stock = "600302";			// 证券代码
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";					//买
 			}
@@ -123,7 +115,7 @@ TEST(BatchGtestNoMatchCancelWithoutQuotation, BatchNoMatchCancel)
 		//挂单撤单确认
 		for (j = 0; j < iAShareNum; j++)
 		{
-			iRes = CheckOrdwth2Cancel(con, aSHShare[j]);
+			lRes = CheckOrdwth2Cancel(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}
 

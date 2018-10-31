@@ -29,9 +29,7 @@ TEST(SingleMatchDivideWithQuotation_S, AveragePrice_1)
 	uint64_t ui64Cjje = 0;
 	uint64_t ui64Price = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
 	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -80,7 +78,7 @@ TEST(SingleMatchDivideWithQuotation_S, AveragePrice_1)
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
 	//延时 ，等待第二笔成交
-	Sleep(g_iTimeOut * 50);
+	Sleep(g_iTimeOut * 20);
 	lRes = CheckDivideCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
@@ -121,9 +119,7 @@ TEST(SingleMatchDivideWithQuotation_S, AveragePriceCheckAsset_2)
 	uint64_t ui64Cjje = 0;
 	uint64_t ui64Price = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
 	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 	aSHShare.account = "A645078963";	//股票账号
@@ -184,12 +180,13 @@ TEST(SingleMatchDivideWithQuotation_S, AveragePriceCheckAsset_2)
 
 		//比较结果；
 		//查成交表，比较成交结果是否与预期一致；
-		Sleep(g_iTimeOut * 50);
+		Sleep(g_iTimeOut * 20);
 		lRes = CheckDivideCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
 	}
 
 	//检查stgw写回stock_aasset表数据
+	Sleep(g_iTimeOut * 10);
 	iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset, true);
 	EXPECT_EQ(0, iRes);
 

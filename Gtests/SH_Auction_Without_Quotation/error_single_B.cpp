@@ -19,13 +19,7 @@ TEST(SingleErrorWithoutQuotation_B, Error1)
 
 	int iRes = 0;
 	long lRes = 0;
-	int i = 0;
-	int j = 0;
-	int k = 0;
 	char szTemp[10] = { " \0 " };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -77,13 +71,7 @@ TEST(SingleErrorWithoutQuotation_B, Error2)
 
 	int iRes = 0;
 	long lRes = 0;
-	int i = 0;
-	int j = 0;
-	int k = 0;
 	char szTemp[10] = { " \0 " };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -135,13 +123,7 @@ TEST(SingleErrorWithoutQuotation_B, Error3)
 
 	int iRes = 0;
 	long lRes = 0;
-	int i = 0;
-	int j = 0;
-	int k = 0;
 	char szTemp[10] = { " \0 " };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 

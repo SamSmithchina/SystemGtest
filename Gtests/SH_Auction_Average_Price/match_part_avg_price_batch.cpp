@@ -28,11 +28,9 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetYES)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	uint64_t ui64Cjjg = 0;
 	uint64_t ui64Cjje = 0;
 	uint64_t ui64Price = 0;
-	double dCjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
@@ -66,15 +64,15 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetYES)
 
 			aSHShare[j].qty = "200000";
 			aSHShare[j].cjjg = CalcAvePrice(aStockQuot, ui64Cjjg);		//cjjg 
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";		//买
-				ui64Price = ui64Cjjg + rand() % (uint64_t)(ui64Cjjg * 0.1);	//高于等于均价，不高于涨幅
+				ui64Price = aStockQuot.maxgain - j;	//高于等于均价，不高于涨幅
 			}
 			else
 			{
 				aSHShare[j].bs = "S";		//卖
-				ui64Price = ui64Cjjg - rand() % (uint64_t)(ui64Cjjg *0.1);		//低于等于均价,不低于跌幅
+				ui64Price = aStockQuot.minfall + j;		//低于等于均价,不低于跌幅
 			}
 			Tgw_StringUtil::iLiToStr(ui64Price, aSHShare[j].price, 3);
 
@@ -101,7 +99,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetYES)
 			//con.Commit();	// commit
 
 			//撤单
-			Sleep(g_iTimeOut * 10);
+			Sleep(g_iTimeOut * 20);
 			lRes = InsertCancelOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();	// commit
@@ -112,7 +110,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetYES)
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
 			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
+			Sleep(g_iTimeOut * 20);
 
 		}
 
@@ -199,11 +197,9 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetNO)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
 	uint64_t ui64Cjjg = 0;
 	uint64_t ui64Cjje = 0;
 	uint64_t ui64Price = 0;
-	double dCjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
@@ -233,15 +229,15 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetNO)
 
 			aSHShare[j].qty = "200000";
 			aSHShare[j].cjjg = CalcAvePrice(aStockQuot, ui64Cjjg);		//cjjg 
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";		//买
-				ui64Price = ui64Cjjg + rand() % (uint64_t)(ui64Cjjg * 0.1);	//高于等于均价，不高于涨幅
+				ui64Price = aStockQuot.maxgain - j;	//高于等于均价，不高于涨幅
 			}
 			else
 			{
 				aSHShare[j].bs = "S";		//卖
-				ui64Price = ui64Cjjg - rand() % (uint64_t)(ui64Cjjg *0.1);		//低于等于均价,不低于跌幅
+				ui64Price = aStockQuot.minfall + j;		//低于等于均价,不低于跌幅
 			}
 			Tgw_StringUtil::iLiToStr(ui64Price, aSHShare[j].price, 3);
 
@@ -268,7 +264,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetNO)
 			//con.Commit();	// commit
 
 			//撤单
-			Sleep(g_iTimeOut * 10);
+			Sleep(g_iTimeOut * 20);
 			lRes = InsertCancelOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();	// commit
@@ -279,8 +275,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetNO)
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
 			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
-
+			Sleep(g_iTimeOut * 20);
 		}
 
 		//确认

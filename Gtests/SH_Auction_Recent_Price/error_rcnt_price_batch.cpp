@@ -27,17 +27,11 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetNO)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
-	uint64_t ui64Cjjg = 0;
-	uint64_t ui64Cjje = 0;
-	uint64_t ui64Price = 0;
-	double dCjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;			//aSHShare数组的成员数量
-	long lAShareQty[10] = { 0 };	//-1 表示卖单数量不合理 ， 不为 - 1 表示 不验股，或者买，或者卖的数量合理
 	int iRound = 1;
 
 	//建立数据库连接 ,0 right , -1 wrong
@@ -66,8 +60,7 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetNO)
 				lTemp = lTemp % 100000;
 			}
 			aSHShare[j].qty = itoa(lTemp, szTemp, 10);
-			ui64Cjjg = aStockQuot.zjjg; 	//cjjg 
-			if (0 == g_iExternRecNum % 2)
+			if (0 == j % 2)
 			{
 				aSHShare[j].bs = "B";		//买
 			}
@@ -75,7 +68,7 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetNO)
 			{
 				aSHShare[j].bs = "S";		//卖
 			}
-			ui64Price = rand() % 10000000; //price char[8]包含小数点，实际数字7位
+			uint64_t ui64Price = rand() % 10000000; //price char[8]包含小数点，实际数字7位
 			for (; aStockQuot.minfall <= ui64Price && ui64Price <= aStockQuot.maxgain;) 	//设置价格高于涨幅或低于跌幅
 			{
 				ui64Price = rand() % 10000000;
@@ -142,17 +135,12 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetYES)
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	int i = 0;
 	int j = 0;
-	int k = 0;
-	uint64_t ui64Cjjg = 0;
-	uint64_t ui64Cjje = 0;
 	uint64_t ui64Price = 0;
-	double dCjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;			//aSHShare数组的成员数量
-	long lAShareQty[10] = { 0 };	//-1 表示卖单数量不合理 ， 不为 - 1 表示 不验股，或者买，或者卖的数量合理
 	int iRound = 1;
 
 	//建立数据库连接 ,0 right , -1 wrong
@@ -181,7 +169,6 @@ TEST(BatchGtestErrorWithQuotation, BatchError_RecentPriceCheckAssetYES)
 				lTemp = lTemp % 100000;
 			}
 			aSHShare[j].qty = itoa(lTemp, szTemp, 10);
-			ui64Cjjg = aStockQuot.zjjg; 	//cjjg 
 		
 			aSHShare[j].bs = "S";		//卖
 			

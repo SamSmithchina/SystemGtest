@@ -7,7 +7,7 @@
 
 // 实盘下推送行情，全部成交，区间段均价 不验股，  
 //aSHShare.account = "A645078963";	
-//aSHShare.stock = "600302" ;	标准股份
+//aSHShare.stock = "600372" ;	中航电子
 //			SingleGtestMatchAllWithQuotation_B.AveragePrice_1
 TEST(SingleGtestMatchAllWithQuotation_B, AveragePrice_1)
 {
@@ -19,6 +19,8 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePrice_1)
 	//构造行情
 	AStockQuot aStockQuot;
 	CreateQuotationExample(aStockQuot);
+	aStockQuot.zqdm = "600372";
+	aStockQuot.zqmc = "中航电子";
 
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -39,7 +41,7 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePrice_1)
 	ASSERT_EQ(0, iRes);
 
 	//单个测试样例；
-	aSHShare.account = "A645078963";	//股票账号
+	aSHShare.account = "A645078963";	    //股票账号
 	aSHShare.stock = aStockQuot.zqdm;		// 证券代码
 	g_iExternRecNum++;
 	aSHShare.reff = "J000000000";
@@ -48,9 +50,11 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePrice_1)
 	aSHShare.rec_num = szTemp;
 	aSHShare.price = "1.050";				//均价为1
 	aSHShare.qty = "100";
-	aSHShare.bs = "B";					//买
+	aSHShare.bs = "B";						//买
 
 	//成交汇回报字段
+	aSHShare.gddm = aSHShare.account;
+	aSHShare.zqdm = aSHShare.stock;
 	aSHShare.cjsl = aSHShare.qty;
 	aSHShare.cjjg = CalcAvePrice(aStockQuot, ui64Price);	//计算区间段均价
 	lTemp = atol(aSHShare.qty.c_str());
@@ -84,6 +88,8 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePrice_1)
 
 
 // 实盘下推送行情，全部成交，买单，区间段均价 验股，  
+// aStockQuot.zqdm = "600372";
+// aStockQuot.zqmc = "中航电子";
 //			SingleGtestMatchAllWithQuotation_B.AveragePriceCheckAssert_2
 TEST(SingleGtestMatchAllWithQuotation_B, AveragePriceCheckAssert_2)
 {
@@ -95,7 +101,8 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePriceCheckAssert_2)
 	//构造行情
 	AStockQuot aStockQuot;
 	CreateQuotationExample(aStockQuot);
-
+	aStockQuot.zqdm = "600372";
+	aStockQuot.zqmc = "中航电子";
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
 
@@ -130,6 +137,8 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePriceCheckAssert_2)
 	aSHShare.bs = "B";					//买
 
 	//成交汇回报字段
+	aSHShare.gddm = aSHShare.account;
+	aSHShare.zqdm = aSHShare.stock;
 	aSHShare.cjsl = aSHShare.qty;
 	aSHShare.cjjg = CalcAvePrice(aStockQuot, ui64Price);	//计算区间段均价
 	lTemp = atol(aSHShare.qty.c_str());

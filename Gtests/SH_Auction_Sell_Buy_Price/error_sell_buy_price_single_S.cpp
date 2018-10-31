@@ -26,11 +26,7 @@ TEST(SingleErrorWithQuotation_S, SellBuyPrice_1)
 
 	int iRes = 0;
 	long lRes = 0;
-	long laShareQty = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -96,11 +92,7 @@ TEST(SingleErrorWithQuotation_S, SellBuyPrice_2)
 
 	int iRes = 0;
 	long lRes = 0;
-	long laShareQty = 0;
 	char szTemp[10] = { "\0" };
-	long lQueryResult = -1;
-	long lTemp = 0;
-	std::string strTemp = "";
 	OTLConn40240 con;
 	SHShare aSHShare;
 
@@ -172,7 +164,7 @@ TEST(SingleErrorWithQuotation_S, SellBuyPrice_2)
 //	char szTemp[10] = { "\0" };
 //	long lQueryResult = -1;
 //	long lTemp = 0;
-//	std::string strTemp = "";
+//	std::string strTemp;
 //	OTLConn40240 con;
 //	SHShare aSHShare;
 //
@@ -238,7 +230,7 @@ TEST(SingleErrorWithQuotation_S, SellBuyPrice_2)
 //	char szTemp[10] = { "\0" };
 //	long lQueryResult = -1;
 //	long lTemp = 0;
-//	std::string strTemp = "";
+//	std::string strTemp;
 //	OTLConn40240 con;
 //	SHShare aSHShare;
 //
