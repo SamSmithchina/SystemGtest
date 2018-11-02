@@ -14,14 +14,14 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetNO)
 	int iRes = 0;
 	long lRes = 0;
 	int i = 0;
-	int j = 0; 
+	int j = 0;
 	long lErrorOrderCounter = 0;		//错误订单计数器
 	uint64_t ui64Cjjg = 0;
 	uint64_t ui64Cjje = 0;
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
-	SHShare aSHShare[10];			
+	SHShare aSHShare[10];
 	int iAShareNum = 10;			//aSHShare数组的成员数量
 	int iRound = 1;
 
@@ -33,12 +33,12 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetNO)
 
 	//主循环体包含插入、确认、成交
 	//
-	for (i = 0; i < iRound; i++)	
+	for (i = 0; i < iRound; i++)
 	{
 		for (j = 0; j < iAShareNum; j++)
 		{
 			//初始化股票订单；
-	    	g_iExternRecNum++;
+			g_iExternRecNum++;
 			aSHShare[j].reff = "J000000000";
 			itoa(g_iExternRecNum, szTemp, 10);
 			aSHShare[j].reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);	//订单编号；利用静态变量保持rec_num从1递增；
@@ -162,7 +162,7 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetYES)
 	char szTemp[10] = { "\0" };
 	long lTemp = 0;
 	OTLConn40240 con;
-	SHShare aSHShare[10];			
+	SHShare aSHShare[10];
 	int iAShareNum = 10;			//aSHShare数组的成员数量
 	int iAShareAssetFlag[10] = { 0 };	//-1 表示卖单数量不合理 ， 不为-1,表示不验股，或者买，或者卖的数量合理
 	StockAsset aSHStockAsset;
@@ -177,7 +177,7 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetYES)
 	ASSERT_EQ(0, iRes);
 
 	//主循环体包含插入、确认、成交
-	for (i = 0; i < iRound; i++)	
+	for (i = 0; i < iRound; i++)
 	{
 		for (j = 0; j < iAShareNum; j++)
 		{
@@ -284,7 +284,7 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetYES)
 			lRes = CheckCjhb(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 
-			if (-1 != iAShareAssetFlag[j])
+			if (-1 != lRes)
 			{
 				if ("B" == aSHShare[j].bs)
 				{
@@ -295,15 +295,16 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetYES)
 					ui64SCjsl += strtoull(aSHShare[j].cjsl.c_str(), NULL, 10);
 				}
 			}
-		}		//比较
+		}
 
 	}//for (i = 0; i < 1; i++ )	//主循环
-	
+
 	con.Close();
 
 	//校验回写股份资产stock_asset
+	Sleep(g_iTimeOut * 10); //等待tgw写完mysql数据
 	iRes = CheckStgwWriteAssetBackToMySQL(aSHStockAsset, ui64BCjsl, ui64SCjsl);
-	EXPECT_EQ(0, iRes);
+	EXPECT_EQ(0, iRes) << ++lErrorOrderCounter;
 
 	if (0 < lErrorOrderCounter)
 	{
@@ -318,5 +319,5 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetYES)
 		EzLog::i("=================================================", "\n");
 	}
 	EzLog::i(__FUNCTION__, "\n\n");
-		EzLog::e("" , __FUNCTION__);
+	EzLog::e("", __FUNCTION__);
 }

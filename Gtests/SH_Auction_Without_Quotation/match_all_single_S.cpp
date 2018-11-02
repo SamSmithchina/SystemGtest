@@ -311,11 +311,11 @@ TEST(SingleMatchAllWithoutQuotation_S, MatchAllCheckAsset_5)
 		//查成交表，比较成交结果是否与预期一致；
 		lRes = CheckCjhb(con, aSHShare);
 		EXPECT_EQ(0, lRes);
+	
+		//校验回写股份资产stock_asset
+		iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
+		EXPECT_EQ(0, iRes);
 	}
-
-	//校验回写股份资产stock_asset
-	iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
-	EXPECT_EQ(0, iRes);
 	
 	con.Close();
 	if(iRes != 0 || lRes != 0)
@@ -393,11 +393,11 @@ TEST(SingleMatchAllWithoutQuotation_S, MatchAllCheckAsset1_6)
 		//查成交表，比较成交结果是否与预期一致；
 		lRes = CheckCjhb(con, aSHShare);
 		EXPECT_EQ(0, lRes);
+		
+		//校验回写股份资产stock_asset
+		iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
+		EXPECT_EQ(0, iRes);
 	}
-
-	//校验回写股份资产stock_asset
-	iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
-	EXPECT_EQ(0, iRes);
 
 	con.Close();
 	if(iRes != 0 || lRes != 0)

@@ -22,6 +22,8 @@ TEST(SingleNoMatchCancelWithoutQuotation_B, NoMatchCancel_1)
 	int iRes = 0;
 	long lRes = 0;
 	char szTemp[10] = { " \0 " };
+	OTLConn40240 con;
+	SHShare aSHShare;
 
 	//建立数据库连接 ,0 right , -1 wrong
 	iRes = con.Connect(g_strShOdbcConn);

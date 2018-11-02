@@ -193,7 +193,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, SellBuyPrice_3)
 
 	//单个测试样例；
 	aSHShare.account = "A645078963";	//股票账号
-	aSHShare.stock = ("600311");		// 证券代码
+	aSHShare.stock = aStockQuot.zqdm;		// 证券代码
 	g_iExternRecNum++;
 	aSHShare.reff = "J000000000";
 	itoa(g_iExternRecNum, szTemp, 10);
@@ -206,6 +206,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, SellBuyPrice_3)
 	//成交字段
 	aSHShare.gddm = aSHShare.account;
 	aSHShare.zqdm = aSHShare.stock;
+	Tgw_StringUtil::iLiToStr(aStockQuot.SJW1, aSHShare.cjjg, 3);
 	aSHShare.cjsl = aSHShare.qty;
 	lTemp = atoi(aSHShare.qty.c_str());
 	uint64_t ui64Cjjg = aStockQuot.BJW1;
@@ -223,6 +224,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, SellBuyPrice_3)
 	EXPECT_EQ(0, lRes);
 
 	//插入订单
+	Sleep(g_iTimeOut * 25);
 	g_iExternRecNum++;
 	aSHShare.reff = "J000000000";
 	itoa(g_iExternRecNum, szTemp, 10);
@@ -233,13 +235,12 @@ TEST(SingleNoMatchCancelWithQuotation_S, SellBuyPrice_3)
 	con.Commit();
 
 	//推送第二次行情；
-	//Sleep(g_iTimeOut * 25);
 	aStockQuot.cjsl += 100000;
 	aStockQuot.cjje += 100000000;
 	TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 	aStockQuot.hqsj += ".500";					//毫秒
 	EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
-	Sleep(g_iTimeOut * 20);
+	Sleep(g_iTimeOut * 50);
 
 	//查询确认
 	lRes = CheckOrdwth2Match(con, aSHShare);

@@ -207,6 +207,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_3)
 	aSHShare.zqdm = aSHShare.stock;
 	aSHShare.cjsl = aSHShare.qty;
 	lTemp = atoi(aSHShare.qty.c_str());
+	aSHShare.cjjg = "1.000";
 	uint64_t ui64Cjjg = aStockQuot.zjjg;
 	ui64Cjje = lTemp * ui64Cjjg;
 	if (ui64Cjje > 999999999990)
@@ -222,6 +223,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_3)
 	EXPECT_EQ(0, lRes);
 
 	//插入订单
+	Sleep(g_iTimeOut * 25);
 	g_iExternRecNum++;
 	aSHShare.reff = "J000000000";
 	itoa(g_iExternRecNum, szTemp, 10);
@@ -232,13 +234,12 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_3)
 	con.Commit();
 
 	//推送第二次行情；
-	//Sleep(g_iTimeOut * 25);
 	aStockQuot.cjsl += 100000;
 	aStockQuot.cjje += 100000000;
 	TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 	aStockQuot.hqsj += ".500";					//毫秒
 	EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
-	Sleep(g_iTimeOut * 20);
+	Sleep(g_iTimeOut * 50);
 
 	//查询确认
 	lRes = CheckOrdwth2Match(con, aSHShare);

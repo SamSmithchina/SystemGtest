@@ -401,12 +401,11 @@ TEST(SingleMatchDivideWithoutQuotation_S, MatchDivideCheckAsset_6)
 		//查成交表，比较成交结果是否与预期一致；
 		lRes = CheckDivideCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
+		//检查stgw写回stock_aasset表数据
+		iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset, true);
+		EXPECT_EQ(0, iRes);
 	}
-
-	//检查stgw写回stock_aasset表数据
-	iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset, true);
-	EXPECT_EQ(0, iRes);
-
+	
 	con.Close();
 	if(iRes != 0 || lRes != 0)
 	{

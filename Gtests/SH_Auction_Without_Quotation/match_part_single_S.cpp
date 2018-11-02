@@ -476,11 +476,11 @@ TEST(SingleMatchPartWithoutQuotation_S, MatchPart_5)
 		//检查撤单的确认
 		lRes = CheckOrdwth2Cancel(con, aSHShare);	//这里检查部分撤单的确认表，OrderType为5， 
 		EXPECT_EQ(0, lRes);
+		
+		//检查stgw写回stock_aasset表数据
+		iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
+		EXPECT_EQ(0, iRes);
 	}
-
-	//检查stgw写回stock_aasset表数据
-	iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
-	EXPECT_EQ(0, iRes);
 
 	con.Close();
 	if(iRes != 0 || lRes != 0)
@@ -589,12 +589,12 @@ TEST(SingleMatchPartWithoutQuotation_S, MatchPart_6)
 		//检查撤单的确认
 		lRes = CheckOrdwth2Cancel(con, aSHShare);	//这里检查部分撤单的确认表，OrderType为5， 
 		EXPECT_EQ(0, lRes);
+		//检查stgw写回stock_aasset表数据
+		iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
+		EXPECT_EQ(0, iRes);
 	}
 
-	//检查stgw写回stock_aasset表数据
-	iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
-	EXPECT_EQ(0, iRes);
-
+	
 	con.Close();
 	if(iRes != 0 || lRes != 0)
 	{

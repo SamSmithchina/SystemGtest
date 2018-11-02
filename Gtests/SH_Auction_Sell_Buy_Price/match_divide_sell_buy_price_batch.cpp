@@ -41,6 +41,8 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 	StockAsset aSHStockAsset;
 	aSHStockAsset.account_id = "A645078963";
 	aSHStockAsset.Init("A645078963", aStockQuot.zqdm);
+	uint64_t ui64BCjsl = 0;
+	uint64_t ui64SCjsl = 0;
 
 	//建立数据库连接 ,0 right , -1 wrong
 	iRes = con.Connect(g_strShOdbcConn);
@@ -154,16 +156,31 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 		}
 
 		//成交
-		for (j = 0; j < iAShareNum; j++)		
+		for (j = 0; j < iAShareNum; j++)
 		{
 			if (-1 != lAShareQty[j])
 			{
-				lRes =CheckDivideCjhb(con, aSHShare[j], 2);
+				lRes = CheckDivideCjhb(con, aSHShare[j], 2);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				if (lRes == 0)
+				{
+					if ("B" == aSHShare[j].bs)
+					{
+						ui64BCjsl += strtoull(aSHShare[j].cjsl.c_str(), NULL, 10);
+					}
+					if ("S" == aSHShare[j].bs)
+					{
+						ui64SCjsl += strtoull(aSHShare[j].cjsl.c_str(), NULL, 10);
+					}
+				}
 			}
-		}		
-
+		}
 	}//for (i = 0; i < 1; i++ )	//主循环
+
+	//校验回写股份资产stock_asset
+	Sleep(g_iTimeOut * 10); //等待tgw写完mysql数据
+	iRes = CheckStgwWriteAssetBackToMySQL(aSHStockAsset, ui64BCjsl, ui64SCjsl);
+	EXPECT_EQ(0, iRes) << ++lErrorOrderCounter;
 
 	if (0 < lErrorOrderCounter)
 	{
@@ -293,7 +310,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 		{
 			lRes = CheckOrdwth2Match(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
-			
+
 			//推送第二次行情；
 			//Sleep(g_iTimeOut * 25);
 			aStockQuot.cjsl += 100000;
@@ -313,11 +330,11 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_SellBuyPriceCheckAsset
 		}
 
 		//成交
-		for (j = 0; j < iAShareNum; j++)		
+		for (j = 0; j < iAShareNum; j++)
 		{
-			lRes =CheckDivideCjhb(con, aSHShare[j], 2);
+			lRes = CheckDivideCjhb(con, aSHShare[j], 2);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
-		}		
+		}
 
 	}//for (i = 0; i < 1; i++ )	//主循环
 

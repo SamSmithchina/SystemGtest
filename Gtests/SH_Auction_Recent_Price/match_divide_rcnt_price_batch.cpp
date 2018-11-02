@@ -19,6 +19,8 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentPriceCheckAssetY
 	CreateQuotationExample(aStockQuot);
 	aStockQuot.zqdm = "600353";
 	aStockQuot.zqmc = "旭光股份";
+	uint64_t ui64BCjsl = 0;
+	uint64_t ui64SCjsl = 0;
 
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -152,10 +154,25 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_RecentPriceCheckAssetY
 			{
 				lRes = CheckDivideCjhb(con, aSHShare[j], 2);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				if (lRes == 0)
+				{
+					if ("B" == aSHShare[j].bs)
+					{
+						ui64BCjsl += strtoull(aSHShare[j].cjsl.c_str(), NULL, 10);
+					}
+					if ("S" == aSHShare[j].bs)
+					{
+						ui64SCjsl += strtoull(aSHShare[j].cjsl.c_str(), NULL, 10);
+					}
+				}
 			}
 		}
-
 	}//for (i = 0; i < 1; i++ )	//主循环
+
+	//校验回写股份资产stock_asset
+	Sleep(g_iTimeOut * 10); //等待tgw写完mysql数据
+	iRes = CheckStgwWriteAssetBackToMySQL(aSHStockAsset, ui64BCjsl, ui64SCjsl);
+	EXPECT_EQ(0, iRes) << ++lErrorOrderCounter;
 
 	if (0 < lErrorOrderCounter)
 	{

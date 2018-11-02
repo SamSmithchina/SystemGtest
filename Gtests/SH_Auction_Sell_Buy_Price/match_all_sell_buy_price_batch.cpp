@@ -45,6 +45,8 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_SellBuyPriceCheckAssetYES)
 	StockAsset aSHStockAsset;
 	aSHStockAsset.account_id = "A645078963";
 	aSHStockAsset.Init("A645078963", aStockQuot.zqdm);
+	uint64_t ui64BCjsl = 0;
+	uint64_t ui64SCjsl = 0;
 
 	//建立数据库连接 ,0 right , -1 wrong
 	iRes = con.Connect(g_strShOdbcConn);
@@ -150,10 +152,25 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_SellBuyPriceCheckAssetYES)
 			{
 				lRes = CheckCjhb(con, aSHShare[j]);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				if (lRes == 0)
+				{
+					if ("B" == aSHShare[j].bs)
+					{
+						ui64BCjsl += strtoull(aSHShare[j].cjsl.c_str(), NULL, 10);
+					}
+					if ("S" == aSHShare[j].bs)
+					{
+						ui64SCjsl += strtoull(aSHShare[j].cjsl.c_str(), NULL, 10);
+					}
+				}
 			}
-		}		//比较
-
+		}
 	}//for (i = 0; i < 1; i++ )	//主循环
+
+	//校验回写股份资产stock_asset
+	Sleep(g_iTimeOut * 10); //等待tgw写完mysql数据
+	iRes = CheckStgwWriteAssetBackToMySQL(aSHStockAsset, ui64BCjsl, ui64SCjsl);
+	EXPECT_EQ(0, iRes) << ++lErrorOrderCounter;
 
 	if (0 < lErrorOrderCounter)
 	{
@@ -167,7 +184,7 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_SellBuyPriceCheckAssetYES)
 		EzLog::Out("出现错误订单笔数 ：", (trivial::severity_level)2, lErrorOrderCounter);
 		EzLog::i("=================================================", "\n");
 	}
-	
+
 	//关闭连接
 	con.Close();
 	EzLog::i(__FUNCTION__, "\n\n");

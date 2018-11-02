@@ -299,6 +299,7 @@ TEST(BatchGtestMatchDivideWithoutQuotation, CheckAssetYES)
 	con.Close();
 
 	//校验回写股份资产stock_asset
+	Sleep(g_iTimeOut * 10); //等待tgw写完mysql数据
 	iRes = CheckStgwWriteAssetBackToMySQL(aSHStockAsset, ui64BCjsl, ui64SCjsl);
 	EXPECT_EQ(0, iRes);
 

@@ -160,11 +160,11 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePriceCheckAssert_2)
 		//实际成交价格为行情价格；
 		lRes = CheckCjhb(con, aSHShare);
 		EXPECT_EQ(0, lRes);
+
+		iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
+		EXPECT_EQ(0, iRes);
 	}
 	con.Close();
-
-	iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset);
-	EXPECT_EQ(0, iRes);
 
 	if(iRes != 0 || lRes != 0)
 	{
