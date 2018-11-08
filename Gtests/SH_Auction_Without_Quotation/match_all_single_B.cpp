@@ -11,6 +11,54 @@
 检验成交消息(查看成交订单号，成交数量、成交价格) ，在ASSERT_EQ中完成
 */
 
+// 插入一条订单
+// MatchOrder.Insert 
+TEST(MatchOrder, Insert)
+{
+	OTLConn40240 con;
+	SHShare aSHShare;
+	char szTemp[10] = { " \0 " };
+
+	int iRes = con.Connect(g_strShOdbcConn);
+	ASSERT_EQ(0, iRes);
+	iRes = con.SetAutoCommit(0);
+	ASSERT_EQ(0, iRes);
+
+	int iStockID = 600000;
+	long lRes = 0;
+
+	for (int j = 0; j < 6; j++)
+	{
+		//单个测试样例；
+		g_iExternRecNum++;
+		aSHShare.reff = "J000000000";
+		itoa(g_iExternRecNum, szTemp, 10);
+		aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);	//订单编号；利用静态变量保持rec_num从1递增；
+		aSHShare.rec_num = szTemp;
+		aSHShare.price = "0.100";
+		aSHShare.qty = "100";
+		aSHShare.bs = "B";					//买卖
+		aSHShare.cjsl = aSHShare.qty;
+		aSHShare.cjjg = aSHShare.price;
+		aSHShare.cjje = "10.00";
+		aSHShare.stock = itoa(j + iStockID, szTemp, 10);
+		//插入测试样例
+		std::cout << aSHShare.GetSQlInsertSentence() << std::endl;
+		lRes = InsertOrder(con, aSHShare);
+		EXPECT_EQ(0, lRes);
+		con.Commit();
+	}
+	con.Close();
+	if (iRes != 0 || lRes != 0)
+	{
+		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
+	}
+}
+
 //单个测试样例；
 //	SingleMatchAllWithoutQuotation_B.MatchAll_1
 TEST(SingleMatchAllWithoutQuotation_B, MatchAll_1)

@@ -14,10 +14,10 @@
 
 int main(int argc, char* argv[])
 {
-	time_t tBeginCounter;
-	time_t tEndCounter;
-	time_t tBeginGTest;
-	time_t tEndGTest;
+	clock_t tBeginCounter;
+	clock_t tEndCounter;
+	clock_t tBeginGTest;
+	clock_t tEndGTest;
 	int iExternRecNum = 0;
 
 	tBeginCounter = clock();
@@ -85,8 +85,8 @@ int main(int argc, char* argv[])
 	//计时
 	tEndCounter = clock();
 	EzLog::i("=================================================", "\n");
-	EzLog::Out("测试程序耗时ms = ", (trivial::severity_level)2, (long)(tEndGTest - tBeginGTest));
-	EzLog::Out("程 序 耗 时 ms = ", (trivial::severity_level)2, (long)(tEndCounter - tBeginCounter));
+	EzLog::Out("测试程序耗时ms = ", (trivial::severity_level)2, (long)(tEndGTest - tBeginGTest) *1000 / CLOCKS_PER_SEC);
+	EzLog::Out("程 序 耗 时 ms = ", (trivial::severity_level)2, (long)(tEndCounter - tBeginCounter) *1000 / CLOCKS_PER_SEC);
 	EzLog::Out("执行测试样例 = ", (trivial::severity_level)2, g_iExternRecNum - iExternRecNum);
 	EzLog::i("=================================================", "\n");
 	//system("pause");

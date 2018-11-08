@@ -1,0 +1,154 @@
+﻿G_TestTradeWithoutQuotation\G_TestMatchALLWithoutQuotation.cpp(455): error: Expected: (999999999.99) < (dTemp), actual: 1e+009 vs 9.99906e+008
+999905600
+[2018-06-29 16:25:21.745512] [0x000002fc] [error]
+							
+// #将GTEST语句 改为EXPECT_PRED_FORMAT2(testing::DoubleLE, 999999999.99, dTemp) 
+
+[error]   OTLConn40240::Exec()EXCEPTION=[Microsoft][ODBC SQL Server Driver][SQL Server]违反了 PRIMARY KEY 约束 'PK_ASHARE_ORDWTH'。不能在对象 'dbo.ashare_ordwth' 中插入重复键。,INSERT INTO [Ashare_OIW].[dbo].[ashare_ordwth]([date],[time],[reff],[acc], [stock], [bs], [price], [qty], [status] , [owflag], [ordrec], [firmid], [branchid], [checkord],[rec_num])VALUES('20180629','17:06:49','J100010000','A645078963','600320','B','1.321','1000100','R','LPT','0','','',0x01,'10000'),23000,
+// #price的位宽8， 超过8为会出错，改进为加入模除取余，比较可以减少除法次数，
+			temp = 100 + externRecNum * 100;
+			if (temp > 99990000)
+			{
+				temp = temp % 99990000;		//char qty[8]
+			}
+			AShare[j].qty = itoa(temp, chTemp, 10);
+			if (temp > 9999)
+			{
+				temp = externRecNum % 9999;
+			}
+			
+			
+G_TestTradeWithoutQuotation\G_TestMatchALLWithoutQuotation.cpp(455): error: Expected: (999999999.99) <= (dTemp)
+  Actual: 999999999.99000001 vs 999905600	
+  // # 浮点运算精度不能用整形的Test来比较；
+  //其他地方也是如此；
+  
+999905600  814
+G_TestTradeWithoutQuotation\G_TestMatchALLWithoutQuotation.cpp(455): error: Expected: (999999999.99) <= (dTemp)
+  Actual: 999999999.99000001 vs 999765600
+999765600  2485
+G_TestTradeWithoutQuotation\G_TestMatchALLWithoutQuotation.cpp(455): error: Expected: (999999999.99) <= (dTemp)
+  Actual: 999999999.99000001 vs 999765600
+999765600 Rec_num : 2485price : 488.321  qty : 2048700temp 2048700
+// #stgw的cjje没有计算小数部分，校验才出错，
+
+
+SEH exception with code 0xc00000fd thrown in the test body.
+// #空指针，原因是设置SHShare[3000]数组太大，每条元素640B, 设置1500可以，设置2000就不行；
+
+
+2018-07-05 16:28:25
+虚拟机很卡， 丢了一些订单的cjhb；
+
+unknown file: error: C++ exception with description "invalid string position" thrown in the test body.
+// string  find_first_of() 找不到返回-1， 使用这个函数要注意返回值的有有效性；
+
+//插入数据后一定记得COMMIT；
+
+unknown file: error: SEH exception with code 0xc0000005 thrown in the test body.
+//	strTemp = ltoa(lTemp, NULL, 10); 第二个参数用NULL ，  就会报上面的错误； 
+//	可以改成 ltoa( lTemp, szChar, 10);
+
+
+2018-10-22 16:00:17
+// 重装系统，丢失了很多重要文件
+准备找回数据
+
+2018-10-29 16:47:40
+行情圈的意义在于根据营业部代码区分不同券商的交易，尽量避免所有市场参与者对某只股票竞争，而一些人大量卖卖导致奇特人无法交易；
+行情圈存在时，行情圈的成交数量和成交金额在上一次的行情加减本次交易的数量、金额；
+
+2018-10-31 09:37:16
+[2018-10-31 09:34:53.462024] [0x0000e538] [info]    SystemInit::Simutgw_ConfigIn
+it() System Initialization begin
+[2018-10-31 10:29:43.784036] [info] Pid[0x00017ec4]-Tid[0x000189f8] [] SystemIni
+t::Step2_ReadConfig() add sh db link name=Sh_Conn1
+Assertion failed: IsObject(), file d:\simutgw_slu\vs13_src\rapidjson1.1.0\rapidj
+son/document.h, line 1187
+
+vs编译器 对未引用的局部变量会检查，单不检查全局的我使用变量。
+
+2018-11-8 09:38:40
+hiredis.dll封装的方式解析：
+工程文件有三个“hiredis_wrapper.h”dll结构体和相关函数声明， "hiredis_wrapper.cpp" 函数定义 ， "dllmain.cpp"主函数入口
+
+在“hiredis_wrapper.h” ：
+函数的特点是
+#ifdef _MSC_VER
+	extern "C" _declspec(dllexport) void Dll_redisFree(redisContext_dll *c);
+#else
+	extern "C" void Dll_redisFree(redisContext_dll *c);
+#endif
+extern "C"指的是编译器强制使用C语法风格编译、链接函数；实现c/c++混合编译；
+详情参考：https://www.jianshu.com/p/5d2eeeb93590
+
+_declspec(dllexport) 可以使用 __declspec(dllexport) 关键字从 DLL 导出数据、函数、类或类成员函数。 __declspec(dllexport) 会将导出指令添加到对象文件中，因此您不需要使用 .def 文件。
+详情参考：https://msdn.microsoft.com/zh-cn/library/a90k134d
+
+在 hiredis_wrapper.cpp 文件中定义了hiredis_wrapper.h的函数
+头文件#include "hiredis.h"， hiredis.h是已经封装好的c++ redis库，
+推测hiredis_wrapper.h功能是根据需要的显示、处理功能定义一个结构体redisContext_dll，该结构体与hiredis封装的redisContext结构大致相同；
+这个文件中写函数也只是在hiredis再次封装；无功能改变，参数些不同；
+
+在 dllmain.cpp中定义函数入口；这个文件代码很短
+BOOL APIENTRY DllMain( HMODULE hModule,
+                       DWORD  ul_reason_for_call,
+                       LPVOID lpReserved
+					 )
+{
+	switch (ul_reason_for_call)
+	{
+	case DLL_PROCESS_ATTACH:
+	case DLL_THREAD_ATTACH:
+	case DLL_THREAD_DETACH:
+	case DLL_PROCESS_DETACH:
+		break;
+	}
+	return TRUE;
+}
+这里的：四个dll入口条件 
+	case DLL_PROCESS_ATTACH:	
+	当DLL被进程 <<第一次>> 调用时，导致DllMain函数被调用，
+
+同时ul_reason_for_call的值为DLL_PROCESS_ATTACH，
+
+如果同一个进程后来再次调用此DLL时，操作系统只会增加DLL的使用次数，
+
+不会再用DLL_PROCESS_ATTACH调用DLL的DllMain函数。
+	
+	case DLL_THREAD_ATTACH:	
+	当进程创建一线程时，系统查看当前映射到进程地址空间中的所有DLL文件映像，
+
+并用值DLL_THREAD_ATTACH调用DLL的DllMain函数。 
+
+新创建的线程负责执行这次的DLL的DllMain函数，
+
+只有当所有的DLL都处理完这一通知后，系统才允许线程开始执行它的线程函数。
+	
+	case DLL_THREAD_DETACH:	
+		如果线程调用了ExitThread来结束线程（线程函数返回时，系统也会自动调用ExitThread），
+		系统查看当前映射到进程空间中的所有DLL文件映像，并用DLL_THREAD_DETACH来调用DllMain函数，
+		通知所有的DLL去执行线程级的清理工作。
+		★注意：如果线程的结束是因为系统中的一个线程调用了TerminateThread，
+		系统就不会用值DLL_THREAD_DETACH来调用所有DLL的DllMain函数
+	case DLL_PROCESS_DETACH:		当DLL被从进程的地址空间解除映射时，系统调用了它的DllMain，传递的ul_reason_for_call值是DLL_PROCESS_DETACH。如果进程的终结是因为调用了TerminateProcess，系统就不会用DLL_PROCESS_DETACH来调用DLL的DllMain函数。这就意味着DLL在进程结束前没有机会执行任何清理工作。
+参考链接：https://blog.csdn.net/friendan/article/details/7659190
+①hModule参数：指向DLL本身的实例句柄；
+②ul_reason_for_call参数：指明了DLL被调用的原因，可以有以下4个取值：
+③lpReserved参数：保留，目前没什么意义。
+ 
+ 生成dll的过程
+	hiredis_wrapper编译hiredis_wrapper.dll动态链接文件，
+	m_hDLL = LoadLibrary("hiredis_wrapper.dll"); 加载DLL文件
+	F_Dll_redisConnectWithTimeout = (pfDll_redisConnectWithTimeout)GetProcAddress(m_hDLL, "Dll_redisConnectWithTimeout");
+		GetProcAddress(m_hDLL, "Dll_redisConnectWithTimeout") m_hDLL是句柄，不清楚Windows下的具体类型、含义；Dll_redisConnectWithTimeout是动态库的参数；
+		F_Dll_redisConnectWithTimeout是pfDll_redisConnectWithTimeout指针类型函数基础上定义的一个指针变量
+
+fix连接失败的可能：
+1：关闭防火墙，
+2：如果连接web,但是tgw没有收到web消息，清空webid \mysql user表
+3： 清空虚拟机stg日志log和store两个文件夹；
+4：stg 和 撮合 重启一下，
+	
+		
+	

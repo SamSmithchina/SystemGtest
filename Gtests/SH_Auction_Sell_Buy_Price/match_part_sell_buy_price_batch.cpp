@@ -124,7 +124,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetYES)
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
 			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 20);
+			Sleep(g_iTimeOut * 50);
 		}
 
 		//验股
@@ -315,7 +315,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetNO)
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
 			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 20);
+			Sleep(g_iTimeOut * 50);
 		}
 
 		//确认

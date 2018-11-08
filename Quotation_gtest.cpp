@@ -216,3 +216,74 @@ TEST(AStockQuot, DelKeyNum)
 }
 
 //下一笔订单，依据行情成交所需要的测试时间
+//  AStockQuot.Timer
+TEST(AStockQuot, Timer)
+{
+	//获取最新行情容量
+	std::string strZqdm = "600000";
+	uint64_t ui64MaxGain = 0;
+	uint64_t ui64MinFall = 0;
+	string strTpbz;
+	uint64_t ui64Cjje = 0;
+	uint64_t ui64Cjsl = 0;
+	uint64_t ui64SJW1 = 0;
+	uint64_t ui64SSL1 = 0;
+	uint64_t ui64BJW1 = 0;
+	uint64_t ui64BSL1 = 0;
+	uint64_t ui64Zjjg = 0;
+	int i = 0;
+	int j = 0;
+
+	//推送一条行情；
+	AStockQuot aStockQuot;
+	CreateQuotationExample(aStockQuot);
+	aStockQuot.zqdm = "600000";
+	aStockQuot.zqmc = "quot_test";
+	int iRes = SendQuotToRedis(aStockQuot);
+	EXPECT_EQ(0, iRes);
+	Sleep(g_iTimeOut * 10);
+
+	for (j = 0; j < 5; j++)
+	{
+		//更新行情
+		aStockQuot.cjsl += 100000;
+		aStockQuot.cjje += 100000000;
+		TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
+		aStockQuot.hqsj += ".500";					//毫秒
+		ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
+		Sleep(2500);
+
+		clock_t beginTimer = clock();
+		{
+			for (i = 0; i < 200; i++)
+			{
+				Sleep(g_iTimeOut);
+				RedisReply enumRedisReplyRes = GetQuotFromTgwHqkTV(
+					strZqdm, strTpbz,
+					ui64MaxGain, ui64MinFall, ui64Cjje,
+					ui64Cjsl, ui64SJW1, ui64SSL1,
+					ui64BJW1, ui64BSL1, ui64Zjjg);
+				int n = 0;
+				if (RedisReply_array == enumRedisReplyRes)
+				{
+					if (aStockQuot.cjsl == ui64Cjsl && aStockQuot.cjje == ui64Cjje)
+					{
+						break;
+					}
+				}
+				else
+				{
+					if (i == 199)
+					{
+						std::cout << "达到最大查找次数 ！ " << std::endl;
+					}
+					continue;
+				}
+			}// for
+		}// timer
+		clock_t endTimer = clock();
+
+		std::cout << "第  " << j << " 次 ，两次推送行情中第二次行情处理的时间间隔  "
+			<< (double)(endTimer - beginTimer) * 1000 / CLOCKS_PER_SEC << " ms" << std::endl;
+	}
+}

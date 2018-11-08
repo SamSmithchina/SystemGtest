@@ -7,8 +7,8 @@
 //区间段均价1.000元 ，批量处理实盘下部分成交订单,  验股
 // account = "A645078963" 股票账号
 // stock = ("600366") 宁波韵升
-//	 BatchGtestMAtchPartWithQuotation.BatchMAtchPart_AveragePriceCheckAssetYES
-TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetYES)
+//	 BatchGtestMAtchPartWithQuotation.BatchMatchPart_AveragePriceCheckAssetYES
+TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetYES)
 {
 	//切换部分成交模式，开启行情
 	ASSERT_EQ(0, TransformMatchMode(AveragePrice));
@@ -112,7 +112,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetYES)
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
 			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 20);
+			Sleep(g_iTimeOut * 50);
 
 		}
 
@@ -193,8 +193,8 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetYES)
 //区间段均价1.000元 ，批量处理实盘下部分成交订单,  不验股
 // account = "A645078963" 股票账号
 // stock = ("600367") 红星发展
-//	 BatchGtestMAtchPartWithQuotation.BatchMAtchPart_AveragePriceCheckAssetNO
-TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetNO)
+//	 BatchGtestMAtchPartWithQuotation.BatchMatchPart_AveragePriceCheckAssetNO
+TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetNO)
 {
 	//切换部分成交模式，开启行情
 	ASSERT_EQ(0, TransformMatchMode(AveragePrice));
@@ -292,7 +292,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMAtchPart_AveragePriceCheckAssetNO)
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//毫秒
 			EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 20);
+			Sleep(g_iTimeOut * 50);
 		}
 
 		//确认

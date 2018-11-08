@@ -114,7 +114,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetYES)
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//∫¡√Î
 			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 20);
+			Sleep(g_iTimeOut * 50);
 		}
 
 		//—Èπ…
@@ -294,7 +294,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetNO)
 			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 			aStockQuot.hqsj += ".500";					//∫¡√Î
 			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 20);
+			Sleep(g_iTimeOut * 50);
 		}
 		con.Commit();	// commit
 

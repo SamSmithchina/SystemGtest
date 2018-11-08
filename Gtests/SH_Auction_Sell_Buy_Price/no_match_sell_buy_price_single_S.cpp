@@ -206,7 +206,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, SellBuyPrice_3)
 	//成交字段
 	aSHShare.gddm = aSHShare.account;
 	aSHShare.zqdm = aSHShare.stock;
-	Tgw_StringUtil::iLiToStr(aStockQuot.SJW1, aSHShare.cjjg, 3);
+	Tgw_StringUtil::iLiToStr(aStockQuot.BJW1, aSHShare.cjjg, 3);
 	aSHShare.cjsl = aSHShare.qty;
 	lTemp = atoi(aSHShare.qty.c_str());
 	uint64_t ui64Cjjg = aStockQuot.BJW1;

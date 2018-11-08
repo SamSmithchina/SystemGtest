@@ -43,16 +43,16 @@ TEST(TransformMatchMode, RepateTransform)
 	MatchMode mmExample = SimulMatchAll;
 	int iRound = 11;
 	int iErrorCounter = 0;
-	time_t tTotal = 0;
+	clock_t tTotal = 0;
 
-	time_t tBegin = clock();
+	clock_t tBegin = clock();
 	{
 		int iModeNumber = 11;
 		int i = 0;
 		int iRes = 0;
-		time_t tSingleTestBegin;
-		time_t tSingleTestEnd;
-		time_t tTemp = 0;
+		clock_t tSingleTestBegin;
+		clock_t tSingleTestEnd;
+		clock_t tTemp = 0;
 		for (i = 0; i < iRound; i++)
 		{
 			if (i == 0 || i == 9) //0清算模式完成时间太长，9启用行情实际上用不到；
@@ -75,11 +75,11 @@ TEST(TransformMatchMode, RepateTransform)
 			}
 		}
 	}
-	time_t	tEnd = clock();
+	clock_t	tEnd = clock();
 	EzLog::Out("转换工作模式总次数 ", (trivial::severity_level)2, iRound);
 	EzLog::Out("出错次数 ：", (trivial::severity_level)2, iErrorCounter);
-	EzLog::Out("总转换耗时ms  ", (trivial::severity_level)2, (long)tTotal);
-	EzLog::Out("总循环耗时ms  ", (trivial::severity_level)2, (long)(tEnd - tBegin));
+	EzLog::Out("总转换耗时ms  ", (trivial::severity_level)2, (long)tTotal * 1000 / CLOCKS_PER_SEC);
+	EzLog::Out("总循环耗时ms  ", (trivial::severity_level)2, (long)(tEnd - tBegin) * 1000 / CLOCKS_PER_SEC);
 	EzLog::i("\n", "\n");
 	EXPECT_EQ(0, iErrorCounter);
 	EzLog::i(__FUNCTION__, "\n\n");
