@@ -59,5 +59,6 @@ web端下发撮合策略， 柜台下单， 撮合根据撮合策略处理委托
 TradPolicyManager.h line 127 缺少深圳市场规则的指针拷贝：ptrRule_Sz = orig.ptrRule_Sz;
 
  Clienter::ProcessReceivedData 这个函数命名是不是多了一个'd'，应该是 ProcessReceiveData？
+为什么推荐++iterator ，而不是iterator++?
 
 

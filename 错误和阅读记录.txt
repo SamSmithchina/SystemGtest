@@ -150,5 +150,8 @@ fix连接失败的可能：
 3： 清空虚拟机stg日志log和store两个文件夹；
 4：stg 和 撮合 重启一下，
 	
-		
+2018-11-12 13:22:15
+int* MergeSort(int& iArray[]) // 语法错误； 不允许引用数组
+int* MergeSort(int* iArray)   //正确写法
+
 	

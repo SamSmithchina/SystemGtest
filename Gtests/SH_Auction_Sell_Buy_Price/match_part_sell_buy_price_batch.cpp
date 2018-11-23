@@ -111,6 +111,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetYES)
 			//插入
 			lRes = InsertOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes);
+			con.Commit();
 
 			//插入撤单
 			Sleep(g_iTimeOut * 20);
@@ -119,12 +120,15 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetYES)
 			con.Commit();	// commit
 
 			//推送第二次行情；
-			aStockQuot.cjsl += 100000;
-			aStockQuot.cjje += 100000000;
-			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
-			aStockQuot.hqsj += ".500";					//毫秒
-			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
+			if ((iAShareNum - 1) > j)
+			{
+				aStockQuot.cjsl += 100000;
+				aStockQuot.cjje += 100000000;
+				TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
+				aStockQuot.hqsj += ".500";					//毫秒
+				ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
+				Sleep(g_iTimeOut * 50);
+			}
 		}
 
 		//验股
@@ -302,6 +306,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetNO)
 			//插入
 			lRes = InsertOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes);
+			con.Commit();
 
 			//插入撤单
 			Sleep(g_iTimeOut * 20);
@@ -310,12 +315,15 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetNO)
 			con.Commit();	// commit
 
 			//推送第二次行情；
-			aStockQuot.cjsl += 100000;
-			aStockQuot.cjje += 100000000;
-			TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
-			aStockQuot.hqsj += ".500";					//毫秒
-			ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
-			Sleep(g_iTimeOut * 50);
+			if ((iAShareNum - 1) > j)
+			{
+				aStockQuot.cjsl += 100000;
+				aStockQuot.cjje += 100000000;
+				TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
+				aStockQuot.hqsj += ".500";					//毫秒
+				ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
+				Sleep(g_iTimeOut * 50);
+			}
 		}
 
 		//确认

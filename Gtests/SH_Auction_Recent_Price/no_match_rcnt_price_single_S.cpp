@@ -156,7 +156,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_2)
 }
 
 
-// 挂单撤单 ，对应的股票成交数量0，订单理应不成交，之后推送新行情；
+// 挂单撤单 ，对应的股票买单价格高于最近成交价，订单理应不成交，之后推送新行情；
 // 最近成交价1.000元， 卖单，不验股
 // account = "A645078963" 股票账号
 // stock = ("600377") 宁沪高速
@@ -199,16 +199,16 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_3)
 	itoa(g_iExternRecNum, szTemp, 10);
 	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);		//订单编号；利用静态变量保持rec_num从1递增；
 	aSHShare.rec_num = szTemp;
-	aSHShare.price = "0.950";
-	aSHShare.qty = "100000";
+	aSHShare.price = "1.050";
+	aSHShare.qty = "100";
 	aSHShare.bs = "S";					//买\卖
 	//成交字段
 	aSHShare.gddm = aSHShare.account;
 	aSHShare.zqdm = aSHShare.stock;
 	aSHShare.cjsl = aSHShare.qty;
 	lTemp = atoi(aSHShare.qty.c_str());
-	aSHShare.cjjg = "1.000";
-	uint64_t ui64Cjjg = aStockQuot.zjjg;
+	aSHShare.cjjg = "1.050";
+	uint64_t ui64Cjjg = 1050;
 	ui64Cjje = lTemp * ui64Cjjg;
 	if (ui64Cjje > 999999999990)
 	{
@@ -234,8 +234,9 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_3)
 	con.Commit();
 
 	//推送第二次行情；
-	aStockQuot.cjsl += 100000;
-	aStockQuot.cjje += 100000000;
+	aStockQuot.cjsl += 200000;
+	aStockQuot.cjje += 200000000;
+	aStockQuot.zjjg = 1050;
 	TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 	aStockQuot.hqsj += ".500";					//毫秒
 	EXPECT_EQ(0, SendQuotToRedis(aStockQuot));

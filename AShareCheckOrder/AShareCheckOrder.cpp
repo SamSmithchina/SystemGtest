@@ -145,6 +145,15 @@ long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare)
 					return -1;
 				}
 
+				strTemp = mapRowData["status"].strValue;
+				if ("O" != strTemp)
+				{
+					EzLog::e("Ordwth status:", strTemp);
+					EzLog::e("预期   status:", "O");//错单标志F
+					EzLog::e("Check Ordwth2_error ERROR! reff = ", aSHShare.reff);
+					return -1;
+				}
+
 				strTemp = mapRowData["price"].strValue;			//该订单成交金额
 				iRes = (int)strTemp.find_first_of(" ");
 				if (iRes != -1)

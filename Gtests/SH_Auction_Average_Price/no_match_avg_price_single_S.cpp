@@ -156,7 +156,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, AveragePrice_2)
 }
 
 
-// 挂单撤单 ，对应的股票成交数量0，订单理应不成交，之后推送新行情成交；
+// 挂单撤单 ，对应的股票卖单价格高于均价，订单理应不成交，之后推送新行情成交；
 // 区间段均价1.000元， 卖单，不验股
 // account = "A645078963" 股票账号
 // stock = ("600373") 中文传媒
@@ -192,23 +192,23 @@ TEST(SingleNoMatchCancelWithQuotation_S, AveragePrice_3)
 	ASSERT_EQ(0, iRes);
 
 	//单个测试样例；
-	aSHShare.account = "A645078963";	//股票账号
+	aSHShare.account = "A645078963";		//股票账号
 	aSHShare.stock = aStockQuot.zqdm;		// 证券代码
 	g_iExternRecNum++;
 	aSHShare.reff = "J000000000";
 	itoa(g_iExternRecNum, szTemp, 10);
 	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);		//订单编号；利用静态变量保持rec_num从1递增；
 	aSHShare.rec_num = szTemp;
-	aSHShare.price = "0.927";
-	aSHShare.qty = "100000";
+	aSHShare.price = "1.001";
+	aSHShare.qty = "100";
 	aSHShare.bs = "S";					//买\卖
 	//成交字段
 	aSHShare.gddm = aSHShare.account;
 	aSHShare.zqdm = aSHShare.stock;
 	aSHShare.cjsl = aSHShare.qty;
 	lTemp = atoi(aSHShare.qty.c_str());
-	aSHShare.cjjg = "1.000";	//计算区间段均价
-	uint64_t ui64Cjjg = 1000;
+	aSHShare.cjjg = "1.100";	//计算区间段均价
+	uint64_t ui64Cjjg = 1100;
 	ui64Cjje = lTemp * ui64Cjjg;
 	if (ui64Cjje > 999999999990)
 	{
@@ -218,23 +218,13 @@ TEST(SingleNoMatchCancelWithQuotation_S, AveragePrice_3)
 	{
 		Tgw_StringUtil::iLiToStr(ui64Cjje, aSHShare.cjje, 2); //成交金额带两位小数；
 	}
-	lRes = InsertOrder(con, aSHShare);	//消耗行情容量
-	EXPECT_EQ(0, lRes);
-
-	//插入订单
-	Sleep(g_iTimeOut * 25);
-	g_iExternRecNum++;
-	aSHShare.reff = "J000000000";
-	itoa(g_iExternRecNum, szTemp, 10);
-	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);
-	aSHShare.rec_num = szTemp;
-	lRes = InsertOrder(con, aSHShare);
+	lRes = InsertOrder(con, aSHShare);	
 	EXPECT_EQ(0, lRes);
 	con.Commit();
 
 	//推送第二次行情；
-	aStockQuot.cjsl += 100000;
-	aStockQuot.cjje += 100000000;
+	aStockQuot.cjsl += 10000;
+	aStockQuot.cjje += 11000000;
 	TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 	aStockQuot.hqsj += ".500";					//毫秒
 	EXPECT_EQ(0, SendQuotToRedis(aStockQuot));

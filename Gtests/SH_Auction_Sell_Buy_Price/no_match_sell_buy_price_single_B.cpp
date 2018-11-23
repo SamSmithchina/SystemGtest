@@ -155,7 +155,7 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_2)
 	}
 }
 
-// 挂单撤单 ，对应的股票最近成交数量0，订单理应不成交，之后推送新行情成交；
+// 挂单撤单 ，对应的股票买单价低于卖一价格，订单理应不成交，之后推送新行情成交；
 // 买一价1.050元，卖一价1.045元， 买单，不验股
 // account = "A645078963" 股票账号
 // stock = ("600378") 天科股份
@@ -198,9 +198,24 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_3)
 	itoa(g_iExternRecNum, szTemp, 10);
 	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);		//订单编号；利用静态变量保持rec_num从1递增；
 	aSHShare.rec_num = szTemp;
-	aSHShare.price = "1.050";
-	aSHShare.qty = "100000";
+	aSHShare.price = "1.040";
+	aSHShare.qty = "100";
 	aSHShare.bs = "B";					//买\卖
+
+	lRes = InsertOrder(con, aSHShare);
+	EXPECT_EQ(0, lRes);
+	con.Commit();
+
+	//推送第二次行情；
+	aStockQuot.cjsl += 100000;
+	aStockQuot.cjje += 100000000;
+	aStockQuot.SJW1 = 1039;
+	//aStockQuot.BJW1 += 1050;
+	TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
+	aStockQuot.hqsj += ".500";					//毫秒
+	EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
+	Sleep(g_iTimeOut * 50);
+
 	//成交字段
 	aSHShare.gddm = aSHShare.account;
 	aSHShare.zqdm = aSHShare.stock;
@@ -217,29 +232,6 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_3)
 	{
 		Tgw_StringUtil::iLiToStr(ui64Cjje, aSHShare.cjje, 2); //成交金额带两位小数；
 	}
-
-
-	lRes = InsertOrder(con, aSHShare);	//消耗行情容量
-	EXPECT_EQ(0, lRes);
-
-	//插入订单
-	Sleep(g_iTimeOut * 25);
-	g_iExternRecNum++;
-	aSHShare.reff = "J000000000";
-	itoa(g_iExternRecNum, szTemp, 10);
-	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);
-	aSHShare.rec_num = szTemp;
-	lRes = InsertOrder(con, aSHShare);
-	EXPECT_EQ(0, lRes);
-	con.Commit();
-
-	//推送第二次行情；
-	aStockQuot.cjsl += 100000;
-	aStockQuot.cjje += 100000000;
-	TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
-	aStockQuot.hqsj += ".500";					//毫秒
-	EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
-	Sleep(g_iTimeOut * 50);
 
 	//查询确认
 	lRes = CheckOrdwth2Match(con, aSHShare);
