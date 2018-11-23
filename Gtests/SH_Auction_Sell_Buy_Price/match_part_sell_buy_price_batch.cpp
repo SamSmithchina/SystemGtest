@@ -114,7 +114,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetYES)
 			con.Commit();
 
 			//插入撤单
-			Sleep(g_iTimeOut * 20);
+			Sleep(g_iTimeOut * 5);
 			lRes = InsertCancelOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes);
 			con.Commit();	// commit
@@ -122,6 +122,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetYES)
 			//推送第二次行情；
 			if ((iAShareNum - 1) > j)
 			{
+				Sleep(g_iTimeOut * 10);
 				aStockQuot.cjsl += 100000;
 				aStockQuot.cjje += 100000000;
 				TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
@@ -309,7 +310,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetNO)
 			con.Commit();
 
 			//插入撤单
-			Sleep(g_iTimeOut * 20);
+			Sleep(g_iTimeOut * 5);
 			lRes = InsertCancelOrder(con, aSHShare[j]);
 			EXPECT_EQ(0, lRes);
 			con.Commit();	// commit
@@ -317,6 +318,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_SellBuyPriceCheckAssetNO)
 			//推送第二次行情；
 			if ((iAShareNum - 1) > j)
 			{
+				Sleep(g_iTimeOut * 10);
 				aStockQuot.cjsl += 100000;
 				aStockQuot.cjje += 100000000;
 				TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);

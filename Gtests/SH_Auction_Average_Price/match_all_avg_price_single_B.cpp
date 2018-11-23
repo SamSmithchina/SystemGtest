@@ -49,7 +49,7 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePrice_1)
 	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);		//订单编号；利用静态变量保持rec_num从1递增；
 	aSHShare.rec_num = szTemp;
 	aSHShare.price = "1.050";				//均价为1
-	aSHShare.qty = "100";
+	aSHShare.qty = "1000";
 	aSHShare.bs = "B";						//买
 
 	//成交汇回报字段
@@ -133,7 +133,7 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePriceCheckAssert_2)
 	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);		//订单编号；利用静态变量保持rec_num从1递增；
 	aSHShare.rec_num = szTemp;
 	aSHShare.price = "1.050";				//均价为1
-	aSHShare.qty = "100";
+	aSHShare.qty = "1000";
 	aSHShare.bs = "B";					//买
 
 	//成交汇回报字段
