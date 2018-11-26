@@ -68,3 +68,15 @@ son/document.h, line 1187
 
 vs编译器 对未引用的局部变量会检查，单不检查全局的我使用变量。
 
+
+
+[2018-11-23 17:28:09.614337] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] 	CJHB cjjg: 0.999
+[2018-11-23 17:28:09.614337] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] 	预期 cjjg: 1.000
+[2018-11-23 17:28:09.614337] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] Check Cjhb ERROR! reff = J000000136
+[2018-11-23 17:28:09.614337] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] SingleGtestMatchAllWithQuotation_S_AveragePrice_1_Test::TestBody
+
+[2018-11-23 17:28:11.598721] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] 	CJHB cjjg: 0.999
+[2018-11-23 17:28:11.598721] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] 	预期 cjjg: 1.000
+[2018-11-23 17:28:11.598721] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] Check Cjhb ERROR! reff = J000000137
+[2018-11-23 17:28:12.114346] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] SingleGtestMatchAllWithQuotation_S_AveragePriceCheckAssert_2_Test::TestBody
+

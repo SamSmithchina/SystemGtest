@@ -158,7 +158,7 @@ TEST(AStockQuot, DelKeyNum)
 	}
 	else
 	{
-		EzLog::e("删除该行情", "成功 ！");
+		EzLog::i("删除该行情", "成功 ！");
 	}
 
 	Sleep(g_iTimeOut * 10);

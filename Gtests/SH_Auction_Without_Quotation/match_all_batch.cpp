@@ -319,5 +319,4 @@ TEST(BatchGtestMatchAllWithoutQuotation, CheckAssetYES)
 		EzLog::i("=================================================", "\n");
 	}
 	EzLog::i(__FUNCTION__, "\n\n");
-	EzLog::e("", __FUNCTION__);
 }
