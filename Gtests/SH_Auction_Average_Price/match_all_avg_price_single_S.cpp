@@ -18,6 +18,8 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePrice_1)
 	//构造行情
 	AStockQuot aStockQuot;
 	CreateQuotationExample(aStockQuot);
+	aStockQuot.zqdm = "600380";
+	aStockQuot.zqmc = "健康元";
 
 	////推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -50,6 +52,8 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePrice_1)
 	aSHShare.bs = "S";					//卖
 
 	//成交汇回报字段
+	aSHShare.gddm = aSHShare.account;
+	aSHShare.zqdm = aSHShare.stock;
 	aSHShare.cjsl = aSHShare.qty;
 	aSHShare.cjjg = CalcAvePrice(aStockQuot, ui64Price);	//计算区间段均价
 	lTemp = atol(aSHShare.qty.c_str());
@@ -94,6 +98,8 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePriceCheckAssert_2)
 	//构造行情
 	AStockQuot aStockQuot;
 	CreateQuotationExample(aStockQuot);
+	aStockQuot.zqdm = "600380";
+	aStockQuot.zqmc = "健康元";
 
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -129,6 +135,8 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePriceCheckAssert_2)
 	aSHShare.bs = "S";					//卖
 
 	//成交汇回报字段
+	aSHShare.gddm = aSHShare.account;
+	aSHShare.zqdm = aSHShare.stock;
 	aSHShare.cjsl = aSHShare.qty;
 	aSHShare.cjjg = CalcAvePrice(aStockQuot, ui64Price);	//计算区间段均价
 	lTemp = atol(aSHShare.qty.c_str());
