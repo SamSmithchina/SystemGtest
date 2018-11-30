@@ -5,7 +5,7 @@
 #include <mutex>
 #include <thread>
 
-int g_AShareNum = 0;
+int g_iSingleThreadAShareNum = 0;
 std::mutex mutex1;
 
 //多线程执行；
@@ -23,7 +23,7 @@ int MatchAllWithoutQuotation()
 	OTLConn40240 con;
 	SHShare aSHShare[10];
 	int iAShareNum = 10;		//aSHShare数组的成员数量
-	g_AShareNum = iAShareNum;
+	g_iSingleThreadAShareNum = iAShareNum;
 
 	//建立数据库连接 ,0 right , -1 wrong
 	con.Connect(g_strShOdbcConn);
@@ -245,18 +245,22 @@ TEST(MutilThreadGtestMatchAll, MatchAll)
 		lErrorOrderCounter += iDRes2;
 		lErrorOrderCounter += iDRes3;
 	}
+
 	if (0 < lErrorOrderCounter)
 	{
-		EzLog::i("=================================================", "\n");
-		EzLog::e(__FUNCTION__, "\n");
-		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
-		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
-		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
-		EzLog::Out("每组        ：", (trivial::severity_level)2, g_AShareNum);
-		EzLog::Out("共计 iRound * iAShareNum ： ", (trivial::severity_level)2, iRound*g_AShareNum);
-		EzLog::Out("出现错误订单笔数 ：", (trivial::severity_level)2, lErrorOrderCounter);
-		EzLog::i("=================================================", "\n");
+		char szTransferBuff[65] = { "\0" };
+		std::string strError = "=================================================\n";
+		strError += __FUNCTION__;
+		strError += "\n共计 iRound * iAShareNum ： ";
+		strError += itoa(iRound*g_iSingleThreadAShareNum, szTransferBuff, 10);
+		strError += "\n出现错误订单笔数 ：";
+		strError +=  ltoa(lErrorOrderCounter, szTransferBuff, 10);
+		strError += "\n=================================================\n";
+		EzLog::e(strError, "");
 		EXPECT_EQ(lErrorOrderCounter, 0);//如果有错误订单就输出错误订单数，
 	}
-	EzLog::i(__FUNCTION__, "\n\n");
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n\n");
+	}
 }

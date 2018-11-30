@@ -49,7 +49,7 @@
 //设计特定的行情数据:
 //输入：待处理行情AStockQuot &inout_aStockQuot ，行情价格1.000元，
 //输出：返回引用行情，
-void CreateQuotationExample(AStockQuot &inout_aStockQuot)
+void CreateQuotation(AStockQuot &inout_aStockQuot)
 {
 	//初始化AStockQuot结构体，构造一条行情的信息；
 
@@ -117,7 +117,7 @@ void CreateQuotationExample(AStockQuot &inout_aStockQuot)
 //设计新行情NewExample 
 //输入：行情结构体AStockQuot & inout_aStockQuot， 区间段均价0.900元
 //输出：赋值于该行情并返回 
-void CreateQuotationNewExample(AStockQuot &inout_aStockQuot)
+void CreateNewQuotation(AStockQuot &inout_aStockQuot)
 {
 	//构造新的行情；
 
@@ -188,7 +188,6 @@ void CreateQuotationNewExample(AStockQuot &inout_aStockQuot)
 //输出：0，表示程序正确执行；  1，表示出现错误
 int SendQuotToRedis(AStockQuot& in_aStockQuot)
 {
-	int iRes = 0;
 	std::string strRedisRes;
 	long long llRes = 0;
 	int  iStrLen = 0;
@@ -196,27 +195,6 @@ int SendQuotToRedis(AStockQuot& in_aStockQuot)
 	vector<string> vctArgs;
 	std::string strTran = "";
 	std::string strQuotation = "";
-
-	iRes = simutgw::g_redisPool.SetConnection("127.0.0.1", 6600, 10, 0, "");
-	if (0 != iRes)
-	{
-		EzLog::e("SendQuotToRedis( )", "SetConnection failed !");
-		return -1;
-	}
-
-	iRes = Tgw_RedisHelper::LoadHiredisLibrary();
-	if (0 != iRes)
-	{
-		EzLog::e("SendQuotToRedis( )", "LoadHiredisLibrary failed !");
-		return -1;
-	}
-
-	iRes = simutgw::g_redisPool.Init();
-	if (0 != iRes)
-	{
-		EzLog::e("SendQuotToRedis( )", "g_redisPool.Init failed !");
-		return -1;
-	}
 
 	//生成行情string
 	strQuotation = "{\"";
@@ -433,9 +411,6 @@ int SendQuotToRedis(AStockQuot& in_aStockQuot)
 		return -1;
 	}
 
-	simutgw::g_redisPool.Stop();
-
-	Tgw_RedisHelper::FreeHiredisLibrary();
 	return 0;
 }
 
@@ -460,15 +435,6 @@ RedisReply GetQuotFromTgwHqkTV(
 	uint64_t& ui64Cjsl, uint64_t& ui64SJW1, uint64_t& ui64SSL1,
 	uint64_t& ui64BJW1, uint64_t& ui64BSL1, uint64_t& ui64Zjjg)
 {
-	//连接Redis数据库
-	simutgw::g_redisPool.SetConnection("127.0.0.1", 6600, 10, 0, "");
-
-	//加载Redis.dll
-	Tgw_RedisHelper::LoadHiredisLibrary();
-
-	//redis 连接池初始化
-	simutgw::g_redisPool.Init();
-
 	// 实时行情	
 	string strMaxGain;
 	string strMinFall;
@@ -621,9 +587,6 @@ RedisReply GetQuotFromTgwHqkTV(
 		//strCircle_Hqsj = vectArray[i].str;
 		//std::cout << setiosflags(ios::left) << setw(20) << "strCircle_Hqsj" << strCircle_Hqsj << std::endl;
 	}
-
-	simutgw::g_redisPool.Stop();
-	Tgw_RedisHelper::FreeHiredisLibrary();
 	return emPcbCallRes;
 }
 
@@ -632,30 +595,6 @@ RedisReply GetQuotFromTgwHqkTV(
 // 输出 ：0 正常执行删除 操作 ， -1删除操作失败
 int DelRedisKeyNum(const std::string& strZqdm)
 {
-	int iRes = 0;
-	iRes = simutgw::g_redisPool.SetConnection("127.0.0.1", 6600, 10, 0, "");
-	if (0 != iRes)
-	{
-		EzLog::e("DelRedisKeyNum() ", "simutgw::g_redisPool.SetConnection failed!");
-		return -1;
-	}
-
-	//加载Redisdll
-	iRes = Tgw_RedisHelper::LoadHiredisLibrary();
-	if (0 != iRes)
-	{
-		EzLog::e("DelRedisKeyNum( ) ", "Tgw_RedisHelper::LoadHiredisLibrary failed !");
-		return -1;
-	}
-
-	//初始化redis连接池
-	iRes = simutgw::g_redisPool.Init();
-	if (0 != iRes)
-	{
-		EzLog::e("DelRedisKeyNum( ) ", "simutgw::g_redisPool.Init failed !");
-		return -1;
-	}
-
 	std::string strCmd = "del tgwhqk_" + strZqdm;
 	std::string strRes = "";
 	long long llRes = 0;
@@ -669,13 +608,13 @@ int DelRedisKeyNum(const std::string& strZqdm)
 
 	if (RedisReply_integer != emPcbCallRes)
 	{
-		EzLog::e("DelRedisKeyNum( ) ", "RunCmd Fail !");
-		EzLog::e("string Cmd : ", strCmd);
+		std::string strError = "DelRedisKeyNum( ) RunCmd Fail !";
+		strError += "\nstring Cmd :\n";
+		strError += strCmd;
+		EzLog::e(strError, "");
 		return -1;
 	}
 
-	simutgw::g_redisPool.Stop();
-	Tgw_RedisHelper::FreeHiredisLibrary();
 	return 0;
 }
 

@@ -19,7 +19,7 @@ TEST(SingleErrorWithQuotation_B, AveragePrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600312";
 	aStockQuot.zqmc = "平高电气";
 
@@ -86,7 +86,7 @@ TEST(SingleErrorWithQuotation_B, AveragePrice_1)
 //
 //	//构造行情
 //	AStockQuot aStockQuot;				//行情CJSL = 100000
-//	CreateQuotationExample(aStockQuot);
+//	CreateQuotation(aStockQuot);
 //	aStockQuot.zqdm = "600312";
 //	aStockQuot.zqmc = "平高电气";
 //	aStockQuot.TPBZ = "P";	//停牌标志正常是“F”, 改成空P
@@ -155,7 +155,7 @@ TEST(SingleErrorWithQuotation_B, AveragePrice_1)
 //
 //	//构造行情
 //	AStockQuot aStockQuot;				//行情CJSL = 100000
-//	CreateQuotationExample(aStockQuot);
+//	CreateQuotation(aStockQuot);
 //	aStockQuot.zqdm = "600312";
 //	aStockQuot.zqmc = "平高电气";
 //	aStockQuot.TPBZ = "P";	//停牌标志正常是“F”, 改成空P

@@ -18,7 +18,7 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600372";
 	aStockQuot.zqmc = "中航电子";
 
@@ -100,7 +100,7 @@ TEST(SingleGtestMatchAllWithQuotation_B, AveragePriceCheckAssert_2)
 
 	//构造行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600372";
 	aStockQuot.zqmc = "中航电子";
 	//推送行情

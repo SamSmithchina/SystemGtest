@@ -69,7 +69,6 @@ son/document.h, line 1187
 vs编译器 对未引用的局部变量会检查，单不检查全局的我使用变量。
 
 
-
 [2018-11-23 17:28:09.614337] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] 	CJHB cjjg: 0.999
 [2018-11-23 17:28:09.614337] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] 	预期 cjjg: 1.000
 [2018-11-23 17:28:09.614337] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] Check Cjhb ERROR! reff = J000000136
@@ -80,3 +79,27 @@ vs编译器 对未引用的局部变量会检查，单不检查全局的我使�
 [2018-11-23 17:28:11.598721] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] Check Cjhb ERROR! reff = J000000137
 [2018-11-23 17:28:12.114346] [error] Pid[0x00000d5c]-Tid[0x000004e0] [] SingleGtestMatchAllWithQuotation_S_AveragePriceCheckAssert_2_Test::TestBody
 
+2018-11-29 14:38:34
+[2018-11-29 14:27:54.116125] [info] Pid[0x00002880]-Tid[0x000017ec] [] SzConn_St
+epOrder::Valide_Record_Order() Recived SZ Order cliordid=O1000013  , client=192.
+168.60.131_8019 .TradePolicyCell-- RunMode=3,普通模式; Check_Assets:false,不验券
+; 成交模式:1,SimulMatchAll 仿真模拟-全部成交; 实盘模拟行情模式:0,AveragePrice 区
+间段均价; Part_Match_Num=2, SettleGroup=[], RuleId=35 judgeRule={"35":"D","38":"
+\\b[6-9][0-9]{3}\\b.*|\\b[1-9][0-9]{4,}\\b.*","1180":"010"}, CircleID=O1
+[2018-11-29 14:27:54.131725] [debug] Pid[0x00002880]-Tid[0x000017ec] [] RecordNe
+wOrderHelper::RecordInOrderToDb() Record clordid[O1000013
+[2018-11-29 14:27:55.036525] [info] Pid[0x00002880]-Tid[0x000020a8] [] RecordRep
+ortHelper::RecordReportToDb() Record Report clordid[O1000013
+[2018-11-29 14:27:55.036525] [info] Pid[0x00002880]-Tid[0x000020a8] [StgwFixRepo
+rt] ProcMsgType_8_Confirm_JsonRule() Sz Order ordrec=O1000013   ruleid=35 transe
+d fix string 8=FIXT.1.19=37335=849=tgw_801956=192.168.60.131_801911=O100001
+3  14=0.0017=15434724913810522=10237=15434724913810638=6000.0039=040=244
+=1.000048=00000154=159=060=20181129-14:27:55.00077=O99=0.0000103=0110=0.
+00150=0151=6000.00203=1453=4448=0121359104447=5452=5448=005900447=C452
+=1448=005900447=C452=27448=01447=F452=4522=1544=11090=01180=01010179=
+5110=148
+[2018-11-29 14:27:55.067725] [info] Pid[0x00002880]-Tid[0x000020a8] [] RecordRep
+ortHelper::RecordReportToDb() Record Report clordid[O1000013
+[2018-11-29 14:27:55.083325] [error] Pid[0x00002880]-Tid[0x000020a8] [StgwFixRep
+ort] ProcMsgType_8_Report_JsonRule() 委托clordid[O1000013  ] error Rule match re
+peat, ruleId=35

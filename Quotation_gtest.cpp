@@ -13,18 +13,21 @@ TEST(AStockQuot, Example)
 	AStockQuot aStockQuot;
 	int iRes = 0;
 
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600317";
 	aStockQuot.zqmc = "营口港";
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
 	iRes = myQuotHelper.Validate(aStockQuot);
 	EXPECT_EQ(0, iRes) << iRes;	
 
-	EzLog::i("CreateQuotationExample();\n", aStockQuot.OriginStr);
-	EzLog::i(__FUNCTION__, "\n\n");
+	
 	if (0 != iRes)
 	{
 		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n");
 	}
 }
 
@@ -35,14 +38,13 @@ TEST(AStockQuot, NewExample)
 	AStockQuotationHelper myQuotHelper;
 	int iRes = 0;
 
-	CreateQuotationNewExample(aStockQuot);
+	CreateNewQuotation(aStockQuot);
 	aStockQuot.zqdm = "600317";
 	aStockQuot.zqmc = "营口港";
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
 	iRes = myQuotHelper.Validate(aStockQuot);
 	EXPECT_EQ(0, iRes);
 
-	EzLog::i("NewExample;\n", aStockQuot.OriginStr);
 	if(iRes != 0)
 	{
 		EzLog::e(__FUNCTION__, "\n");
@@ -58,7 +60,7 @@ TEST(AStockQuot, HMGET)
 {
 	//推送行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600323";
 	aStockQuot.zqmc = "瀚蓝环境";
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -91,18 +93,18 @@ TEST(AStockQuot, HMGET)
 	if (RedisReply_array == enumRedisReplyRes)		// 值存在
 	{
 
-		EzLog::i("股票代码 ", strZqdm);
-		EzLog::i("交易圈 ", "01");
-		EzLog::Out("strMaxGain ", (trivial::severity_level)2, (long)ui64MaxGain); //EzLog::Out() 没有重载输出uint64_t的函数，
-		EzLog::Out("strMinFall ", (trivial::severity_level)2, (long)ui64MinFall);
-		EzLog::Out("strTpbz ", (trivial::severity_level)2, strTpbz);
-		EzLog::Out("strLive_Cjsl ", (trivial::severity_level)2, (long)ui64Cjsl);
-		EzLog::Out("strLive_Cjje ", (trivial::severity_level)2, (long)ui64Cjje);
-		EzLog::Out("strLive_SJW1 ", (trivial::severity_level)2, (long)ui64SJW1);
-		EzLog::Out("strLive_SSL1 ", (trivial::severity_level)2, (long)ui64SSL1);
-		EzLog::Out("strLive_BJW1 ", (trivial::severity_level)2, (long)ui64BJW1);
-		EzLog::Out("strLive_BSL1 ", (trivial::severity_level)2, (long)ui64BSL1);
-		EzLog::Out("strLive_Zjjg ", (trivial::severity_level)2, (long)ui64Zjjg);
+		//EzLog::i("股票代码 ", strZqdm);
+		//EzLog::i("交易圈 ", "01");
+		//EzLog::Out("strMaxGain ", (trivial::severity_level)2, (long)ui64MaxGain); //EzLog::Out() 没有重载输出uint64_t的函数，
+		//EzLog::Out("strMinFall ", (trivial::severity_level)2, (long)ui64MinFall);
+		//EzLog::Out("strTpbz ", (trivial::severity_level)2, strTpbz);
+		//EzLog::Out("strLive_Cjsl ", (trivial::severity_level)2, (long)ui64Cjsl);
+		//EzLog::Out("strLive_Cjje ", (trivial::severity_level)2, (long)ui64Cjje);
+		//EzLog::Out("strLive_SJW1 ", (trivial::severity_level)2, (long)ui64SJW1);
+		//EzLog::Out("strLive_SSL1 ", (trivial::severity_level)2, (long)ui64SSL1);
+		//EzLog::Out("strLive_BJW1 ", (trivial::severity_level)2, (long)ui64BJW1);
+		//EzLog::Out("strLive_BSL1 ", (trivial::severity_level)2, (long)ui64BSL1);
+		//EzLog::Out("strLive_Zjjg ", (trivial::severity_level)2, (long)ui64Zjjg);
 
 		//EzLog::Out( "strLive_Hqsj" , (trivial::severity_level)2 ,strLive_Hqsj );
 		//EzLog::Out("strCircle_Cjsl" , (trivial::severity_level)2 ,strCircle_Cjsl );
@@ -142,7 +144,7 @@ TEST(AStockQuot, DelKeyNum)
 	int n = 0;
 	//新建一条行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600000";
 	aStockQuot.zqmc = "测试Redis行情";
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot)) << n++;
@@ -236,7 +238,7 @@ TEST(AStockQuot, Timer)
 
 	//推送一条行情；
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600000";
 	aStockQuot.zqmc = "quot_test";
 	int iRes = SendQuotToRedis(aStockQuot);

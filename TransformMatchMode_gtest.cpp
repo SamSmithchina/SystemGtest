@@ -28,8 +28,7 @@ TEST(TransformMatchMode, Error)
 	EzLog::i(__FUNCTION__, "\n\n");
 	if (iDRes != 0)
 	{
-		EzLog::e("Transform to MatchAllWithoutQuotation ", "failed. \n");
-		EzLog::e(__FUNCTION__, "\n");
+		EzLog::e(__FUNCTION__," Transform to MatchAllWithoutQuotation  failed. \n");
 		ASSERT_EQ(0, iDRes);
 	}
 }
@@ -44,7 +43,7 @@ TEST(TransformMatchMode, RepateTransform)
 	int iRound = 11;
 	int iErrorCounter = 0;
 	clock_t tTotal = 0;
-
+	std::string strError;
 	clock_t tBegin = clock();
 	{
 		int iModeNumber = 11;
@@ -65,26 +64,39 @@ TEST(TransformMatchMode, RepateTransform)
 			tSingleTestEnd = clock();
 			tTemp = tSingleTestEnd - tSingleTestBegin;
 			tTotal += tTemp;
-			EzLog::Out("转换次序 iRound :", trivial::severity_level(2), i);
-			EzLog::Out("本次耗时ms :", (trivial::severity_level)2, (long)tTemp);
+			strError = "\n转换次序 iRound :";
+			strError += to_string(i);
+			strError += "\n本次耗时ms :";
+			strError += to_string(tTemp);
+			EzLog::i(strError, "");
 			if (0 != iRes)
 			{
 				iErrorCounter++;
-				EzLog::Out("stgw 切换模式为 ： ", (trivial::severity_level)2, mmExample);
-				EzLog::Out("stgw 切换工作模式出错 ！,返回值为 ：", (trivial::severity_level)2, iRes);
+				strError = "\nstgw 切换模式为 ： ";
+				strError += to_string(mmExample);
+				strError += "\nstgw 切换工作模式出错 ！,返回值为 ：";
+				strError += to_string(iRes);
+				EzLog::e(strError, "");
 			}
 		}
 	}
 	clock_t	tEnd = clock();
-	EzLog::Out("转换工作模式总次数 ", (trivial::severity_level)2, iRound);
-	EzLog::Out("出错次数 ：", (trivial::severity_level)2, iErrorCounter);
-	EzLog::Out("总转换耗时ms  ", (trivial::severity_level)2, (long)tTotal * 1000 / CLOCKS_PER_SEC);
-	EzLog::Out("总循环耗时ms  ", (trivial::severity_level)2, (long)(tEnd - tBegin) * 1000 / CLOCKS_PER_SEC);
-	EzLog::i("\n", "\n");
+	strError = "\n转换工作模式总次数 ";
+	strError += to_string(iRound);
+	strError += "\n出错次数 ：";
+	strError += "\n总转换耗时ms  ";
+	strError += to_string((long)tTotal / CLOCKS_PER_SEC);
+	strError += "\n总循环耗时ms  ";
+	strError += to_string((long)(tEnd - tBegin) / CLOCKS_PER_SEC);
+	EzLog::i(strError, "");
+		
 	EXPECT_EQ(0, iErrorCounter);
-	EzLog::i(__FUNCTION__, "\n\n");
 	if (iErrorCounter != 0)
 	{
 		EzLog::e(__FUNCTION__, "\n");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n\n");
 	}
 }

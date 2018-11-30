@@ -17,7 +17,7 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600380";
 	aStockQuot.zqmc = "健康元";
 
@@ -97,7 +97,7 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePriceCheckAssert_2)
 
 	//构造行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600380";
 	aStockQuot.zqmc = "健康元";
 
@@ -117,7 +117,7 @@ TEST(SingleGtestMatchAllWithQuotation_S, AveragePriceCheckAssert_2)
 	StockAsset aSHStockAsset;
 	aSHStockAsset.Init(aSHShare.account, aSHShare.stock);
 
-	//建立数据库连接 ,0 right , -1 wrong
+	//建立数据库连接 ,0 right , -1 wronge
 	iRes = con.Connect(g_strShOdbcConn);
 	//	ASSERT_EQ(0, iRes);
 	ASSERT_EQ(0, iRes);

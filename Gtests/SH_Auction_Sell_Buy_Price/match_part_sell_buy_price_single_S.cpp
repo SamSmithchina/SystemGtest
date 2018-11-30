@@ -17,7 +17,7 @@ TEST(SingleMatchPartWithQuotation_S, SellBuyPrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600343";
 	aStockQuot.zqmc = "航天动力";
 
@@ -108,7 +108,7 @@ TEST(SingleMatchPartWithQuotation_S, SellBuyPriceCheckAsset_2)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600348";
 	aStockQuot.zqmc = "阳泉煤业";
 

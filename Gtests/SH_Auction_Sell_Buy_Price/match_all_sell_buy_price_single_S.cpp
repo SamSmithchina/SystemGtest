@@ -16,7 +16,7 @@ TEST(SingleGtestMatchAllWithQuotation_S, SellBuyPrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -93,7 +93,7 @@ TEST(SingleGtestMatchAllWithQuotation_S, SellBuyPriceCheckAsset_2)
 
 	//构造行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));

@@ -18,7 +18,7 @@ TEST(SingleMatchDivideWithQuotation_B, SellBuyPrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600335";
 	aStockQuot.zqmc = "国机汽车";
 
@@ -82,7 +82,7 @@ TEST(SingleMatchDivideWithQuotation_B, SellBuyPrice_1)
 	//查成交表，比较成交结果是否与预期一致；
 	//延时 ，等待第二笔成交
 	Sleep(g_iTimeOut * 50);
-	lRes = CheckDivideCjhb(con, aSHShare, 2);
+	lRes = CheckCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
@@ -109,7 +109,7 @@ TEST(SingleMatchDivideWithQuotation_B, SellBuyPriceCheckAsset_2)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600337";
 	aStockQuot.zqmc = "美克家居";
 
@@ -186,7 +186,7 @@ TEST(SingleMatchDivideWithQuotation_B, SellBuyPriceCheckAsset_2)
 		//比较结果；
 		//查成交表，比较成交结果是否与预期一致；
 		Sleep(g_iTimeOut * 50);
-		lRes = CheckDivideCjhb(con, aSHShare, 2);
+		lRes = CheckCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
 		
 		//检查stgw写回stock_aasset表数据

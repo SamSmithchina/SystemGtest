@@ -16,7 +16,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 
 	//构造行情,
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600349";
 	aStockQuot.zqmc = "富通昭和";
 
@@ -150,7 +150,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 		{
 			if (-1 != lAShareQty[j])
 			{
-				lRes = CheckDivideCjhb(con, aSHShare[j], 2);
+				lRes = CheckCjhb(con, aSHShare[j], 2);
 				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 				if (lRes == 0)
 				{
@@ -173,23 +173,25 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 	Sleep(g_iTimeOut * 10); //等待tgw写完mysql数据
 	iRes = CheckStgwWriteAssetBackToMySQL(aSHStockAsset, ui64BCjsl, ui64SCjsl);
 	EXPECT_EQ(0, iRes) << ++lErrorOrderCounter;
-
-	if (0 < lErrorOrderCounter)
-	{
-		EzLog::i("=================================================", "\n");
-		EzLog::e(__FUNCTION__, "\n");
-		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
-		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
-		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
-		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
-		EzLog::Out("共计 iRound * iAShareNum ： ", (trivial::severity_level)2, iRound*iAShareNum);
-		EzLog::Out("出现错误订单笔数 ：", (trivial::severity_level)2, lErrorOrderCounter);
-		EzLog::i("=================================================", "\n");
-	}
-
+	
 	//关闭连接
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
+	if (0 < lErrorOrderCounter)
+	{
+		char szTransferBuff[65] = { "\0" };
+		std::string strError = "=================================================\n";
+		strError += __FUNCTION__;
+		strError += "\n共计 iRound * iAShareNum ： ";
+		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);
+		strError += "\n出现错误订单笔数 ：";
+		strError +=  ltoa(lErrorOrderCounter, szTransferBuff, 10);
+		strError += "\n=================================================\n";
+		EzLog::e(strError, "");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n\n");
+	}
 }
 
 
@@ -205,7 +207,7 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 
 	//构造行情,
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600350";
 	aStockQuot.zqmc = "山东高速";
 
@@ -311,26 +313,28 @@ TEST(BatchGtestMatchDivideWithQuotation, BatchMatchDivide_AveragePriceCheckAsset
 		//成交
 		for (j = 0; j < iAShareNum; j++)
 		{
-			lRes = CheckDivideCjhb(con, aSHShare[j], 2);
+			lRes = CheckCjhb(con, aSHShare[j], 2);
 			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}
 
 	}//for (i = 0; i < 1; i++ )	//主循环
 
-	if (0 < lErrorOrderCounter)
-	{
-		EzLog::i("=================================================", "\n");
-		EzLog::e(__FUNCTION__, "\n");
-		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
-		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
-		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
-		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
-		EzLog::Out("共计 iRound * iAShareNum ： ", (trivial::severity_level)2, iRound*iAShareNum);
-		EzLog::Out("出现错误订单笔数 ：", (trivial::severity_level)2, lErrorOrderCounter);
-		EzLog::i("=================================================", "\n");
-	}
-
 	//关闭连接
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
+	if (0 < lErrorOrderCounter)
+	{
+		char szTransferBuff[65] = { "\0" };
+		std::string strError = "=================================================\n";
+		strError += __FUNCTION__;
+		strError += "\n共计 iRound * iAShareNum ： ";
+		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);
+		strError += "\n出现错误订单笔数 ：";
+		strError +=  ltoa(lErrorOrderCounter, szTransferBuff, 10);
+		strError += "\n=================================================\n";
+		EzLog::e(strError, "");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n\n");
+	}
 }

@@ -51,6 +51,12 @@ extern int g_strRedisPort;
 //redis内存数据库密码
 extern std::string g_strRedisPassword;
 
+//加载redis并初始化
+int InitRedis();
+
+// 释放redis连接
+void StopRedis();
+
 //ReadMaxRecNumFromDB（） : 从数据库中读取最大的订单编号，保证订单编号递增
 //输入：  
 //输出 ： 0,正常读取到最大订单号， -1 ，失败

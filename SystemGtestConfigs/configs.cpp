@@ -2,7 +2,8 @@
 #include "util/EzLog.h"
 #include "tool_odbc/OTLConn40240.h"
 #include "boost/property_tree/ini_parser.hpp"
-
+#include "tool_redis/Tgw_RedisHelper.h"
+#include "simutgw/stgw_config/g_values_inner.h"
 #include <Windows.h>
 #include <tchar.h>
 
@@ -52,6 +53,39 @@ int g_strRedisPort = 6700;
 
 //redis内存数据库密码
 std::string g_strRedisPassword = "";
+
+//加载redis并初始化
+int InitRedis()
+{
+	int iRes = simutgw::g_redisPool.SetConnection("127.0.0.1", 6600, 2, 0, "");
+	if (0 != iRes)
+	{
+		EzLog::e("SendQuotToRedis( )", "SetConnection failed !");
+		return -1;
+	}
+
+	iRes = Tgw_RedisHelper::LoadHiredisLibrary();
+	if (0 != iRes)
+	{
+		EzLog::e("SendQuotToRedis( )", "LoadHiredisLibrary failed !");
+		return -1;
+	}
+
+	iRes = simutgw::g_redisPool.Init();
+	if (0 != iRes)
+	{
+		EzLog::e("SendQuotToRedis( )", "g_redisPool.Init failed !");
+		return -1;
+	}
+	return 0;
+}
+
+// 释放redis连接
+void StopRedis()
+{
+	simutgw::g_redisPool.Stop();
+	Tgw_RedisHelper::FreeHiredisLibrary();
+}
 
 //ReadMaxRecNumFromDB（） : 从数据库中读取最大的订单编号，保证订单编号递增
 //输入：  
@@ -232,8 +266,9 @@ int  WriteConfig()
 		_itoa_s(g_strRedisPort, szBuff, 10);
 		pt.put<std::string>("redis.redis_port", szBuff);
 		boost::property_tree::ini_parser::write_ini(".\\SystemGtest\\test_data\\gtest\\systemgtest.ini", pt);
-		EzLog::i("=================================================", "");
-		EzLog::Out("g_iExternRecNum = ", (trivial::severity_level)2, g_iExternRecNum);
+		
+		EzLog::Out("=================================================\n"
+			"g_iExternRecNum = ", (trivial::severity_level)2, g_iExternRecNum);
 	}
 	catch (std::exception & e)
 	{

@@ -16,7 +16,7 @@ TEST(SingleErrorWithQuotation_B, RecentPrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600312";
 	aStockQuot.zqmc = "平高电气";
 
@@ -85,7 +85,7 @@ TEST(SingleErrorWithQuotation_B, RecentPrice_1)
 //
 //	//构造行情
 //	AStockQuot aStockQuot;				//行情CJSL = 100000
-//	CreateQuotationExample(aStockQuot);
+//	CreateQuotation(aStockQuot);
 //	aStockQuot.zqdm = "600312";
 //	aStockQuot.zqmc = "平高电气";
 //	aStockQuot.TPBZ = "P";
@@ -150,7 +150,7 @@ TEST(SingleErrorWithQuotation_B, RecentPrice_1)
 //
 //	//构造行情
 //	AStockQuot aStockQuot;				//行情CJSL = 100000
-//	CreateQuotationExample(aStockQuot);
+//	CreateQuotation(aStockQuot);
 //	aStockQuot.zqdm = "600312";
 //	aStockQuot.zqmc = "平高电气";
 //	aStockQuot.TPBZ = "P";

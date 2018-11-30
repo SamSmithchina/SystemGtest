@@ -60,10 +60,17 @@ int main(int argc, char* argv[])
 		//守护进程
 		OTLConn_Guard::OTLConn_Init();
 		
+		//加载redis并初始化
+		iRes = InitRedis();
+		if (iRes == -1)
+		{
+			EzLog::e(__FUNCTION__, " load redis dll and connect  failed !");
+			Sleep(g_iTimeOut * 10);
+			exit(-1);
+		}
 
-		EzLog::i("================================", "\n");
-		EzLog::i("SystemGtest", "");
-		EzLog::Out("Bit ", (trivial::severity_level)2, (int)(8 * sizeof(int *)));
+		EzLog::Out("================================\n"
+			"SystemGtest Bit ", (trivial::severity_level)2, (int)(8 * sizeof(int *)));
 
 		srand((unsigned)time(NULL));
 
@@ -79,16 +86,28 @@ int main(int argc, char* argv[])
 			EzLog::e("systemgtest.ini 写回数据出错", "\n");
 		}
 
+		StopRedis();
 		MySqlCnnC602_Guard::MysqlLibraryEnd();
 	}
 
 	//计时
 	tEndCounter = clock();
-	EzLog::i("=================================================", "\n");
-	EzLog::Out("测试程序耗时ms = ", (trivial::severity_level)2, (long)(tEndGTest - tBeginGTest) *1000 / CLOCKS_PER_SEC);
-	EzLog::Out("程 序 耗 时 ms = ", (trivial::severity_level)2, (long)(tEndCounter - tBeginCounter) *1000 / CLOCKS_PER_SEC);
-	EzLog::Out("执行测试样例 = ", (trivial::severity_level)2, g_iExternRecNum - iExternRecNum);
-	EzLog::i("=================================================", "\n");
+	char szTemp[65] = { "\0" };
+	long  lTimeCounter;
+	int iExecuteExamples;
+	std::string strInfo = "\n=================================================";
+	strInfo += "\n测试程序耗时   ms = ";
+	lTimeCounter = (long)(tEndGTest - tBeginGTest) * 1000 / CLOCKS_PER_SEC;
+	strInfo += ltoa(lTimeCounter, szTemp, 10);
+
+	strInfo += "\n程 序 耗 时    ms = ";
+	lTimeCounter = (long)(tEndCounter - tBeginCounter) * 1000 / CLOCKS_PER_SEC;
+	strInfo += ltoa(lTimeCounter, szTemp, 10);
+
+	strInfo += "\n执 行 测 试 样 例 = ";
+	iExecuteExamples = g_iExternRecNum - iExternRecNum;
+	strInfo += itoa(iExecuteExamples, szTemp, 10);
+	EzLog::i(strInfo, "\n=================================================\n");
 	//system("pause");
 	return 0;
 }

@@ -58,7 +58,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivide_1)
 
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
-	lRes = CheckDivideCjhb(con, aSHShare, 2);
+	lRes = CheckCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
@@ -120,7 +120,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivide_2)
 
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
-	lRes = CheckDivideCjhb(con, aSHShare, 2);
+	lRes = CheckCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
@@ -181,7 +181,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivide_3)
 
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
-	lRes = CheckDivideCjhb(con, aSHShare, 2);
+	lRes = CheckCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
@@ -243,7 +243,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivide_4)
 
 	//比较结果；
 	//查成交表，比较成交结果是否与预期一致；
-	lRes = CheckDivideCjhb(con, aSHShare, 2);
+	lRes = CheckCjhb(con, aSHShare, 2);
 	EXPECT_EQ(0, lRes);
 
 	con.Close();
@@ -319,7 +319,7 @@ TEST(SingleMatchDivideWithoutQuotation_B, MatchDivideCheckAsset_5)
 
 		//比较结果；
 		//查成交表，比较成交结果是否与预期一致；
-		lRes = CheckDivideCjhb(con, aSHShare, 2);
+		lRes = CheckCjhb(con, aSHShare, 2);
 		EXPECT_EQ(0, lRes);
 		//检查stgw写回stock_aasset表数据
 		iRes = CheckStgwWriteAssetBackToMySQL(aSHShare, aSHStockAsset, true);

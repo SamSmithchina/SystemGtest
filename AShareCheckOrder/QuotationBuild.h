@@ -8,7 +8,7 @@
 #include "util/EzLog.h"
 #include "quotation/AStockQuotationHelper.h"
 #include "simutgw/stgw_config/g_values_inner.h"
-#include "simutgw/stgw_config/g_values_net.h"
+//#include "simutgw/stgw_config/g_values_net.h"
 
 #include <stdlib.h>
 #include <string>
@@ -17,12 +17,12 @@
 //设计特定的行情数据Example
 //输入：待处理行情AStockQuot &inout_aStockQuot
 //输出：赋值与该行情并返回，
-void CreateQuotationExample(AStockQuot &inout_aStockQuot);
+void CreateQuotation(AStockQuot &inout_aStockQuot);
 
 //设计特定的新行情NewExample
 //输入：行情结构体AStockQuot & inout_aStockQuot
 //输出：赋值于该行情并返回
-void CreateQuotationNewExample(AStockQuot &inout_aStockQuot);
+void CreateNewQuotation(AStockQuot &inout_aStockQuot);
 
 //将行情推送redis
 //输入：待推送的行情结构体 in_aStockQuot;

@@ -19,7 +19,7 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_SellBuyPriceCheckA
 
 	//构造行情,
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600311";
 	aStockQuot.zqmc = "荣华实业";
 
@@ -132,19 +132,22 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_SellBuyPriceCheckA
 
 	}//for (i = 0; i < 1; i++ )	//主循环
 
-	if (0 < lErrorOrderCounter)
-	{
-		EzLog::i("=================================================", "\n");
-		EzLog::e(__FUNCTION__, "\n");
-		EzLog::Out("g_iTimeOut  : ", (trivial::severity_level)2, g_iTimeOut);
-		EzLog::Out("iQueryTimes : ", (trivial::severity_level)2, g_iQueryTimes);
-		EzLog::Out("共执行组数  ：", (trivial::severity_level)2, iRound);
-		EzLog::Out("每组        ：", (trivial::severity_level)2, iAShareNum);
-		EzLog::Out("共计 iRound * iAShareNum ： ", (trivial::severity_level)2, iRound*iAShareNum);
-		EzLog::Out("出现错误订单笔数 ：", (trivial::severity_level)2, lErrorOrderCounter);
-		EzLog::i("=================================================", "\n");
-	}
 	//关闭连接
 	con.Close();
-	EzLog::i(__FUNCTION__, "\n\n");
+	if (0 < lErrorOrderCounter)
+	{
+		char szTransferBuff[65] = { "\0" };
+		std::string strError = "=================================================\n";
+		strError += __FUNCTION__;
+		strError += "\n共计 iRound * iAShareNum ： ";
+		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);
+		strError += "\n出现错误订单笔数 ：";
+		strError +=  ltoa(lErrorOrderCounter, szTransferBuff, 10);
+		strError += "\n=================================================\n";
+		EzLog::e(strError, "");
+	}
+	else
+	{
+		EzLog::i(__FUNCTION__, "\n\n");
+	}
 }

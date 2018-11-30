@@ -11,6 +11,13 @@
 #include <stdlib.h>
 #include <string>
 
+enum Ordwth2Report
+{
+	Match = 0,
+	Cancle = 1,
+	Error = 2
+};
+
 //插入数据
 //输出 ： 0 正确； -1 异常
 long InsertOrder(OTLConn40240 &con, SHShare aSHShare);
@@ -24,10 +31,19 @@ long InsertCancelOrder(OTLConn40240 &con, SHShare aSHShare);
 // 输出： -1，未查询带结果，或者出现异常； 0和正整数表示查询到得记录行数
 int QueryRecordNum(OTLConn40240& con, const std::string& strQuery);
 
+//检查汇报表
+//@parameter: con -OTL连接；
+//			  aSHShare -待查订单 ； 
+//            enumOrdwth2Report -回报类型
+//
+//@return： -1  -执行有误
+//			 0  -执行正常
+int CheckOrdwth2(OTLConn40240 &con, SHShare aSHShare, Ordwth2Report enumOrdwth2Report);
+
 //检查待成交单的确认；
 //输入：OTLConn40240 &con 连接数据库, SHShare aSHShare待检查股票订单, 
 //输出 ： 0 正确； -1 异常
-long CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare);
+int CheckOrdwth2Match(OTLConn40240 &con, SHShare aSHShare);
 
 //检查撤单确认；
 //输入：OTLConn40240 &con 连接数据库, SHShare aSHShare待检查股票订单, 
@@ -39,15 +55,10 @@ long CheckOrdwth2Cancel(OTLConn40240 &con, SHShare aSHShare);
 //输出 ： 0 正确； -1 异常
 long CheckOrdwth2Error(OTLConn40240 &con, SHShare aSHShare);
 
-//检查成交单: 
-//输入：OTLConn40240 &con 连接数据库, SHShare aSHShare待检查股票订单, 
-//输出 ： 0 正确； -1 异常
-long CheckCjhb(OTLConn40240 &con, SHShare aSHShare);
-
-//检查分笔成交的成交回报：
+//检查已成交的成交回报：
 //输入：OTLConn40240 &con 连接数据库, SHShare aShare待检查股票订单,iDivide 目前分笔数为2 
 //输出 ： 0 正确； -1 异常
-long CheckDivideCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum);
+long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum = 1);
 
 // 校验simutgw写回本地mysql数据库的数据是否符合实际交易
 //@parameter ： SHShare aSHShare STGW处理的订单;

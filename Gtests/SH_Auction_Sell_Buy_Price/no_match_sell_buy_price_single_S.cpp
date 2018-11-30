@@ -16,7 +16,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, SellBuyPrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600311";
 	aStockQuot.zqmc = "荣华实业";
 
@@ -96,7 +96,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, SellBuyPrice_2)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600311";
 	aStockQuot.zqmc = "荣华实业";
 
@@ -169,7 +169,7 @@ TEST(SingleNoMatchCancelWithQuotation_S, SellBuyPrice_3)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600379";
 	aStockQuot.zqmc = "宝光股份";
 

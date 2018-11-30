@@ -17,7 +17,7 @@ TEST(SingleMatchPartWithQuotation_B, AveragePrice_1)
 
 	//构造行情
 	AStockQuot aStockQuot;
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600310";
 	aStockQuot.zqmc = "桂东电力";	//	aStockQuot.cjsl = 100000;
 
@@ -107,7 +107,7 @@ TEST(SingleMatchPartWithQuotation_B, AveragePriceCheckAsset_2)
 
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
-	CreateQuotationExample(aStockQuot);
+	CreateQuotation(aStockQuot);
 	aStockQuot.zqdm = "600321";
 	aStockQuot.zqmc = "国栋建设";
 
