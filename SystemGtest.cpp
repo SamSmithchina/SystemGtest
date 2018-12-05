@@ -14,16 +14,22 @@
 
 int main(int argc, char* argv[])
 {
-	clock_t tBeginCounter;
-	clock_t tEndCounter;
-	clock_t tBeginGTest;
-	clock_t tEndGTest;
+	clock_t tBeginTimer;
+	clock_t tEndTimer;
+	clock_t tBeginGTestTimer;
+	clock_t tEndGTestTimer;
 	int iExternRecNum = 0;
 
-	tBeginCounter = clock();
+	tBeginTimer = clock();
 	{
 		//初始化日志
 		EzLog::Init_log_ern(".\\SystemGtest\\test_data\\gtest\\log_SystemGtest.ini");
+		
+		//MySQL 守护进程
+		MySqlCnnC602_Guard::MysqlLibraryInit();
+
+		//守护进程
+		OTLConn_Guard::OTLConn_Init();
 
 		//读入配置
 		if (-1 == ReadConfig())
@@ -53,12 +59,6 @@ int main(int argc, char* argv[])
 			EzLog::e("获取当前路径 ", " 失败 !");
 			exit(-1);
 		}
-
-		//MySQL 守护进程
-		MySqlCnnC602_Guard::MysqlLibraryInit();
-
-		//守护进程
-		OTLConn_Guard::OTLConn_Init();
 		
 		//加载redis并初始化
 		iRes = InitRedis();
@@ -75,10 +75,10 @@ int main(int argc, char* argv[])
 		srand((unsigned)time(NULL));
 
 		//RUN_ALL_TESTS
-		tBeginGTest = clock();
+		tBeginGTestTimer = clock();
 		testing::InitGoogleTest(&argc, argv);
 		RUN_ALL_TESTS();
-		tEndGTest = clock();
+		tEndGTestTimer = clock();
 
 		//写g_iExternRecNum;
 		if (-1 == WriteConfig())
@@ -91,17 +91,17 @@ int main(int argc, char* argv[])
 	}
 
 	//计时
-	tEndCounter = clock();
+	tEndTimer = clock();
 	char szTemp[65] = { "\0" };
 	long  lTimeCounter;
 	int iExecuteExamples;
 	std::string strInfo = "\n=================================================";
 	strInfo += "\n测试程序耗时   ms = ";
-	lTimeCounter = (long)(tEndGTest - tBeginGTest) * 1000 / CLOCKS_PER_SEC;
+	lTimeCounter = (long)(tEndGTestTimer - tBeginGTestTimer) * 1000 / CLOCKS_PER_SEC;
 	strInfo += ltoa(lTimeCounter, szTemp, 10);
 
 	strInfo += "\n程 序 耗 时    ms = ";
-	lTimeCounter = (long)(tEndCounter - tBeginCounter) * 1000 / CLOCKS_PER_SEC;
+	lTimeCounter = (long)(tEndTimer - tBeginTimer) * 1000 / CLOCKS_PER_SEC;
 	strInfo += ltoa(lTimeCounter, szTemp, 10);
 
 	strInfo += "\n执 行 测 试 样 例 = ";

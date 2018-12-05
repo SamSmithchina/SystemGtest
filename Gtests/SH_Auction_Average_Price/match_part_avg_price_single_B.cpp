@@ -70,6 +70,7 @@ TEST(SingleMatchPartWithQuotation_B, AveragePrice_1)
 	EXPECT_EQ(0, lRes);
 
 	//插入撤单
+	Sleep(g_iTimeOut * 10);
 	lRes = InsertCancelOrder(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 	con.Commit();
@@ -175,6 +176,7 @@ TEST(SingleMatchPartWithQuotation_B, AveragePriceCheckAsset_2)
 		EXPECT_EQ(0, lRes);
 
 		//插入撤单
+		Sleep(g_iTimeOut * 10);
 		lRes = InsertCancelOrder(con, aSHShare);
 		EXPECT_EQ(0, lRes);
 		con.Commit();

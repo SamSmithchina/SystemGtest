@@ -97,13 +97,13 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetYES)
 
 			//插入
 			lRes = InsertOrder(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			ASSERT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();	// commit
 
 			//撤单
-			Sleep(g_iTimeOut * 5);
+			Sleep(g_iTimeOut * 20);
 			lRes = InsertCancelOrder(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			ASSERT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();	// commit
 
 			//推送第二次行情；
@@ -114,7 +114,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetYES)
 				aStockQuot.cjje += 100000000;
 				TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 				aStockQuot.hqsj += ".500";					//毫秒
-				EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
+				ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
 				Sleep(g_iTimeOut * 50);
 			}
 		}
@@ -130,7 +130,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetYES)
 			{
 				lAShareQty[j] = -1;
 				lRes = CheckOrdwth2Error(con, aSHShare[j]);
-				EXPECT_EQ(0, lRes);
+				ASSERT_EQ(0, lRes);
 			}
 		}
 
@@ -140,9 +140,9 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetYES)
 			if (-1 != lAShareQty[j])
 			{
 				lRes = CheckOrdwth2Match(con, aSHShare[j]);
-				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 				lRes = CheckOrdwth2Cancel(con, aSHShare[j]);
-				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			}
 
 		}
@@ -153,7 +153,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetYES)
 			if (-1 != lAShareQty[j])
 			{
 				lRes = CheckCjhb(con, aSHShare[j]);
-				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 				if (lRes == 0)
 				{
 					if ("B" == aSHShare[j].bs)
@@ -172,14 +172,14 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetYES)
 	//校验回写股份资产stock_asset
 	Sleep(g_iTimeOut * 10); //等待tgw写完mysql数据
 	iRes = CheckStgwWriteAssetBackToMySQL(aSHStockAsset, ui64BCjsl, ui64SCjsl);
-	EXPECT_EQ(0, iRes) << ++lErrorOrderCounter;
+	ASSERT_EQ(0, iRes) << ++lErrorOrderCounter;
 	
 	//关闭连接
 	con.Close();
 	if (0 < lErrorOrderCounter)
 	{
 		char szTransferBuff[65] = { "\0" };
-		std::string strError = "=================================================\n";
+		std::string strError = "\n=================================================\n";
 		strError += __FUNCTION__;
 		strError += "\n共计 iRound * iAShareNum ： ";
 		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);
@@ -282,13 +282,13 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetNO)
 
 			//插入
 			lRes = InsertOrder(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			ASSERT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();	// commit
 
 			//撤单
-			Sleep(g_iTimeOut * 5);
+			Sleep(g_iTimeOut * 20);
 			lRes = InsertCancelOrder(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			ASSERT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();	// commit
 
 			//推送第二次行情；
@@ -299,7 +299,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetNO)
 				aStockQuot.cjje += 100000000;
 				TimeStringUtil::GetCurrTimeInTradeType(aStockQuot.hqsj);
 				aStockQuot.hqsj += ".500";					//毫秒
-				EXPECT_EQ(0, SendQuotToRedis(aStockQuot));
+				ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
 				Sleep(g_iTimeOut * 50);
 			}
 		}
@@ -308,16 +308,16 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetNO)
 		for (j = 0; j < iAShareNum; j++)
 		{
 			lRes = CheckOrdwth2Match(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+			ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			lRes = CheckOrdwth2Cancel(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+			ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}
 
 		//成交
 		for (j = 0; j < iAShareNum; j++)		
 		{
 			lRes = CheckCjhb(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+			ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}		
 
 	}//for (i = 0; i < 1; i++ )	//主循环
@@ -327,7 +327,7 @@ TEST(BatchGtestMAtchPartWithQuotation, BatchMatchPart_AveragePriceCheckAssetNO)
 	if (0 < lErrorOrderCounter)
 	{
 		char szTransferBuff[65] = { "\0" };
-		std::string strError = "=================================================\n";
+		std::string strError = "\n=================================================\n";
 		strError += __FUNCTION__;
 		strError += "\n共计 iRound * iAShareNum ： ";
 		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);

@@ -6,7 +6,7 @@
 
 //区间段均价1.000元 ，批量处理实盘下全部成交订单,  验股
 // account = "A645078963" 股票账号
-// stock = ("600302") 标准股份
+// stock = ("600398") 海澜之家
 //	 BatchGtestMatchAllWithQuotation.BatchMatchAll_AveragePriceCheckAssetYES
 TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetYES)
 {
@@ -17,8 +17,8 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetYES)
 	//构造行情,
 	AStockQuot aStockQuot;
 	CreateQuotation(aStockQuot);
-	aStockQuot.zqdm = "600302";
-	aStockQuot.zqmc = "标准股份";
+	aStockQuot.zqdm = "600398";
+	aStockQuot.zqmc = "海澜之家";
 	aStockQuot.cjsl = 100000000000;		//批量时设置一个特别大的成交数量
 	aStockQuot.cjje = 100000000000000;
 	//推送行情
@@ -165,7 +165,7 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetYES)
 	if (0 < lErrorOrderCounter)
 	{
 		char szTransferBuff[65] = { "\0" };
-		std::string strError = "=================================================\n";
+		std::string strError = "\n=================================================\n";
 		strError += __FUNCTION__;
 		strError += "\n共计 iRound * iAShareNum ： ";
 		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);
@@ -184,7 +184,7 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetYES)
 
 //区间段均价 1.000元，批量处理实盘下全部成交订单,  不验股
 // account = "A645078963" 股票账号
-// stock = ("600302") 标准股份
+// stock = ("600397") ST安煤
 //	 BatchGtestMatchAllWithQuotation.BatchMatchAll_AveragePriceCheckAssetNO
 TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetNO)
 {
@@ -195,8 +195,8 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetNO)
 	//构造行情,
 	AStockQuot aStockQuot;
 	CreateQuotation(aStockQuot);
-	aStockQuot.zqdm = "600302";
-	aStockQuot.zqmc = "标准股份";
+	aStockQuot.zqdm = "600397";
+	aStockQuot.zqmc = "ST安煤";
 	aStockQuot.cjsl = 100000000000;
 	aStockQuot.cjje = 100000000000000;
 
@@ -302,7 +302,7 @@ TEST(BatchGtestMatchAllWithQuotation, BatchMatchAll_AveragePriceCheckAssetNO)
 	if (0 < lErrorOrderCounter)
 	{
 		char szTransferBuff[65] = { "\0" };
-		std::string strError = "=================================================\n";
+		std::string strError = "\n=================================================\n";
 		strError += __FUNCTION__;
 		strError += "\n共计 iRound * iAShareNum ： ";
 		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);

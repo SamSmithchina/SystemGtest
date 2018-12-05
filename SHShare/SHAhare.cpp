@@ -100,6 +100,17 @@ std::string SHShare::GetSQlInsertSentence()
 //获取要执行的撤销语句
 std::string SHShare::GetSQLCancelSentence()
 {
+	time_t tNow;
+	tm tmPtr;
+	char szTime[9] = { "\0" };
+	char szDate[9] = { "\0" };
+	time(&tNow);
+	localtime_s(&tmPtr, &tNow);
+	_Strftime(szDate, 9, "%Y%m%d", &tmPtr, NULL);	//char 8
+	date = szDate;									//日期年月日
+	_Strftime(szTime, 9, "%H:%M:%S", &tmPtr, NULL);	//char 8  字符串末尾填充空位；
+	now = szTime;						 			//时间时分秒
+
 	//插入撤单;将owflag 和 orderrec修改
 	std::string strCancelOwflag = ("WTH");
 	std::string strCancelOrdrec = rec_num;

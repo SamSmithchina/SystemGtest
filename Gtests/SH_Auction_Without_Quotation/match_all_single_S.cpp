@@ -2,7 +2,7 @@
 #include "util/EzLog.h"
 #include "SystemGtestConfigs/configs.h"
 #include "gtest/gtest.h"
-#include "tool_mysql\MysqlCnnc602.h"
+
 
 //全部成交模式测试
 /*

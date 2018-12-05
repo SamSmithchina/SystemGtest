@@ -101,12 +101,13 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetYES)
 
 			//插入
 			lRes = InsertOrder(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			ASSERT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();
 
 			//插入撤单
-			Sleep(g_iTimeOut * 5);
+			Sleep(g_iTimeOut * 20);
 			lRes = InsertCancelOrder(con, aSHShare[j]);
+			ASSERT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();
 
 			//推送第二次行情；
@@ -133,7 +134,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetYES)
 			{
 				lAShareQty[j] = -1;
 				lRes = CheckOrdwth2Error(con, aSHShare[j]);
-				EXPECT_EQ(0, lRes);
+				ASSERT_EQ(0, lRes);
 			}
 		}
 
@@ -143,10 +144,10 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetYES)
 			if (-1 != lAShareQty[j])
 			{
 				lRes = CheckOrdwth2Match(con, aSHShare[j]);
-				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 
 				lRes = CheckOrdwth2Cancel(con, aSHShare[j]);
-				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 			}
 		}
 
@@ -156,7 +157,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetYES)
 			if (-1 != lAShareQty[j])
 			{
 				lRes = CheckCjhb(con, aSHShare[j]);
-				EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+				ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 				if (lRes == 0)
 				{
 					if ("B" == aSHShare[j].bs)
@@ -174,14 +175,14 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetYES)
 
 	//校验回写股份资产stock_asset
 	iRes = CheckStgwWriteAssetBackToMySQL(aSHStockAsset, ui64BCjsl, ui64SCjsl);
-	EXPECT_EQ(0, iRes) << ++lErrorOrderCounter;
+	ASSERT_EQ(0, iRes) << ++lErrorOrderCounter;
 	
 	//关闭连接
 	con.Close();
 	if (0 < lErrorOrderCounter)
 	{
 		char szTransferBuff[65] = { "\0" };
-		std::string strError = "=================================================\n";
+		std::string strError = "\n=================================================\n";
 		strError += __FUNCTION__;
 		strError += "\n共计 iRound * iAShareNum ： ";
 		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);
@@ -288,12 +289,13 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetNO)
 
 			//插入
 			lRes = InsertOrder(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << i*iAShareNum + j;
+			ASSERT_EQ(0, lRes) << i*iAShareNum + j;
 			con.Commit();
 
 			//插入撤单
-			Sleep(g_iTimeOut * 5);
+			Sleep(g_iTimeOut * 20);
 			lRes = InsertCancelOrder(con, aSHShare[j]);
+			ASSERT_EQ(0, lRes) << i*iAShareNum + j; 
 			con.Commit();
 
 			//推送第二次行情；
@@ -314,17 +316,17 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetNO)
 		for (j = 0; j < iAShareNum; j++)
 		{
 			lRes = CheckOrdwth2Match(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+			ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 
 			lRes = CheckOrdwth2Cancel(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+			ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}
 
 		//成交
 		for (j = 0; j < iAShareNum; j++)
 		{
 			lRes = CheckCjhb(con, aSHShare[j]);
-			EXPECT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
+			ASSERT_EQ(0, lRes) << "num =  " << i*iAShareNum + j << "\t lErrorOrderCounter = " << ++lErrorOrderCounter;
 		}
 
 	}//for (i = 0; i < 1; i++ )	//主循环
@@ -334,7 +336,7 @@ TEST(BatchGtestMatchPartWithQuotation, BatchMatchPart_RecentPriceCheckAssetNO)
 	if (0 < lErrorOrderCounter)
 	{
 		char szTransferBuff[65] = { "\0" };
-		std::string strError = "=================================================\n";
+		std::string strError = "\n=================================================\n";
 		strError += __FUNCTION__;
 		strError += "\n共计 iRound * iAShareNum ： ";
 		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);

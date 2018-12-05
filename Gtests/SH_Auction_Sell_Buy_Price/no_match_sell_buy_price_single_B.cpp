@@ -7,7 +7,7 @@
 // 挂单撤单 ，对应的股票最近成交数量0，订单理应不成交，之后撤下；
 //买一价1.050元，卖一价1.045元， 买单，不验股
 // account = "A645078963" 股票账号
-// stock = ("600311") 荣华实业
+// stock = ("600392") 盛和资源
 // SingleNoMatchCancelWithQuotation_B.SellBuyPrice_1
 TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_1)
 {
@@ -18,8 +18,8 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_1)
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
 	CreateQuotation(aStockQuot);
-	aStockQuot.zqdm = "600311";
-	aStockQuot.zqmc = "荣华实业";
+	aStockQuot.zqdm = "600392";
+	aStockQuot.zqmc = "盛和资源";
 
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -28,7 +28,7 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_1)
 	long lRes = 0;
 	char szTemp[10] = { "\0" };
 	OTLConn40240 con;
-	SHShare aSHShare;
+	SHShare aSHShareConsume;
 
 	//建立数据库连接 ,0 right , -1 wrong
 	iRes = con.Connect(g_strShOdbcConn);
@@ -38,37 +38,45 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_1)
 	ASSERT_EQ(0, iRes);
 
 	//单个测试样例；
-	aSHShare.account = "A645078963";	//股票账号
-	aSHShare.stock = ("600311");		// 证券代码
+	aSHShareConsume.account = "A645078963";	//股票账号
+	aSHShareConsume.stock = aStockQuot.zqdm;		// 证券代码
 	g_iExternRecNum++;
-	aSHShare.reff = "J000000000";
+	aSHShareConsume.reff = "J000000000";
 	itoa(g_iExternRecNum, szTemp, 10);
-	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);		//订单编号；利用静态变量保持rec_num从1递增；
-	aSHShare.rec_num = szTemp;
-	aSHShare.price = "1.050";
-	aSHShare.qty = "100000";
-	aSHShare.bs = "B";					//买\卖
-	aSHShare.qty2 = "100000";
+	aSHShareConsume.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);		//订单编号；利用静态变量保持rec_num从1递增；
+	aSHShareConsume.rec_num = szTemp;
+	aSHShareConsume.price = "1.055";
+	aSHShareConsume.qty = "100000";
+	aSHShareConsume.bs = "B";					//买\卖
 
-	lRes = InsertOrder(con, aSHShare);	//消耗行情容量
+	lRes = InsertOrder(con, aSHShareConsume);	//消耗行情容量
 	EXPECT_EQ(0, lRes);
+
 	//插入订单
+	Sleep(g_iTimeOut * 25);
+	SHShare aSHShare;
+	aSHShare.stock = aStockQuot.zqdm;
+	aSHShare.account = aSHShareConsume.account;
 	g_iExternRecNum++;
 	aSHShare.reff = "J000000000";
 	itoa(g_iExternRecNum, szTemp, 10);
 	aSHShare.reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);
 	aSHShare.rec_num = szTemp;
+	aSHShare.price = "1.050";
+	aSHShare.qty = "100000";
+	aSHShare.bs = "B";					//买\卖
+	aSHShare.qty2 = "100000";
 	lRes = InsertOrder(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 	con.Commit();
 
 	//插入撤单
+	Sleep(g_iTimeOut * 10);
 	lRes = InsertCancelOrder(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 	con.Commit();
 
 	//查询撤单
-	Sleep(g_iTimeOut * 20);
 	lRes = CheckOrdwth2Cancel(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 
@@ -86,7 +94,7 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_1)
 // 挂单撤单 ，对应的股票买单价格低于卖一价，订单理应不成交，之后撤下；
 //买一价1.050元，卖一价1.045元， 买单，不验股
 // account = "A645078963" 股票账号
-// stock = ("600311") 荣华实业
+// stock = ("600383") 金地集团
 // SingleNoMatchCancelWithQuotation_B.SellBuyPrice_2
 TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_2)
 {
@@ -97,8 +105,8 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_2)
 	//构造行情
 	AStockQuot aStockQuot;				//行情CJSL = 100000
 	CreateQuotation(aStockQuot);
-	aStockQuot.zqdm = "600311";
-	aStockQuot.zqmc = "荣华实业";
+	aStockQuot.zqdm = "600383";
+	aStockQuot.zqmc = "金地集团";
 
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -118,7 +126,7 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_2)
 
 	//单个测试样例；
 	aSHShare.account = "A645078963";	//股票账号
-	aSHShare.stock = ("600311");		// 证券代码
+	aSHShare.stock = ("600383");		// 证券代码
 	g_iExternRecNum++;
 	aSHShare.reff = "J000000000";
 	itoa(g_iExternRecNum, szTemp, 10);
@@ -135,12 +143,12 @@ TEST(SingleNoMatchCancelWithQuotation_B, SellBuyPrice_2)
 	con.Commit();
 
 	//插入撤单
+	Sleep(g_iTimeOut * 10);
 	lRes = InsertCancelOrder(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 	con.Commit();
 
 	//查询撤单
-	Sleep(g_iTimeOut * 20);
 	lRes = CheckOrdwth2Cancel(con, aSHShare);
 	EXPECT_EQ(0, lRes);
 

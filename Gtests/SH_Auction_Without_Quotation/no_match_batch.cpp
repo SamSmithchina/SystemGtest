@@ -126,7 +126,7 @@ TEST(BatchGtestNoMatchCancelWithoutQuotation, BatchNoMatchCancel)
 	if (0 < lErrorOrderCounter)
 	{
 		char szTransferBuff[65] = { "\0" };
-		std::string strError = "=================================================\n";
+		std::string strError = "\n=================================================\n";
 		strError += __FUNCTION__;
 		strError += "\n共计 iRound * iAShareNum ： ";
 		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);

@@ -103,3 +103,35 @@ ortHelper::RecordReportToDb() Record Report clordid[O1000013
 [2018-11-29 14:27:55.083325] [error] Pid[0x00002880]-Tid[0x000020a8] [StgwFixRep
 ort] ProcMsgType_8_Report_JsonRule() 委托clordid[O1000013  ] error Rule match re
 peat, ruleId=35
+
+2018-12-4 10:36:32
+					  SingleMatchPartWithQuotation_B.AveragePriceCheckAsset_2
+10:34:15 [  FAILED  ] SingleNoMatchCancelWithQuotation_B.SellBuyPrice_1
+10:34:15 [  FAILED  ] SingleNoMatchCancelWithQuotation_S.RecentPrice_1
+10:34:15 [  FAILED  ] SingleNoMatchCancelWithQuotation_S.SellBuyPrice_1
+					  SingleMatchPartWithQuotation_S.RecentPrice_1  	//订单全撤
+					  
+10.202.82.158虚拟机上 
+systemgtest
+ 新建matchrule 文件夹和 gtest\sh_match_rule文件夹；
+ 修改 systemgtest.cpp 文件 
+ 后续需要验证matchrule中的函数正确性；需要编写清空mysql数据库的函数；
+g_iExternRecNum = 537
+[2018-12-04 18:08:52.075105] [info] Pid[0x0000178c]-Tid[0x000000ac] []
+=================================================
+测试程序耗时   ms = -614116
+程 序 耗 时    ms = -613960
+执 行 测 试 样 例 = 457
+=================================================
+测试的执行时间有误
+
+  FAILED  ] 3 tests, listed below:
+  FAILED  ] SingleNoMatchCancelWithQuotation_B.AveragePrice_1
+  FAILED  ] SingleNoMatchCancelWithQuotation_B.RecentPrice_1
+  FAILED  ] SingleNoMatchCancelWithQuotation_S.RecentPrice_1
+			SingleNoMatchCancelWithQuotation_B.SellBuyPrice_1
+*** 解决方法是		挂单撤单第二笔订单延后5秒下，该笔订单的撤单延后2秒时间，
+					通过外部时延区分调整撮合订单优先级，同时也造成处理低效的问题
+撮合对订单的优先级排列有问题： 
+	下两笔同股票的订单A、B， A买单价格高，时间早， B买单价格低，时间晚3秒，
+	撮合处理还是会先处理B的订单；

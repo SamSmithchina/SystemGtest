@@ -42,9 +42,9 @@ int QueryRecordNum(OTLConn40240& con, const std::string& strQuery)
 {
 	otl_stream streamDB;
 	std::map<std::string, struct OTLConn_DF::DataInRow> mapRowData;
-	int iRes = 0;
+	int iRes = -1;
 
-	for (int k = 0; k < g_iQueryTimes; k++)
+	for (int k = 0; k < g_iQueryTimes; ++k)
 	{
 		if (k == g_iQueryTimes - 1)//达到最大查询次数
 		{
@@ -61,7 +61,7 @@ int QueryRecordNum(OTLConn40240& con, const std::string& strQuery)
 			continue;
 		}
 
-		int iRes = con.FetchNextRow(&streamDB, mapRowData);
+		iRes = con.FetchNextRow(&streamDB, mapRowData);
 		if (iRes == -1)
 		{
 			streamDB.clean();
@@ -71,7 +71,18 @@ int QueryRecordNum(OTLConn40240& con, const std::string& strQuery)
 		else
 		{
 			iRes = atoi(mapRowData[""].strValue.c_str());
-			break;
+			//std::cout << "iRes" << iRes << std::endl;
+			if (iRes == 0)  //查到0条数据
+			{
+				streamDB.close();
+				mapRowData.clear();
+				Sleep(g_iTimeOut);
+				continue;
+			}
+			else
+			{
+				break;
+			}
 		}
 	}
 
@@ -114,7 +125,7 @@ int CheckOrdwth2(OTLConn40240 &con, SHShare aSHShare, Ordwth2Report enumOrdwth2R
 		strQueryOrdwth2 += "' and status = 'F';";
 	}
 
-	for (int k = 0; k < g_iQueryTimes; k++)
+	for (int k = 0; k < g_iQueryTimes; ++k)
 	{
 		mapRowData.clear();
 		long lQueryResult = con.Query(strQueryOrdwth2, &streamDB);
@@ -177,7 +188,7 @@ int CheckOrdwth2(OTLConn40240 &con, SHShare aSHShare, Ordwth2Report enumOrdwth2R
 			}
 
 			strTemp = mapRowData["status"].strValue;
-			if (Error != enumOrdwth2Report)
+			if (Ordwth2Report::Match == enumOrdwth2Report)
 			{
 				if ("O" != strTemp)
 				{
@@ -192,7 +203,7 @@ int CheckOrdwth2(OTLConn40240 &con, SHShare aSHShare, Ordwth2Report enumOrdwth2R
 					return -1;
 				}
 			}
-			else if (Error == enumOrdwth2Report)
+			else if (Ordwth2Report::Error == enumOrdwth2Report)
 			{
 				if ("F" != strTemp)
 				{
@@ -200,6 +211,21 @@ int CheckOrdwth2(OTLConn40240 &con, SHShare aSHShare, Ordwth2Report enumOrdwth2R
 					strError += strTemp;
 					strError += "\n预期   status:";
 					strError += "F";//错单标志F
+					strError += "\nCheck Ordwth2_error ERROR! reff = ";
+					EzLog::e(strError, aSHShare.reff);
+					streamDB.close();
+					mapRowData.clear();
+					return -1;
+				}
+			}
+			else if(Ordwth2Report::Cancle == enumOrdwth2Report)
+			{
+				if ("W" != strTemp)
+				{
+					std::string strError = "\nOrdwth status:";
+					strError += strTemp;
+					strError += "\n预期   status:";
+					strError += "W";	//撤单标志W
 					strError += "\nCheck Ordwth2_error ERROR! reff = ";
 					EzLog::e(strError, aSHShare.reff);
 					streamDB.close();
@@ -269,7 +295,7 @@ int CheckOrdwth2(OTLConn40240 &con, SHShare aSHShare, Ordwth2Report enumOrdwth2R
 				}
 			}
 		}// end else //校验确认字段
-	}	//for ( k = 0; k < g_iQueryTimes; k++)
+	}	//for ( k = 0; k < g_iQueryTimes; ++k)
 	streamDB.close();
 	mapRowData.clear();
 	return 0;
@@ -417,7 +443,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum)
 		strQueryCjhb += aSHShare.reff;
 		strQueryCjhb += "';";
 
-		for (int k = 0; k < g_iQueryTimes; k++)
+		for (int k = 0; k < g_iQueryTimes; ++k)
 		{
 			mapRowData.clear();
 			lQueryResult = con.Query(strQueryCjhb, &streamDB);
@@ -547,7 +573,7 @@ long CheckCjhb(OTLConn40240 &con, SHShare aSHShare, int iDivideNum)
 
 			break;
 		} // else if (iRes == iDivideNum) //分笔数等于的成交回报数
-	}//for (int k = 0; k < g_iQueryTimes; k++)
+	}//for (int k = 0; k < g_iQueryTimes; ++k)
 
 	return 0;
 }

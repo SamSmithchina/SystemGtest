@@ -9,7 +9,7 @@
 //或者买单价格在跌幅和卖一价之间，卖单价格在买一价到涨幅之间，订单不成交，之后撤下
 // 买一价1.050元，卖一价1.045元，不验股；
 // account = "A645078963" 股票账号
-// stock = ("600311") 荣华实业
+// stock = ("600395") 盘江股份
 //	 BatchGtestNoMatchCancelWithQuotation.BatchNoMatchCancel_SellBuyPriceCheckAssetNO
 TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_SellBuyPriceCheckAssetNO)
 {
@@ -20,8 +20,8 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_SellBuyPriceCheckA
 	//构造行情,
 	AStockQuot aStockQuot;
 	CreateQuotation(aStockQuot);
-	aStockQuot.zqdm = "600311";
-	aStockQuot.zqmc = "荣华实业";
+	aStockQuot.zqdm = "600395";
+	aStockQuot.zqmc = "盘江股份";
 
 	//推送行情
 	ASSERT_EQ(0, SendQuotToRedis(aStockQuot));
@@ -61,12 +61,7 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_SellBuyPriceCheckA
 			aSHShare[j].reff.replace(10 - strlen(szTemp), strlen(szTemp), szTemp);
 			aSHShare[j].rec_num = szTemp;
 
-			lTemp = g_iExternRecNum * 100;
-			if (lTemp > 99999900)
-
-			{
-				lTemp = lTemp % 100000000;	//char qty[8]
-			}
+			lTemp = 100000 + j * 100;
 			aSHShare[j].qty = itoa(lTemp, szTemp, 10);
 			if (0 == j % 2)
 			{
@@ -116,6 +111,7 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_SellBuyPriceCheckA
 		con.Commit();	// commit
 
 		//插入撤单
+		Sleep(g_iTimeOut * 10);
 		for (j = 0; j < iAShareNum; j++)
 		{
 			lRes = InsertCancelOrder(con, aSHShare[j]);
@@ -137,12 +133,12 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_SellBuyPriceCheckA
 	if (0 < lErrorOrderCounter)
 	{
 		char szTransferBuff[65] = { "\0" };
-		std::string strError = "=================================================\n";
+		std::string strError = "\n=================================================\n";
 		strError += __FUNCTION__;
 		strError += "\n共计 iRound * iAShareNum ： ";
 		strError += itoa(iRound*iAShareNum, szTransferBuff, 10);
 		strError += "\n出现错误订单笔数 ：";
-		strError +=  ltoa(lErrorOrderCounter, szTransferBuff, 10);
+		strError += ltoa(lErrorOrderCounter, szTransferBuff, 10);
 		strError += "\n=================================================\n";
 		EzLog::e(strError, "");
 	}
