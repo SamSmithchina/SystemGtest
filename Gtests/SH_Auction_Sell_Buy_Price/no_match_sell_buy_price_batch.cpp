@@ -97,6 +97,7 @@ TEST(BatchGtestNoMatchCancelWithQuotation, BatchNoMatchCancel_SellBuyPriceCheckA
 				aSHShare[0].qty = "100000";
 				lRes = InsertOrder(con, aSHShare[j]);	//消耗行情容量
 				EXPECT_EQ(0, lRes);
+				con.Commit();
 
 				g_iExternRecNum++;
 				aSHShare[0].reff = "J000000000";

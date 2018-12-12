@@ -50,9 +50,10 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_1)
 
 	lRes = InsertOrder(con, aSHShareConsume);	//消耗行情容量
 	EXPECT_EQ(0, lRes);
+	con.Commit();
 
 	//插入订单
-	Sleep(g_iTimeOut * 25);
+	Sleep(g_iTimeOut * 10);
 	SHShare aSHShare;
 	aSHShare.stock = aStockQuot.zqdm;
 	aSHShare.account = aSHShareConsume.account;
@@ -228,9 +229,10 @@ TEST(SingleNoMatchCancelWithQuotation_S, RecentPrice_3)
 
 	lRes = InsertOrder(con, aSHShare);	//消耗行情容量
 	EXPECT_EQ(0, lRes);
+	con.Commit();
 
 	//插入订单
-	Sleep(g_iTimeOut * 25);
+	Sleep(g_iTimeOut * 10);
 	g_iExternRecNum++;
 	aSHShare.reff = "J000000000";
 	itoa(g_iExternRecNum, szTemp, 10);

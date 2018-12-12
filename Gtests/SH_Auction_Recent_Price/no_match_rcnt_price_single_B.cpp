@@ -51,9 +51,10 @@ TEST(SingleNoMatchCancelWithQuotation_B, RecentPrice_1)
 
 	lRes = InsertOrder(con, aSHShareConsume);	//消耗行情容量
 	EXPECT_EQ(0, lRes);
-	
+	con.Commit();
+
 	//插入订单
-	Sleep(g_iTimeOut * 25);
+	Sleep(g_iTimeOut * 10);
 	SHShare aSHShare;
 	aSHShare.stock = aStockQuot.zqdm;
 	aSHShare.account = aSHShareConsume.account;
