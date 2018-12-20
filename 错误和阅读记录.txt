@@ -153,5 +153,23 @@ fix连接失败的可能：
 2018-11-12 13:22:15
 int* MergeSort(int& iArray[]) // 语法错误； 不允许引用数组
 int* MergeSort(int* iArray)   //正确写法
+ 
+ 
+ 
+ extern static  global 关键字的含义用法
+ 
+ //代码出自Sz_GenSettlementFile.cpp 
+ rapidjson::Value& jsVal_sett_hit;
+ rapidjson::Value& elem; 
+ jsVal_sett_hit = elem[cszFileContent][i];	// 这一句赋值给jsVal_sett_hit之后，elem的值会改变，十分奇怪；
+ 
 
-	
+ 2018-12-19 13:22:16
+ 84.9的机器上撤单成交的委托数据owflag有误
+
+2018-12-20 15:08:02
+c++ 打开文件 直接在文件尾部追加数据 用 
+ 	open(ofstreamFilePtr, ios::app | ios::out) 	//如果没有文件，创建文件；如果有文件，在文件尾追加
+	open(ofstreamFilePtr, ios::ate | ios::out)		//如果没有文件，创建文件；如果有，清空文件
+
+也可以用 seekp()函数来定位;

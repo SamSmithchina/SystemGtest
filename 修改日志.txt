@@ -1,4 +1,4 @@
-# 2018-10-24 9:39:02
+﻿# 2018-10-24 9:39:02
 修改变量命名 gExternRecNum -> g_iExternRecNum
 修改函数 输入输出参数的命名 ， ioAStockQuot -> inout_aStockQuot;
 增加函数，从sql server库中读取rec_num的最大编号；
@@ -63,6 +63,10 @@ TradPolicyManager.h line 127 缺少深圳市场规则的指针拷贝：ptrRule_S
 
 2018-11-28 08:59:43
 成交规则的正则表达式性能指标;
+
+2018-12-20 15:06:43
+测试样例基本完成
+
 
 
 

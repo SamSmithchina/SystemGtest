@@ -135,3 +135,27 @@ g_iExternRecNum = 537
 撮合对订单的优先级排列有问题： 
 	下两笔同股票的订单A、B， A买单价格高，时间早， B买单价格低，时间晚3秒，
 	撮合处理还是会先处理B的订单；
+	
+	dbf阅读软件、 截图、 数据库字段顺序、定义、格式
+	深圳市场
+
+	web页面的字段按域名做模糊搜索；
+	Clienter.cpp  Clienter::ProcReqMsg_settleAccountsRule函数 中两个SendMsgToServer(simutgw::client::cstrKey_SettleFileUploadRule, nullptr, docRespTmp_up, trivial::info)；不要写nullptr， 写成in_cstrOrigseqnum；
+	
+	2018-12-17 13:30:18
+	上海清算文件的引用、正则计算的值有误，格式有误
+	深圳清算 正则表达式计算有误
+	Sh_GenSettlementFile.cpp line.371 iRes = Tgw_StringUtil::String2Double_atof(strAfterTrans, dbfRow.dValue); 对iRes赋值，
+	Sz_GenSettlementFile.cpp line.369 iRes = Tgw_StringUtil::String2Double_atof(strAfterTrans, dbfRow.dValue); 对iRes赋值，
+	
+	验证mysql 清算规则类型为D （时间）,web填写该字段为string 时候的 正则表达式计算
+	json不支持“20181218” + “1”或是“20181218” + 1这样的写法
+	验证mysql 清算规则类型为D （时间）,web填写该字段为int 时候的 正则表达式计算
+	“20181218 + 1”结果在dbf数据库中是20191218/ /
+	清算文件的生成内容
+
+	验证mysql 清算规则类型为D （时间）,web填写该字段为string 时候的 正则表达式计算
+	json不支持“20181218” + “1”或是“20181218” + 1这样的写法
+	验证mysql 清算规则类型为D （时间）,web填写该字段为int 时候的 正则表达式计算
+	“20181218 + 1”结果在dbf数据库中是20191218/ /
+	清算文件的生成内容
