@@ -173,3 +173,19 @@ c++ 打开文件 直接在文件尾部追加数据 用
 	open(ofstreamFilePtr, ios::ate | ios::out)		//如果没有文件，创建文件；如果有，清空文件
 
 也可以用 seekp()函数来定位;
+
+2019-1-8 09:05:41
+mysql密码不要带@这类的中英文含义不同的符号
+
+
+1.移除增删增量文件后的空文件目录
+2.增加从jra上对客户端exe文件提取拷贝，脚本写在Jenkins配置windows bat上，保持风格一致
+3.cong SVN \JRA 提取client lbm .xml.rpt .exe 文件
+4.处理服务端kcbp的lbm提取
+5.Jenkins从服务器的编译器配置
+
+
+
+2019年1月28日17:49:25
+优化Python抓取网页速度
+修复服务器编译生成exe文件，拷贝时候出错的问题
